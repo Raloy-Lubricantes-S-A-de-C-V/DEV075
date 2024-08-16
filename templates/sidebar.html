@@ -1,0 +1,105 @@
+{% load static %}
+
+
+<!-- begin #sidebar -->
+<div id="sidebar" class="sidebar">
+    <!-- begin sidebar scrollbar -->
+    <div data-scrollbar="true" data-height="100%">
+        <!-- begin sidebar user -->
+        <ul class="nav">
+            <li class="nav-profile">
+                <a href="javascript:;" data-toggle="nav-profile">
+                    <div class="cover with-shadow"></div>
+                    
+                    <div class="image">
+                        {% if request.user.profile.picture %}
+                        <img src="{{ request.user.profile.picture.url }}" class="rounded-circle" width="50"
+                             height="50"/>
+                        {% else %}
+                        <img src="{% static 'img/users/user.png' %}" class="rounded-circle" height="50"/>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="info"><b class="caret pull-right"></b> <h5>{{ request.user }}</h5>
+                        
+                        {% if request.user.profile.biography %}
+                        <div class="col-md-12 p-4">
+                            <small><i class="fas fa-bookmark"></i>&nbsp;{{ request.user.profile.biography }}</small>
+                        </div>
+                        {% endif %}
+                        {% if request.user.profile.phone_number %}
+                        <div class="col-md-12 p-4">
+                            <small><i class="fas fa-phone-alt"></i>&nbsp;{{ request.user.profile.phone_number }}</small>
+                        </div>
+                        {% endif %}
+                </a>
+            </li>
+            <li>
+                <ul class="nav nav-profile">
+                    <li><a href="{% url 'users:update_profile' %}"><i class="fa fa-cog"></i>Edith Profile</a></li>
+                    <li><a href="javascript:;"><i class="fa fa-question-circle"></i> Helps</a></li>
+                    <li><a href="javascript:;"><i class="fas fa-palette"></i>Tema: {{ request.user.profile.theme }}</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <!-- end sidebar user -->
+    
+    <!-- begin sidebar nav -->
+    <ul class="nav">
+        <li class="nav-header">Navigation</li>
+        
+        <!-- Panel Delvelop = Use active in class has-sub -->
+        <li class="has-sub">
+            <a href="javascript:;">
+                <a href="{% url 'general_settings:ping' %}">
+                    <i class="fa fa-th-large"></i>
+                    <span>My Panel</span>
+                </a>
+            </a>
+        </li>
+        <!-- End Panel Delvelop -->
+        
+        <li class="has-sub ">
+            <a href="{% url 'apps:aplicaciones' %}">
+                <i class="fa fa-code "></i>
+                <span>Aplicaciones / Software</span>
+            </a>
+        </li>
+        <li class="has-sub ">
+            <a href="{% url 'networks:redes' %}">
+                <i class="fa fa-globe "></i>
+                <span>Redes</span>
+            </a>
+        </li>
+        <li class="has-sub ">
+            <a href="{% url 'services:servicios_app' %}">
+                <i class="fa fa-cubes "></i>
+                <span>Servicios</span>
+            </a>
+        </li>
+        <li class="has-sub ">
+            <a href="{% url 'sw:software' %}">
+                <i class="fa fa-user "></i>
+                <span>Owners</span>
+            </a>
+        </li>
+             <li class="has-sub ">
+            <a href="{% url 'sw:software' %}">
+                <i class="fa fa-building "></i>
+                <span>Company</span>
+            </a>
+        </li>
+
+        
+        <!-- begin sidebar minify button -->
+        <li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i
+                class="fa fa-angle-double-left"></i></a></li>
+        <!-- end sidebar minify button -->
+    </ul>
+    <!-- end sidebar nav -->
+</div>
+<!-- end sidebar scrollbar -->
+</div>
+<div class="sidebar-bg"></div>
+<!-- end #sidebar -->
