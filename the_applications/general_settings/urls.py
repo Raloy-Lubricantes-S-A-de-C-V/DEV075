@@ -14,4 +14,10 @@ urlpatterns = [
         view=views.dashboard,
         name='dashboard'
     ),
+
+    path(
+        route='getnoty',
+        view=views.GetNotify.as_view(),
+        name='getnoty'
+    ),
 ]

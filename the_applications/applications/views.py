@@ -8,4 +8,4 @@ from django.views.generic import TemplateView
 
 
 class AplicacionesView(LoginRequiredMixin,TemplateView):
-    template_name = 'aplicaciones/aplicaciones.html'
+    template_name = 'notify/notify.html'

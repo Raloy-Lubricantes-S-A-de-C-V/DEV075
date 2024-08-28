@@ -1,0 +1,451 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+{% csrf_token %}
+<!-- begin row -->
+<h3>Notificaciones</h3><br>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-inverse">
+            <div class="panel-heading" style="color:white;">
+                <span>Tipo de Notificación</span>
+            </div>
+            <div class="panel-body m-20">
+                <div class="row">
+                    <div><button id="btn_notify_1" class="btn btn-primary m-b-30 btn-name-mdl-create" data-mdl-name="Crear tipo notificación" data-mdl-sh="sh-1" data-toggle="modal" href="#modal-without-animation">Nuevo tipo de notificación</button></div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <table id="tbtype">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Color</th>
+                                    <th>Descripción</th>
+                                    <th>Activo</th>
+                                    <th>Ultima Modificación</th>
+                                    <th>Ultima Creación</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>xxx</td>
+                                    <td>xxx</td>
+                                    <td>xxx</td>
+                                    <td>xxx</td>
+                                    <td>xxx</td>
+                                    <td>xxx</td>
+                                    <td>xxx</td>
+                                    <td>xxx</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-inverse">
+            <div class="panel-heading" style="color:white;">
+                <span>Notificaciones</span>
+            </div>
+            <div class="panel-body m-20">
+                               <div class="row">
+                    <div><button id="btn_notify_2" class="btn btn-primary m-b-10 btn-name-mdl-create" data-mdl-name="Crear notificación" data-mdl-sh="sh-2" data-toggle="modal" href="#modal-without-animation">Nueva notificación</button></div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <table id="tbnotify">
+                            <thead>
+                                <tr>
+                                    <th>x</th>
+                                    <th>x</th>
+                                    <th>x</th>
+                                    <th>x</th>
+                                    <th>x</th>
+                                    <th>x</th>
+                                    <th>x</th>
+                                    <th>x</th>
+                                    <th>x</th>
+                                    <th>x</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>xxx</td>
+                                    <td>xxx</td>
+                                    <td>xxx</td>
+                                    <td>xxx</td>
+                                    <td>xxx</td>
+                                    <td>xxx</td>
+                                    <td>xxx</td>
+                                    <td>xxx</td>
+                                    <td>xxx</td>
+                                    <td>xxx</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end row -->
+<!-- begin row -->
+
+{% endblock %}
+
+{% block style %}
+    <style>
+    .btn-name-mdl-create{
+        font-size: 14px;
+    }
+    .chip-user{
+        width: 100%;
+        text-align: center;
+    }
+    .bold{
+        font-weight: bold !important;
+        color:#0d3349;
+    }
+    .badge{
+        background: transparent !important;
+    }
+    </style>
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready(function (){
+        var csrfmiddlewaretoken = {'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val()}
+        var tbtype = $('#tbtype').DataTable({
+            destroy: true,
+            responsive: true,
+            ajax: {
+                type: 'POST',
+                url: '{% url "notify:datatables_type_notify" %}',
+                data: csrfmiddlewaretoken,
+                dataType: 'json',
+            },
+            columns: [
+                {data: 'id', title: 'Id', visible:false,  type: 'string'},
+                {data: 'name', title: 'Nombre', className:'bold',  type: 'string'},
+                {data: null, title: 'Color', type: 'string', className:'ttype-color', "render": function (data, type, row, meta) {
+                        return '<span style="color:'+data.color+' !important;"><div>'+data.color+'</div></span>';
+                    }
+                },
+                {data: 'description', title: 'Descripción', type: 'string'},
+                {data: null, title: 'Activo', type: 'string',  "render": function (data, type, row, meta) {
+                    var active = ""
+                    if(data.active == 1){
+                        active = '<span style="background:green"><div>Activo</div></span>';
+                    }else{
+                        active = '<span style="background:red"><div>Inactivo</div></span>';
+                    }
+                    return active;
+                    }
+                },
+                {data: 'created', title: 'Creado', type: 'string'},
+                {data: 'modified', title: 'Modificado', type: 'string'},
+                {data: null, title: 'Acciones', width: '20%', "render": function ( data, type, row, meta) {
+                         return '' +
+                            '<a class="tooltipm" style="margin-right: 10px;" data-action="info" data-toggle="tooltip" data-placement="top" title="Mas información" style="cursor:pointer">' +
+                            '<iconify-icon style="font-size: 30px;cursor: pointer;" icon="solar:info-square-bold-duotone"></iconify-icon>' +
+                            '</a>' +
+                            '<a class="tooltipm" style="margin-right: 10px;" data-action="deactive" data-id="deactive_tbtype" data-toggle="tooltip" data-placement="top" title="Archivar elemento" style="cursor:pointer">' +
+                            '<iconify-icon style="font-size: 30px;cursor:pointer;" icon="solar:link-broken-minimalistic-bold-duotone"></iconify-icon>' +
+                            '</a>'+
+                            '<a class="tooltipm" style="margin-right: 10px;" data-action="active" data-id="active_tbtype" data-toggle="tooltip" data-placement="top" title="Desarchivar elemento" style="cursor:pointer">' +
+                            '<iconify-icon style="font-size: 30px;cursor:pointer;" icon="solar:link-round-angle-bold-duotone"></iconify-icon>' +
+                            '</a>';
+                    }
+                }
+            ],
+            pageLength: 25,
+            autoWidth: false,
+            columnDefs: {
+                "max-width": "50%", targets: [0, 1], className: "truncate",
+                checkboxes: {
+                    selectRow: true
+                }
+            },
+            fixedColumns: true,
+            bAutoWidth: false,
+            iDisplayLength: 25,
+            dom: 'Bfrtip',
+            select: {
+                style: 'multi'
+            },
+            buttons: [
+                {#{extend: 'copy', className: 'btn btn-primary glyphicon glyphicon-duplicate boton_data'},#}
+                {#{extend: 'csv', className: 'btn btn-primary glyphicon glyphicon-save-file boton_data'},#}
+                {#{extend: 'excel', className: 'btn btn-primary glyphicon glyphicon-list-alt boton_data'},#}
+                {#{extend: 'pdf', className: 'btn btn-primary glyphicon glyphicon-file'},#}
+                {#{extend: 'print', className: 'btn btn-primary glyphicon glyphicon-print boton_data'}#}
+            ]
+        });
+        function getBoldFromSeeField(a){
+            var response = ""
+            if( parseInt(a) == 0){
+                response = "bold"
+            }else{
+                response = ""
+            }
+            return response
+        }
+        function getPriorityField(a){
+            var response = ""
+            if( parseInt(a) == 1){
+                response = {"type":"Alta", "color":"#00acac"}
+            }else{
+                if( parseInt(a) == 2){
+                    response = {"type":"Media", "color":"#f59c1a"}
+                }else{
+                    if( parseInt(a) == 3){
+                        response = {"type":"Baja", "color":"#b6b6b6"}
+                    }else{
+                        response = {"type":"Known", "color":"#b6b6b6"}
+                    }
+                }
+            }
+            return response
+        }
+        var tbtype = $('#tbnotify').DataTable({
+            destroy: true,
+            responsive: true,
+            ajax: {
+                type: 'POST',
+                url: '{% url "notify:datatables_notify" %}',
+                data: csrfmiddlewaretoken,
+                dataType: 'json',
+            },
+
+            columns: [
+                {data: 'id', title: 'Id', visible:false,  type: 'string'},
+                {data: null, title: 'De', width: '8%', "render": function ( data, type, row, meta) {
+                        var classbold = getBoldFromSeeField(data.see)
+                        return '<div class="chip chip-md">'+
+                                  '<img src="{% static 'img/users/user.png' %}" alt="User">'+
+                                  '<span class="chip-user ' + classbold + '">' + data.to +'</span>'
+                                '</div>';
+                    }
+                },
+                {data: null, title: 'para', width: '8%', "render": function ( data, type, row, meta) {
+                        var classbold = getBoldFromSeeField(data.see)
+                        return '<div class="chip chip-md">'+
+                                  '<img src="{% static 'img/users/user.png' %}" alt="User">'+
+                                  '<span class="chip-user ' + classbold + '">' + data.user +'</span>'
+                                '</div>';
+                    }
+                },
+                {data: null, title: 'Tipo', width: '10%', "render": function ( data, type, row, meta) {
+                        var classbold = getBoldFromSeeField(data.see)
+                        return '<span class="badge border border-primary px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center" style="color:' + data.colortype + ';border-color:' + data.colortype + ' !important;">' +
+                            '<i class="fa fa-circle fs-9px fa-fw me-5px"></i> ' +
+                            '<div class="' + classbold + '" style="color:' + data.colortype + ';">' + data.type + '</div>'
+                            '</span>';
+                    }
+                },
+                {data: null, title: 'Nombre', width: '18%', "render": function ( data, type, row, meta) {
+                        var classbold = getBoldFromSeeField(data.see)
+                        return '<div class="' + classbold + '">' + data.name + '</div>';
+                    }
+                },
+                {data: null, title: 'Contenido', width: '18%', "render": function ( data, type, row, meta) {
+                        var classbold = getBoldFromSeeField(data.see)
+                        return '<div class="' + classbold + '">' + data.description + '</div>';
+                    }
+                },
+                {data: null, title: 'Prioridad', width: '8%', "render": function ( data, type, row, meta) {
+                        var classbold = getBoldFromSeeField(data.see)
+                        var priority = getPriorityField(data.priority)
+                        return '<span class="badge border border-primary px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center" style="color:' + priority['color'] + '; border-color:' + priority['color'] + ' !important;">' +
+                            '<i class="fa fa-circle fs-9px fa-fw me-5px"></i> ' +
+                            '<div class="' + classbold + '" style="color:' + priority["color"] + ';">' + priority["type"] + '</div>'
+                            '</span>';
+                    }
+                },
+                {data: null, title: 'Creado', width: '8%', "render": function ( data, type, row, meta) {
+                        var classbold = getBoldFromSeeField(data.see)
+                        return '<div class="' + classbold + '">' + data.created + '</div>';
+                    }
+                },
+                {data: null, title: 'Modificado', width: '8%', "render": function ( data, type, row, meta) {
+                        var classbold = getBoldFromSeeField(data.see)
+                        return '<div class="' + classbold + '">' + data.modified + '</div>';
+                    }
+                },
+                {data: null, title: 'Acciones', width: '30%', "render": function ( data, type, row, meta) {
+                         return '' +
+                            '<a class="tooltipm" style="margin-right: 10px;" data-action="info" data-toggle="tooltip" data-placement="top" title="Mas información" style="cursor:pointer">' +
+                            '<iconify-icon style="font-size: 30px;cursor: pointer;" icon="solar:eye-bold-duotone"></iconify-icon>' +
+                            '</a>' +
+                            '<a class="tooltipm" style="margin-right: 10px;" data-action="deactive" data-id="deactive_tbtype" data-toggle="tooltip" data-placement="top" title="Archivar elemento" style="cursor:pointer">' +
+                            '<iconify-icon style="font-size: 30px;cursor:pointer;" icon="solar:link-broken-minimalistic-bold-duotone"></iconify-icon>' +
+                            '</a>'+
+                            '<a class="tooltipm" style="margin-right: 10px;" data-action="active" data-id="active_tbtype" data-toggle="tooltip" data-placement="top" title="Desarchivar elemento" style="cursor:pointer">' +
+                            '<iconify-icon style="font-size: 30px;cursor:pointer;" icon="solar:link-round-angle-bold-duotone"></iconify-icon>' +
+                            '</a>';
+                    }
+                }
+            ],
+            pageLength: 25,
+            autoWidth: false,
+            columnDefs: {
+                "max-width": "50%", targets: [0, 1], className: "truncate",
+                checkboxes: {
+                    selectRow: true
+                }
+            },
+            fixedColumns: true,
+            bAutoWidth: false,
+            iDisplayLength: 25,
+            dom: 'Bfrtip',
+            select: {
+                style: 'multi'
+            },
+            buttons: [
+                {#{extend: 'copy', className: 'btn btn-primary glyphicon glyphicon-duplicate boton_data'},#}
+                {#{extend: 'csv', className: 'btn btn-primary glyphicon glyphicon-save-file boton_data'},#}
+                {#{extend: 'excel', className: 'btn btn-primary glyphicon glyphicon-list-alt boton_data'},#}
+                {#{extend: 'pdf', className: 'btn btn-primary glyphicon glyphicon-file'},#}
+                {#{extend: 'print', className: 'btn btn-primary glyphicon glyphicon-print boton_data'}#}
+            ]
+        });
+        {% if active_type_notify %}
+            $('#modal-without-animation').modal('show');
+            name = $("#btn_notify_1").attr("data-mdl-name");
+            $("#name_modal_create").text(name);
+            $(".modal-header").css("background","rgb(179 0 63) !important");
+            $(".sh-2").hide();
+            $(".sh-1").show();
+        {% endif %}
+        {% if active_notify %}
+            $('#modal-without-animation').modal('show');
+            name = $("#btn_notify_2").attr("data-mdl-name");
+            $("#name_modal_create").text(name);
+            $(".modal-header").css("background","rgb(179 0 63) !important");
+            $(".sh-1").hide();
+            $(".sh-2").show();
+        {% endif %}
+    })
+
+</script>
+
+{% endblock%}-
+
+{% block modalcreate %}
+    <div class="modal_typenotify sh-1">
+        <form action="{% url 'notify:create_type' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row mb-3">
+                <label class="form-label col-form-label col-md-3">Nombre</label>
+                <div class="col-md-9">
+                    <div class="input-group">
+{#                      <span class="input-group-text obligatorio">*</span>#}
+                      <input name="name" id="name" type="text" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="form-label col-form-label col-md-3">Color</label>
+                <div class="col-md-9">
+                    <div class="input-group">
+{#                      <span class="input-group-text obligatorio">*</span>#}
+                      <input name="color" id="color" type="color" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="form-label col-form-label col-md-3">Descripción</label>
+                <div class="col-md-9">
+                    <div class="input-group">
+                      <textarea name="description" id="description" style="width: 100%; background: #ffffff36;"></textarea>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-success" id="save_modal_create" style="float: right;">Crear</button>
+        </form>
+    </div>
+    <div class="modal_notify sh-2">
+        <form action="{% url 'notify:create_notify' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row mb-3">
+                <label class="form-label col-form-label col-md-3">Para</label>
+                <div class="col-md-9">
+                    <div class="input-group">
+{#                      <span class="input-group-text obligatorio">*</span>#}
+                      <select name="user" id="user" class="form-select" style="width: calc(100% - 35px);">
+                        <option></option>
+                        {% for u in context.users %}
+                              <option value="{{ u.id }}">{{ u.username }}</option>
+                            <br>
+                        {% endfor %}
+                      </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="form-label col-form-label col-md-3">Tipo</label>
+                <div class="col-md-9">
+                    <div class="input-group">
+{#                      <span class="input-group-text obligatorio">*</span>#}
+                      <select class="form-select" name="type" id="type" style="width: calc(100% - 35px);">
+                        <option></option>
+                        {% for t in context.type_notify %}
+                              <option value="{{ t.id }}">{{ t.name }}</option>
+                            <br>
+                        {% endfor %}
+                      </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="form-label col-form-label col-md-3">Nombre</label>
+                <div class="col-md-9">
+                    <div class="input-group">
+{#                      <span class="input-group-text obligatorio">*</span>#}
+                      <input name="name" id="name" type="text" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="form-label col-form-label col-md-3">Descripción</label>
+                <div class="col-md-9">
+                    <div class="input-group">
+{#                      <span class="input-group-text obligatorio">*</span>#}
+                      <input name="description" id="description" type="text" class="form-control" />
+                    </div>
+                </div>
+            </div>
+             <div class="row mb-3">
+                <label class="form-label col-form-label col-md-3">Prioridad</label>
+                <div class="col-md-9">
+                    <div class="input-group">
+{#                      <span class="input-group-text obligatorio">*</span>#}
+                      <select class="form-select" name="priority" id="priority" style="width: calc(100% - 35px);">
+                        <option></option>
+                        <option value="1">Alta</option>
+                        <option value="2">Media</option>
+                        <option value="3">Baja</option>
+                      </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="form-label col-form-label col-md-3">Imgen</label>
+                <div class="col-md-9">
+                    <div class="input-group">
+{#                      <span class="input-group-text obligatorio">*</span>#}
+                      <input name="picture" id="picture" type="file" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-success" id="save_modal_create" style="float: right;">Crear</button>
+        </form>
+    </div>
+{% endblock%}

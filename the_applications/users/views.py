@@ -22,16 +22,29 @@ class LoginView(auth_views.LoginView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['company'] = "Raloy Lubricantes"
         try:
-            context['settings'] = ModelConfig.objects.get(pk=1)
+            # context['settings'] = ModelConfig.objects.get(pk=1)
+            context['settings'] = "Roadly"
+            context['subsetting'] = "Ruteador"
         except:
-            context['settings'] = "Administración Raloy"
+            context['settings'] = "Roadly"
+            context['subsetting'] = "Ruteador"
         context['img'] = ModelBackground.objects.all()
         self.template_name = 'users/login.html'
         return context
 
 class LogoutView(LoginRequiredMixin, auth_views.LoginView):
     template_name = 'users/login.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['company'] = "Raloy Lubricantes"
+        context['settings'] = "Roadly"
+        context['img'] = ModelBackground.objects.all()
+        context['register'] = 'Bienvenido, por favor registre sus datos'
+        self.template_name = 'users/login.html'
+        return context
 
 
 
@@ -50,12 +63,12 @@ class SignupView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['company'] = "Raloy Lubricantes"
         try:
-            print("aqui1")
             context['settings'] = ModelConfig.objects.get(pk=1)
         except:
             print("aqui")
-            context['settings'] = "Administración Raloy"
+            context['settings'] = "Roadly"
         context['img'] = ModelBackground.objects.all()
         context['register'] = 'Bienvenido, por favor registre sus datos'
         self.template_name = 'users/signup.html'

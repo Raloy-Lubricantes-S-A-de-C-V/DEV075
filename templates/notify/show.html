@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+{% csrf_token %}
+<!-- begin row -->
+<h3>Notificaciones</h3><br>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-inverse" style="overflow-y: auto;">
+            <div class="panel-body pet-padding-none" >
+                <div class="col-pet-25" >
+                    <div class="col-head-100" style="text-align: center;">
+                        <a href="email_compose.html" class="btn btn-dark ps-40px pe-40px btn-sm">
+                            Nuevo
+                        </a>
+                    </div>
+                    <div class="col-headfree-100" >
+                        <div class="nav-title"><b>FOLDERS</b></div>
+                        <div>
+                            <ul class="nav nav-inbox">
+                                <li class="active"><a href="email_inbox.html"><i class="fa fa-hdd fa-lg fa-fw me-2"></i> Inbox <span class="badge fs-10px rounded-pill ms-auto fw-bolder pt-4px pb-5px px-8px badge-red">52</span></a></li>
+                                <li><a href="email_inbox.html"><i class="fa fa-flag fa-lg fa-fw me-2"></i> Important</a></li>
+                                <li><a href="email_inbox.html"><i class="fa fa-envelope fa-lg fa-fw me-2"></i> Sent</a></li>
+    {#                            <li><a href="email_inbox.html"><i class="fa fa-save fa-lg fa-fw me-2"></i> Drafts</a></li>#}
+                                <li><a href="email_inbox.html"><i class="fa fa-trash-alt fa-lg fa-fw me-2"></i> Trash</a></li>
+                            </ul>
+                        </div>
+                        <div class="nav-title"><b>ETIQUETAS</b></div>
+                        <div>
+                            <ul class="nav nav-inbox">
+                                {% for q in etiqueta %}
+                                    <li><a href="javascript:;" data-id="{{ q.id }}"><i class="fa fa-fw fa-lg fs-12px me-2 fa-circle" style="color:{{ q.color }}"></i>{{ q.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="block" style="height: 400px;"></div>
+                    </div>
+                </div>
+                <div class="col-pet-75" style="height: 100% !important;">
+                    <div class="col-head-100">
+                        <div class="btn-group me-2">
+                            <a href="javascript:;" class="btn btn-white btn-sm"><i class="fa fa-fw fa-reply"></i> <span class="d-none d-lg-inline">Responder</span></a>
+                        </div>
+                        <div class="btn-group me-2">
+                            <a href="javascript:;" class="btn btn-white btn-sm"><i class="fa fa-fw fa-flag"></i> <span class="d-none d-lg-inline">Importante</span></a>
+                            <a href="javascript:;" class="btn btn-white btn-sm"><i class="fa fa-fw fa-archive"></i> <span class="d-none d-lg-inline">Archivar</span></a>
+                        </div>
+                    </div>
+                    <div class="col-headfree-100 transparent m-15 calc-m-30 border-bottom-hr" style="height: 100% !important;">
+                        <h3>
+                            {% if notify.title %}
+                                <h4>{{ notify.title }}</h4>
+                                <div class="block">
+                                    {% for b in notify.badge %}
+                                        {% if b.name == 'Importante' %}
+                                            <span class="bbadge" style="background:{{ b.color }};width: 70px;"><i class="fa fa-flag fa-sm fa-fw me-2"></i>{{ b.name }}</span>
+                                        {% else %}
+                                            <span class="bbadge" style="background:{{ b.color }};">{{ b.name }}</span>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <h4>Bootstrap v5.0 is coming soon</h4>
+                            {% endif %}
+                        </h3>
+                        <div class="block">
+                            <div class="block" style="width: 100px;">
+                                {% if notify.img %}
+                                     <img src="/media/{{ notify.img }}" />
+                                {% else %}
+                                    <img src="/media/notify/pictures/notify.png" />
+                                {% endif %}
+                            </div>
+                            <div class="block" style="width: 400px;">
+                                <div class="block" style="width: 100%;padding: 0px;">
+                                    {% if notify.from %}
+                                         <h6 class="h6">{{ notify.from }}</h6>
+                                    {% else %}
+                                        <h6 class="h6">from support@wrapbootstrap.com</h6>
+                                    {% endif %}
+                                </div>
+                                <div class="block" style="width: 100%;padding: 0px;">
+                                    {% if notify.date %}
+                                        <i class="fas fa-clock fa-lg" style="margin-right: 4px;"></i><span style="font-size: 12px;">{{ notify.date }}</span>
+                                    {% else %}
+                                        <i class="fas fa-clock fa-lg" style="margin-right: 4px;"></i><span style="font-size: 12px;">Today, 8:30 AM</span>
+                                    {% endif %}
+                                </div>
+                                <div class="block" style="width: 100%;">
+                                    {% if notify.to %}
+                                        <span style="font-size: 12px;">{{ notify.to }}</span>
+                                    {% else %}
+                                        <span style="font-size: 12px;">To: nguoksiong@live.co.uk</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-headfree-100 transparent m-15 calc-m-30 border-bottom-hr hr-transparent" style="height: 100% !important;">
+                        {% if notify.message %}
+                            <p>{{ notify.message }}</p>
+                        {% else %}
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vel auctor nisi, vel auctor orci.
+                            Aenean in pretium odio, ut lacinia tellus. Nam sed sem ac enim porttitor vestibulum vitae at erat.
+
+                            Curabitur auctor non orci a molestie. Nunc non justo quis orci viverra pretium id ut est.
+                            Nullam vitae dolor id enim consequat fermentum. Ut vel nibh tellus.
+                            Duis finibus ante et augue fringilla, vitae scelerisque tortor pretium.
+                            Phasellus quis eros erat. Nam sed justo libero.
+
+                            Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+                            Sed tempus dapibus libero ac commodo.
+
+
+
+                            Best Regards,
+                            Sean.
+
+                            Information Technology Department,
+                            Senior Front End Designer</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end row -->
+<!-- begin row -->
+
+{% endblock %}
+
+{% block style %}
+    <style>
+    .btn-name-mdl-create{
+        font-size: 14px;
+    }
+    .chip-user{
+        width: 100%;
+        text-align: center;
+    }
+    .bold{
+        font-weight: bold !important;
+        color:#0d3349;
+    }
+    .bbadge{
+        float:left;
+        width: 60px;
+        text-align: center;
+        margin-right:4px;
+        border-radius:4px;
+        font-size:10px;
+        padding:2px 5px;
+        color:#fff;
+    }
+    </style>
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready(function (){
+
+    })
+
+</script>
+
+{% endblock%}

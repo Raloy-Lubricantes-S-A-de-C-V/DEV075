@@ -5,6 +5,6 @@ urlpatterns = [
     path(
         route='applications/',
         view=views.AplicacionesView.as_view(),
-        name='aplicaciones'
+        name='notify'
     ),
 ]

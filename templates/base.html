@@ -9,14 +9,18 @@
     <meta content="" name="author"/>
     
     <!-- ================== BEGIN BASE CSS STYLE ================== -->
-    <link href="{% static 'assets/css/transparent/app.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'assets/css/transparent/peter.css' %}" rel="stylesheet"/>
+    <link href="{% static 'assets/css/material/app.min.css' %}" rel="stylesheet"/>
     <!-- ================== END BASE CSS STYLE ================== -->
-    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
     <link href="{% static 'assets/plugins/jvectormap-next/jquery-jvectormap.css' %}" rel="stylesheet"/>
     <link href="{% static 'assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.css' %}" rel="stylesheet"/>
     <link href="{% static 'assets/plugins/gritter/css/jquery.gritter.css' %}" rel="stylesheet"/>
+    <link href="//cdn.datatables.net/2.1.4/css/dataTables.dataTables.min.css" rel="stylesheet"/>
     <!-- ================== END PAGE LEVEL STYLE ================== -->
+    {% block style %}{% endblock style %}
+
 </head>
 <body>
 <!-- begin page-cover -->
@@ -28,36 +32,74 @@
     <span class="spinner"></span>
 </div>
 <!-- end #page-loader -->
+<!-- begin offcanvas -->
+<div class="modal fade" id="modal-without-animation" style="display: none;" aria-modal="true" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><span id="name_modal_create" style="font-weight: bold;font-family: Roboto, sans-serif;"></span></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                {% if form.errors or context.error or errors %}
+                    {% if form.errors %}
+                        <h4 style="color:red">Error Formulario</h4><br>
+                        {% for err in form.errors %}
+                            <div class="alert alert-danger alert-dismissible fade show">
+                                <strong>Upps! : </strong>
+                                [ {{ err }} ]
+                                {% if err == "name" %}{{ form.errors.name }}
+                                {% elif err == "user" %}{{ form.errors.user }}
+                                {% elif err == "type" %}{{ form.errors.type }}
+                                {% elif err == "priority" %}{{ form.errors.priority }}
+                                {% elif err == "description" %}{{ form.errors.description }}
+                                {% endif %}
+                                <button type="button" class="btn-close" data-dismiss="alert"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    {% if context.errors %}
+                        <h4 style="color:red">Error de Contexto</h4><br>
+                    {% endif %}
+                    {% if errors %}
+                        <h4 style="color:red">Error de Sistema</h4><br>
+                    {% endif %}
 
+                {% endif %}
+                {% block modalcreate %}{% endblock modalcreate %}
+            </div>
+            <div class="modal-footer" >
+                <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Cerrar</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end offcanvas -->
 <!-- begin #page-container -->
 <div id="page-container" class="fade page-sidebar-fixed page-header-fixed">
     <!-- begin #header -->
     {% include 'navbar.html' %}
     <!-- end #header -->
-    
+
     <!-- begin #sidebar -->
     {% include 'sidebar.html' %}
     <!-- end #sidebar -->
-    
+
     <!-- begin #content -->
     <div id="content" class="content">
         <!-- begin breadcrumb -->
         <ol class="breadcrumb float-xl-right">
             <li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard</li>
         </ol>
         <!-- end breadcrumb -->
         <!-- begin page-header -->
-        <h1 class="page-header">Dashboard <small>header small text goes here...</small></h1>
+        
         {% block content %}
         {% endblock %}
     </div>
     <!-- end #content -->
     
-    <!-- begin theme-panel -->
-    {% include 'theme_panel.html' %}
-    <!-- end theme-panel -->
-    
+
     <!-- begin scroll to top btn -->
     <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i
             class="fa fa-angle-up"></i></a>
@@ -67,7 +109,8 @@
 
 <!-- ================== BEGIN BASE JS ================== -->
 <script src="{% static 'assets/js/app.min.js' %}"></script>
-<script src="{% static 'assets/js/theme/transparent.min.js' %}"></script>
+<script src="{% static 'assets/js/peter.js' %}"></script>
+<script src="{% static 'assets/js/theme/material.min.js' %}"></script>
 <!-- ================== END BASE JS ================== -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="{% static 'js/password/password.js' %}"></script>
@@ -96,6 +139,8 @@
 <script src="{% static 'assets/plugins/jvectormap-next/jquery-jvectormap.min.js' %}"></script>
 <script src="{% static 'assets/plugins/jvectormap-next/jquery-jvectormap-world-mill.js' %}"></script>
 <script src="{% static 'assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js' %}"></script>
+<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+<script src="//cdn.datatables.net/2.1.4/js/dataTables.min.js"></script>
 <script>
     COLOR_BLACK_TRANSPARENT_2 = 'rgba(255,255,255,0.15)';
     COLOR_DARK_LIGHTER = 'rgba(0,0,0,0.5)';
@@ -122,11 +167,65 @@
                 }
                 return cookieValue;
             }
-            
+
             if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
                 // Only send the token to relative URLs i.e. locally.
                 xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
             }
+        }
+    });
+    const csrfmiddlewaretoken = '{{ csrf_token }}';
+    bell();
+    setInterval("bell()", 60000);
+    function bell(){
+        console.log(csrfmiddlewaretoken);
+         $('#bell').empty();
+         $('#bell-wants').text('NO TIENES NOTIFICACIONES');
+         $("#add_notify").empty();
+        $.post("{% url 'settings:getnoty' %}",{'csrfmiddlewaretoken':csrfmiddlewaretoken}).done(function( data ) {
+            xdata = data.data
+            if(xdata.length > 0){
+                $('.badge').text(xdata.length);
+                $('#bell').append('<i class="fa fa-bell fa-bell-pulse"></i>');
+                $('#bell').append('<span class="label">' + xdata.length + '</span>');
+                $('#bell-wants').text('NOTIFICACIONES (' + xdata.length + ')');
+                for(var i = 0; i < xdata.length ; i++){
+                    console.log(xdata[i])
+                    var img = '';
+                    if(xdata[i]['img'].length > 0){
+                        img = '<img style="width: 48px;height: 48px;border-radius: 10px;" src="../media/'+xdata[i]['img']+'" />';
+                    }else{
+                        img = '<img style="width: 48px;height: 48px;border-radius: 10px;" src="../media/notify/pictures/notify.png" />';
+                    }
+                    noti = '<a href="#" class="dropdown-item media" id="gonotify">'+
+                        '<div class="media-left">'+
+                            img+
+                        '</div>'+
+                        '<div class="media-body" id="gonotify_' + xdata[i]['id'] + '">'+
+                            '<h7 class="media-heading">' + xdata[i]['title'] +
+                            '<br><span style="margin-right:4px;border-radius:4px;font-size:10px;padding:2px 5px;color:#fff;background: #00bcd4">' + xdata[i]['type'] + '</span>'+
+                            '<span style="margin-right:4px;border-radius:4px;font-size:10px;padding:2px 5px;color:#fff;background:' + xdata[i]['priority']['color'] + ';">' + xdata[i]['priority']['type'] + '</span>'+
+                            '<div class="text-muted f-s-11" style="margin-top: 5px;">' + xdata[i]['date'] + '</div>'+
+                        '</div>' +
+                        '<div class="tapadera-notify"></div>'+
+                    '</a>';
+                    $("#add_notify").append(noti)
+                    if(i == 5){
+                        break;
+                    }
+                }
+                console.log(xdata);
+            }else{
+                $('#bell').append('<i class="fa fa-bell"></i>');
+            }
+        });
+    }
+    $(document).click(function(e){
+        id = e.target.id
+        if(id.indexOf("gonotify") > -1){
+            xid = id.split("_")[1]
+            window.location.href = "{% url 'notify:showid' %}?csrfmiddlewaretoken=" + csrfmiddlewaretoken + "&id="+xid;
+            //$.get("{% url 'notify:showid' %}",{'csrfmiddlewaretoken':csrfmiddlewaretoken,'id':xid});
         }
     });
 </script>

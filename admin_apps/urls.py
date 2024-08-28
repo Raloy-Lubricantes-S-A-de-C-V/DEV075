@@ -30,5 +30,5 @@ urlpatterns = [
     path('netwoks/', include(('the_applications.networks.urls', 'networks'), namespace='networks')),
     path('services/', include(('the_applications.services.urls', 'services'), namespace='services')),
     path('sw/', include(('the_applications.software.urls', 'sw'), namespace='sw')),
-
+    path('notify/', include(('the_applications.notify.urls', 'notify'), namespace='notify')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

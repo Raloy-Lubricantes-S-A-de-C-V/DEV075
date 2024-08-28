@@ -44,6 +44,7 @@ LOCAL_APPS=(
     'the_applications.networks',
     'the_applications.services',
     'the_applications.software',
+    'the_applications.notify',
 )
 
 

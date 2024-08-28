@@ -91,8 +91,10 @@
             min-width: 196px;
         }
     }
+    .button-64{
+        font-size: 15px !important;
+    }
 </style>
-
 <!-- begin #page-container -->
 <div id="page-container" class="fade">
     <!-- begin login -->
@@ -100,11 +102,11 @@
         <!-- begin brand -->
         <div class="login-header">
             <div class="brand">
-               <span class="logo"></span> <b>Administración TI</b>
-						<small>Raloy Lubricantes S.A de C.V.</small>
+               <span class="logo"></span> <b>{{ settings }}</b>
+						<small>{{ company }}</small>
             </div>
             <div class="icon">
-                <i class="fa fa-lock"></i>
+                <i class="fa fa-lock" style="font-size: 40px;"></i>
             </div>
         </div>
         <!-- end brand -->
@@ -177,7 +179,6 @@
             }
         }
     });
-
 </script>
 
 </body>

@@ -13,10 +13,20 @@ ALLOWED_HOSTS = ['*']
 # Database dev
 
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'roadly',
+        'USER': 'roadly',
+        'PASSWORD': 'roadly',
+        'HOST': 'localhost',
+        'PORT': '5434',
     }
 }
 
