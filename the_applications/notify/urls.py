@@ -34,6 +34,41 @@ urlpatterns = [
         view=views.ShowId,
         name='showid'
     ),
+    path(
+        route='post_change_important',
+        view=views.PostChangeImportant.as_view(),
+        name='post_change_important'
+    ),
+    path(
+        route='post_change_trash',
+        view=views.PostChangeTrash.as_view(),
+        name='post_change_trash'
+    ),
+    path(
+        route='post_change_active',
+        view=views.PostChangeActive.as_view(),
+        name='post_change_active'
+    ),
+    path(
+        route='inbox',
+        view=views.PostChangeActive.as_view(),
+        name='inbox'
+    ),
+    path(
+        route='important',
+        view=views.PostChangeActive.as_view(),
+        name='important'
+    ),
+    path(
+        route='send',
+        view=views.PostChangeActive.as_view(),
+        name='send'
+    ),
+    path(
+        route='trash',
+        view=views.PostChangeActive.as_view(),
+        name='trash'
+    ),
 
    
 

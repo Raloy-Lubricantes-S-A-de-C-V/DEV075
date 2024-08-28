@@ -216,13 +216,17 @@ class DatatablesNotify(LoginRequiredMixin, TemplateView):
 @login_required
 def ShowId(request):
     idNotify = request.GET['id']
+    notify = Notify.objects.get(pk=idNotify)
+    notify.see = 1
+    notify.modified = datetime.now(timezone.utc)
+    notify.save()
     notify = Notify.objects.filter(pk=idNotify).values()
     nitem = {}
     for n in notify:
         print(n)
         now = datetime.now(timezone.utc)
         now = now.replace(tzinfo=None)
-        zdate = n['modified'].replace(tzinfo=None)
+        zdate = n['created'].replace(tzinfo=None)
         bages = []
         if n['priority'] == 1:
             bitem = {'name':'Alta', 'color':'#00acac'}
@@ -238,11 +242,17 @@ def ShowId(request):
             bages.append(bitem)
         btype = {'name':TypeNotify.objects.filter(pk=n['type_id']).values('name')[0]['name'], 'color':TypeNotify.objects.filter(pk=n['type_id']).values('color')[0]['color']}
         bages.append(btype)
-        if n['see'] == 0:
+        if n['see'] == 1:
             bsee = {'name':'Visto', 'color':'#00af62'}
             bages.append(bsee)
-        if n['important'] == 0:
+        if n['important'] == 1:
             bimportant = {'name':'Importante', 'color':'#f44336'}
+            bages.append(bimportant)
+        if n['trash'] == 1:
+            bimportant = {'name':'Basurero', 'color':'#818181'}
+            bages.append(bimportant)
+        if n['active'] == 0:
+            bimportant = {'name':'Correo archivado, no visible', 'color':'#ff0000'}
             bages.append(bimportant)
         f.aqui_ando(n=1111, t=bages)
         nitem = {
@@ -252,7 +262,9 @@ def ShowId(request):
             'date': "{} - {}".format(timeago.format(now.strftime("%Y-%m-%d %H:%M:%S"), zdate.strftime("%Y-%m-%d %H:%M:%S")), zdate.strftime("%Y-%m-%d %H:%M:%S")),
             'to': 'Para : {}<{}>'.format(User.objects.filter(pk=n['user_id']).values('username')[0]['username'],User.objects.filter(pk=n['user_id']).values('email')[0]['email']),
             'message': n['description'],
-            'badge': bages
+            'badge': bages,
+            'id': n['id'],
+            'modified': n['modified'].replace(tzinfo=None).strftime("%Y-%m-%d %H:%M:%S")
         }
     f.aqui_ando(n=2222, t=idNotify)
     query = Notify.objects.filter(user_id=request.user.id).values('type_id').annotate(dcount=Count('type_id')).order_by()
@@ -273,3 +285,68 @@ def ShowId(request):
         template_name='notify/show.html',
         context=context
     )
+
+class PostChangeImportant(LoginRequiredMixin, TemplateView):
+    template_name = 'notify/show.html'
+
+    def post(self, request, *args, **kwargs):
+        response = {
+            'data': [],
+            'error': False,
+            'msj': ''
+        }
+        id = request.POST['id']
+        notify = Notify.objects.get(pk=id)
+        notify.modified = datetime.now(timezone.utc)
+        f.aqui_ando(t=notify.important)
+        if notify.important == 0:
+            notify.important = 1
+            response['msj'] = 'Se ha marcado la notificación como Importante'
+        else:
+            notify.important = 0
+            response['msj'] = 'Se ha desmarcado la notificación como Importante'
+        notify.save()
+        response['notify'] = notify.id
+        return JsonResponse(response)
+class PostChangeTrash(LoginRequiredMixin, TemplateView):
+    template_name = 'notify/show.html'
+
+    def post(self, request, *args, **kwargs):
+        response = {
+            'data': [],
+            'error': False,
+            'msj': ''
+        }
+        id = request.POST['id']
+        notify = Notify.objects.get(pk=id)
+        notify.modified = datetime.now(timezone.utc)
+        f.aqui_ando(t=notify.trash)
+        if notify.trash == 0:
+            notify.trash = 1
+            response['msj'] = 'Se ha marcado la notificación como Basura'
+        else:
+            notify.trash = 0
+            response['msj'] = 'Se ha desmarcado la notificación como Basura'
+        notify.save()
+        response['notify'] = notify.id
+        return JsonResponse(response)
+
+class PostChangeActive(LoginRequiredMixin, TemplateView):
+    template_name = 'notify/show.html'
+
+    def post(self, request, *args, **kwargs):
+        response = {
+            'data': [],
+            'error': False,
+            'msj': ''
+        }
+        id = request.POST['id']
+        notify = Notify.objects.get(pk=id)
+        notify.modified = datetime.now(timezone.utc)
+        f.aqui_ando(t=notify.active)
+        notify.active = 0
+        response['msj'] = 'Se ha archivado la notificación, si requiere verla nuevamente comuniquese con su administrador'
+        notify.save()
+        response['notify'] = notify.id
+        return JsonResponse(response)
+

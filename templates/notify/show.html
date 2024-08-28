@@ -20,11 +20,10 @@
                         <div class="nav-title"><b>FOLDERS</b></div>
                         <div>
                             <ul class="nav nav-inbox">
-                                <li class="active"><a href="email_inbox.html"><i class="fa fa-hdd fa-lg fa-fw me-2"></i> Inbox <span class="badge fs-10px rounded-pill ms-auto fw-bolder pt-4px pb-5px px-8px badge-red">52</span></a></li>
-                                <li><a href="email_inbox.html"><i class="fa fa-flag fa-lg fa-fw me-2"></i> Important</a></li>
-                                <li><a href="email_inbox.html"><i class="fa fa-envelope fa-lg fa-fw me-2"></i> Sent</a></li>
-    {#                            <li><a href="email_inbox.html"><i class="fa fa-save fa-lg fa-fw me-2"></i> Drafts</a></li>#}
-                                <li><a href="email_inbox.html"><i class="fa fa-trash-alt fa-lg fa-fw me-2"></i> Trash</a></li>
+                                <li class="active"><a href="{% url 'notify:inbox' %}"><i class="fa fa-hdd fa-lg fa-fw me-2"></i> Inbox <span id="badgeinbox" class="badge fs-10px rounded-pill ms-auto fw-bolder pt-4px pb-5px px-8px badge-red">52</span></a></li>
+                                <li><a href="{% url 'notify:important' %}"><i class="fa fa-flag fa-lg fa-fw me-2"></i> Importante</a></li>
+                                <li><a href="{% url 'notify:send' %}"><i class="fa fa-envelope fa-lg fa-fw me-2"></i> Enviado</a></li>
+                                <li><a href="{% url 'notify:trash' %}"><i class="fa fa-trash-alt fa-lg fa-fw me-2"></i> Basura</a></li>
                             </ul>
                         </div>
                         <div class="nav-title"><b>ETIQUETAS</b></div>
@@ -41,11 +40,12 @@
                 <div class="col-pet-75" style="height: 100% !important;">
                     <div class="col-head-100">
                         <div class="btn-group me-2">
-                            <a href="javascript:;" class="btn btn-white btn-sm"><i class="fa fa-fw fa-reply"></i> <span class="d-none d-lg-inline">Responder</span></a>
+                            <a id="btn-notify--response" data-id="{{ notify.id }}" href="javascript:;" class="btn btn-white btn-sm"><i class="fa fa-fw fa-reply"></i> <span class="d-none d-lg-inline">Responder</span></a>
                         </div>
                         <div class="btn-group me-2">
-                            <a href="javascript:;" class="btn btn-white btn-sm"><i class="fa fa-fw fa-flag"></i> <span class="d-none d-lg-inline">Importante</span></a>
-                            <a href="javascript:;" class="btn btn-white btn-sm"><i class="fa fa-fw fa-archive"></i> <span class="d-none d-lg-inline">Archivar</span></a>
+                            <a id="btn-notify--important" data-id="{{ notify.id }}" href="javascript:;" class="btn btn-white btn-sm"><i class="fa fa-fw fa-flag"></i> <span class="d-none d-lg-inline">Importante</span></a>
+                            <a id="btn-notify--trash" data-id="{{ notify.id }}" href="javascript:;" class="btn btn-white btn-sm"><i class="fa fa-fw fa-trash"></i> <span class="d-none d-lg-inline">Basurero</span></a>
+                            <a id="btn-notify--archivar" data-id="{{ notify.id }}" href="javascript:;" class="btn btn-white btn-sm" style="color:red;"><i class="fa fa-fw fa-archive"></i> <span class="d-none d-lg-inline">Archivar</span></a>
                         </div>
                     </div>
                     <div class="col-headfree-100 transparent m-15 calc-m-30 border-bottom-hr" style="height: 100% !important;">
@@ -55,7 +55,13 @@
                                 <div class="block">
                                     {% for b in notify.badge %}
                                         {% if b.name == 'Importante' %}
-                                            <span class="bbadge" style="background:{{ b.color }};width: 70px;"><i class="fa fa-flag fa-sm fa-fw me-2"></i>{{ b.name }}</span>
+                                            <span class="bbadge" style="background:{{ b.color }};width: 85px;"><i class="fa fa-flag fa-xs fa-fw me-2"></i>{{ b.name }}</span>
+                                        {% elif b.name == 'Visto' %}
+                                            <span class="bbadge" style="background:{{ b.color }};"><i class="fa fa-eye fa-xs fa-fw me-2"></i>{{ b.name }}</span>
+                                        {% elif b.name == 'Basurero' %}
+                                            <span class="bbadge" style="background:{{ b.color }};width: 75px;"><i class="fa fa-trash fa-xs fa-fw me-2"></i>{{ b.name }}</span>
+                                        {% elif b.name == 'Correo archivado, no visible' %}
+                                            <span class="bbadge" style="color:{{ b.color }};width: 180px;border:1px solid #ff0000;"><i class="fa fa-window-close fa-xs fa-fw me-2"></i>{{ b.name }}</span>
                                         {% else %}
                                             <span class="bbadge" style="background:{{ b.color }};">{{ b.name }}</span>
                                         {% endif %}
@@ -122,6 +128,7 @@
                             Senior Front End Designer</p>
                         {% endif %}
                     </div>
+                    <div class="flotant-b-rigth">Ultima modificación : {{ notify.modified }}</div>
                 </div>
             </div>
         </div>
@@ -161,7 +168,94 @@
 {% block script %}
 <script>
     $(document).ready(function (){
-
+        const csrfmiddlewaretoken = '{{ csrf_token }}';
+        $('#btn-notify--important').click(function (){
+            id = $(this).attr('data-id');
+            $.post("{% url 'notify:post_change_important' %}",{csrfmiddlewaretoken, 'id':id}).done(function(data){
+                if(data.error){
+                    Swal.fire({
+                      title: 'Upps !!',
+                      text: data.msj,
+                      icon: 'error',
+                    }).then(function (){
+                        location.reload();
+                    });
+                }else{
+                    Swal.fire({
+                      title: 'Genial !!',
+                      text: data.msj,
+                      icon: 'success',
+                    }).then(function (){
+                        location.reload();
+                    });
+                }
+            })
+        });
+        $('#btn-notify--trash').click(function (){
+            id = $(this).attr('data-id');
+            $.post("{% url 'notify:post_change_trash' %}",{csrfmiddlewaretoken, 'id':id}).done(function(data){
+                if(data.error){
+                    Swal.fire({
+                      title: 'Upps !!',
+                      text: data.msj,
+                      icon: 'error',
+                    }).then(function (){
+                        location.reload();
+                    });
+                }else{
+                    Swal.fire({
+                      title: 'Genial !!',
+                      text: data.msj,
+                      icon: 'success',
+                    }).then(function (){
+                        location.reload();
+                    });
+                }
+            })
+        });
+        $('#btn-notify--response').click(function (){
+            id = $(this).attr('data-id');
+            Swal.fire({
+              title: "Respuesta de Notificaciones",
+              text: "Este funcionamiento por el momento no esta disponible en esta versión",
+              icon: "info"
+            });
+        });
+        $('#btn-notify--archivar').click(function (){
+            Swal.fire({
+                title: "Quiere archivar notificación?",
+                text: "Una vez hecho esto desaparce de sus vistas",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, Archivar",
+                cancelButtonText: "Cancelar"
+            }).then((result) => {
+              if (result.isConfirmed) {
+                  id = $(this).attr('data-id');
+                  $.post("{% url 'notify:post_change_active' %}",{csrfmiddlewaretoken, 'id':id}).done(function(data){
+                    if(data.error){
+                        Swal.fire({
+                          title: 'Upps !!',
+                          text: data.msj,
+                          icon: 'error',
+                        }).then(function (){
+                            location.reload();
+                        });
+                    }else{
+                        Swal.fire({
+                          title: 'Genial !!',
+                          text: data.msj,
+                          icon: 'success',
+                        }).then(function (){
+                            location.reload();
+                        });
+                    }
+                });
+              }
+            });
+        });
     })
 
 </script>

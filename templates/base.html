@@ -18,6 +18,7 @@
     <link href="{% static 'assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.css' %}" rel="stylesheet"/>
     <link href="{% static 'assets/plugins/gritter/css/jquery.gritter.css' %}" rel="stylesheet"/>
     <link href="//cdn.datatables.net/2.1.4/css/dataTables.dataTables.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.min.css">
     <!-- ================== END PAGE LEVEL STYLE ================== -->
     {% block style %}{% endblock style %}
 
@@ -141,6 +142,7 @@
 <script src="{% static 'assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js' %}"></script>
 <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
 <script src="//cdn.datatables.net/2.1.4/js/dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js"></script>
 <script>
     COLOR_BLACK_TRANSPARENT_2 = 'rgba(255,255,255,0.15)';
     COLOR_DARK_LIGHTER = 'rgba(0,0,0,0.5)';
@@ -185,7 +187,9 @@
         $.post("{% url 'settings:getnoty' %}",{'csrfmiddlewaretoken':csrfmiddlewaretoken}).done(function( data ) {
             xdata = data.data
             if(xdata.length > 0){
-                $('.badge').text(xdata.length);
+                $('#badgeinbox').addClass("badge");
+                $('#badgeinbox').addClass("badge-red");
+                $('#badgeinbox').text(xdata.length);
                 $('#bell').append('<i class="fa fa-bell fa-bell-pulse"></i>');
                 $('#bell').append('<span class="label">' + xdata.length + '</span>');
                 $('#bell-wants').text('NOTIFICACIONES (' + xdata.length + ')');
@@ -217,6 +221,9 @@
                 console.log(xdata);
             }else{
                 $('#bell').append('<i class="fa fa-bell"></i>');
+                $('#badgeinbox').text("");
+                $('#badgeinbox').removeClass("badge");
+                $('#badgeinbox').removeClass("badge-red");
             }
         });
     }

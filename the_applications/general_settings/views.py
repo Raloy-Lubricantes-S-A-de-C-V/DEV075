@@ -34,6 +34,7 @@ class GetNotify(LoginRequiredMixin, TemplateView):
             'msj': ''
         }
         noti = Notify.objects.filter(user_id=request.user.id, active=True, see=False).values()
+        f.aqui_ando(t=noti)
         notis = []
         for n in noti:
             now = datetime.now(timezone.utc)
@@ -58,5 +59,6 @@ class GetNotify(LoginRequiredMixin, TemplateView):
             }
             notis.append(item)
         response['data'] = notis
+        f.aqui_ando(n=2, t=response)
         return JsonResponse(response)
         ### --------- NOTIFICACIÓN ------------- ###

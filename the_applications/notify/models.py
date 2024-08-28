@@ -18,6 +18,7 @@ class Notify(models.Model):
     active = models.SmallIntegerField(default=1)
     see = models.SmallIntegerField(default=0)
     important = models.SmallIntegerField(default=0)
+    trash = models.SmallIntegerField(default=0)
     to = models.SmallIntegerField(default=1)
     priority = models.SmallIntegerField(default=0)
     picture = models.ImageField(upload_to='notify/pictures',
