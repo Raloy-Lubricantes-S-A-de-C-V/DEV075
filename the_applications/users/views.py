@@ -8,6 +8,7 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, FormView, UpdateView, ListView
 from django.contrib.auth import logout as auth_logout
 from django.http import HttpResponse, JsonResponse
+from django.contrib.sessions.models import Session
 # Model
 
 from .models import Profile
@@ -34,17 +35,22 @@ class LoginView(auth_views.LoginView):
         self.template_name = 'users/login.html'
         return context
 
-class LogoutView(LoginRequiredMixin, auth_views.LoginView):
-    template_name = 'users/login.html'
+# class LogoutView(LoginRequiredMixin, auth_views.LoginView):
+#     template_name = 'users/login.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['company'] = "Raloy Lubricantes"
-        context['settings'] = "Roadly"
-        context['img'] = ModelBackground.objects.all()
-        context['register'] = 'Bienvenido, por favor registre sus datos'
-        self.template_name = 'users/login.html'
-        return context
+def logout(request):
+    # clear the user's session data
+    Session.objects.filter(session_key=request.session.session_key).delete()
+    return redirect('users:login')
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['company'] = "Raloy Lubricantes"
+    #     context['settings'] = "Roadly"
+    #     context['img'] = ModelBackground.objects.all()
+    #     context['register'] = 'Bienvenido, por favor registre sus datos'
+    #     self.template_name = 'users/login.html'
+    #     return context
 
 
 

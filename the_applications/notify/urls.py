@@ -51,7 +51,7 @@ urlpatterns = [
     ),
     path(
         route='inbox',
-        view=views.PostChangeActive.as_view(),
+        view=views.GetNotify.as_view(),
         name='inbox'
     ),
     path(
