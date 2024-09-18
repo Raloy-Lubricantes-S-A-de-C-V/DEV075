@@ -10,11 +10,11 @@ urlpatterns = [
         name='login'
     ),
 
-    path(
-        route='logout/',
-        view=views.LogoutView.as_view(),
-        name='logout'
-    ),
+    # path(
+    #     route='logout/',
+    #     view=views.LogoutView.as_view(),
+    #     name='logout'
+    # ),
 
     path(
         route='logout/',

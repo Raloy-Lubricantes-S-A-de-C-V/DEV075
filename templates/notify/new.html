@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block sitio %}
-    <li class="breadcrumb-item"><a href="{% url 'notify:inbox' %}">Inbox</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'notify:inbox' %}">Nuevo</a></li>
 {% endblock %}
 
 {% block content %}
@@ -20,7 +20,7 @@
                 <div class="col-pet-18" >
                     <div class="col-head-100" style="text-align: center;">
                         <a href="email_compose.html" class="btn btn-dark ps-40px pe-40px btn-sm">
-                            Nuevo
+                            Enviar
                         </a>
                     </div>
                     <div class="col-headfree-100" >
@@ -46,14 +46,8 @@
                 </div>
                 <div class="col-pet-82" style="height: 100% !important;">
                     <div class="col-head-100">
-                        <div class="btn-group me-2">
-                            <a id="btn-notify--response" data-id="{{ notify.id }}" href="javascript:;" class="btn btn-white btn-sm"><i class="fa fa-fw fa-reply"></i> <span class="d-none d-lg-inline">Responder</span></a>
-                        </div>
-                        <div class="btn-group me-2">
-                            <a id="btn-notify--important" data-id="{{ notify.id }}" href="javascript:;" class="btn btn-white btn-sm"><i class="fa fa-fw fa-flag"></i> <span class="d-none d-lg-inline">Importante</span></a>
-                            <a id="btn-notify--trash" data-id="{{ notify.id }}" href="javascript:;" class="btn btn-white btn-sm"><i class="fa fa-fw fa-trash"></i> <span class="d-none d-lg-inline">Basurero</span></a>
-                            <a id="btn-notify--archivar" data-id="{{ notify.id }}" href="javascript:;" class="btn btn-white btn-sm" style="color:red;"><i class="fa fa-fw fa-archive"></i> <span class="d-none d-lg-inline">Archivar</span></a>
-                        </div>
+                        <div class="btn-group me-2">WWWS</div>
+                        <div class="btn-group me-2"></div>
                     </div>
                     <div class="col-headfree-100 transparent m-15 calc-m-30 border-bottom-hr" style="height: 100% !important;">
                         <h3>

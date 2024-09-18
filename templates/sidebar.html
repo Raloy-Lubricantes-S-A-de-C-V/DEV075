@@ -20,7 +20,7 @@
                         {% endif %}
                     </div>
                     
-                    <div class="info"><b class="caret pull-right"></b> <h5>{{ request.user }}</h5>
+                    <div class="info"><b class="caret pull-right"></b> <h5>{{ request.user }}</h5></div>
                         
                         {% if request.user.profile.biography %}
                         <div class="col-md-12 p-4">
@@ -59,12 +59,28 @@
             </a>
         </li>
         <!-- End Panel Delvelop -->
-        
-        <li class="has-sub ">
-            <a href="{% url 'notify:panel' %}">
-                <i class="fa fa-bell "></i>
+
+        <li class="has-sub">
+            <a href="javascript:;">
+                <b class="caret"></b>
+                <i class="fa fa-bell"></i>
                 <span>Notificaciones</span>
             </a>
+            <ul class="sub-menu">
+                <li>
+                    <a href="{% url 'notify:panel' %}">
+                        <i class="fas fa-key fa-sm"></i>
+                        Notificaciones Globales
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'notify:type' %}">
+                        <i class="fas fa-key fa-sm"></i>
+                        Tipo Notificación
+                    </a>
+                </li>
+                <li><a href="{% url 'notify:inbox' %}">Inbox</a></li>
+            </ul>
         </li>
         <li class="has-sub ">
             <a href="{% url 'networks:redes' %}">

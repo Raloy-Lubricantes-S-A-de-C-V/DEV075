@@ -40221,9 +40221,9 @@ body .sp-container button.sp-cancel {
     margin-right: 1rem;
     font-size: 13px;
     font-weight: 500;
-    color: rgba(0, 0, 0, .6);
     cursor: pointer;
-    background-color: #eceff1;
+    color: #ffffff;
+    background-color: #546e7a;
     border-radius: 16px;
     -webkit-transition: opacity .3s linear;
     transition: opacity .3s linear;
@@ -40231,6 +40231,10 @@ body .sp-container button.sp-cancel {
     text-transform: none;
     margin-top: 5px;
     margin-bottom: 5px;
+    box-shadow: 0 0 7px #9f9f9f;
+}
+.seeclass{
+    background:#fffdec !important;
 }
 .chip img {
     width: inherit;
@@ -40318,45 +40322,75 @@ body{
 .col-pet-10{
     max-width: 10%;
     min-width: 10%;
-    background: red;
+    background: #fff;
     float:left;
+    height: 100%;
 }
 .col-pet-90{
     max-width: 90%;
     min-width: 90%;
-    background: green;
+    background: #fff;
     float:left;
+    height: 100%;
+}
+.col-pet-20{
+    max-width: 20%;
+    min-width: 20%;
+    background: #fff;
+    float:left;
+}
+.col-pet-80{
+    max-width: 80%;
+    min-width: 80%;
+    background: #fff;
+    float:left;
+    height: 100%;
 }
 .col-pet-25{
     max-width: 25%;
     min-width: 25%;
     background: #fff;
     float:left;
+    height: 100%;
 }
 .col-pet-75{
     max-width: 75%;
     min-width: 75%;
     background: #fff;
     float:left;
+    height: 100%;
+}
+.col-pet-18{
+    max-width: 18%;
+    min-width: 18%;
+    background: #fff;
+    float:left;
+    height: 100%;
+}
+.col-pet-82{
+    max-width: 82%;
+    min-width: 82%;
+    background: #fff;
+    float:left;
+    height: 100%;
 }
 .col-head-100{
     max-width: 100%;
     min-width: 100%;
     min-height: 68px;
     padding: 18px;
-    background: rgb(0 0 0 / 15%);
+    background: rgb(55 71 79 / 39%);
     border: 1px solid #0000000f;
 }
 .col-headfree-100{
     max-width: 100%;
     min-width: 100%;
-    height: 100%;
+    height: calc(100% + 20px);
     padding: 15px;
-    background: rgb(0 0 0 / 5%);
+    background: rgb(55 71 79 / 7%);
     border: 1px solid #0000000f;
-    height: auto !important;
-    min-height: auto !important;
-    display: grid;
+    display: block;
+
 }
 .pet-padding-none{
     padding: 0px !important;
@@ -40386,6 +40420,11 @@ body{
 }
 .badge-red {
     background: #f44336 !important;
+}
+.badge-red2 {
+    background: #E91E63 !important;
+    color: #ffffff !important;
+    padding: 2px 8px !important;
 }
 .transparent{
     background: transparent !important;
@@ -40434,4 +40473,65 @@ div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm) {
     right: 0;
     margin-bottom: 20px;
     margin-right: 10px;
+}
+.panel.panel-inverse>.panel-heading {
+    background: #fff !important;
+}
+.btn-dark {
+    background-color: #37474f !important;
+}
+.nav-inbox>li>a {
+    color: #37474f;
+}
+
+.btn.btn-icon.btn-xs {
+    width: 40px !important;
+    height: 20px !important;
+    font-size: 8px !important;
+    line-height: 18px !important;
+}
+.content-new{
+    display: block;
+    position: absolute;
+    left:0px;
+    top:0px;
+    z-index:2 !important;
+}
+.btn-circle{
+    z-index:4 !important;
+}
+.btn-sm2 {
+    padding: .2125rem 1.525rem !important;
+    border-radius: 0px 0px 5px 0px !important;
+    box-shadow: 4px 3px 3px -1px #00000057 !important;
+    background-color: #009688 !important;
+    color: #effffb !important;
+    border-color: #0fb5a6 !important;
+    font-weight: 600 !important;
+    transition: 0.7s !important;
+}
+.btn-sm2:hover{
+    color: #ffffff !important;
+    background-color: #4caf50 !important;
+    border-color: #4caf50 !important;
+}
+.new-icon{
+    font-size: 20px;
+    cursor:pointer;
+    color: #effffb !important;
+    display: inline-block;
+    position: relative;
+    top: 6px;
+    left: -6px;
+}
+.new-text{
+    display: inline-block;
+    position: relative;
+    color: #effffb !important;
+    margin-bottom: 6px;
+    font-size: .75rem;
+}
+
+#page-loader {
+    z-index: 9999;
 }

@@ -94,7 +94,7 @@ def update_profile(request):
             profile.theme = data['theme']
             profile.save()
 
-            return redirect('++:form')
+            return redirect('users:login')
     else:
         form = ProfileForm()
 

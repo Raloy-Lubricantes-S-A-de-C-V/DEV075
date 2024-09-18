@@ -1,0 +1,293 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block sitio %}
+    <li class="breadcrumb-item"><a href="{% url 'general_settings:ping' %}">Basura</a></li>
+{% endblock %}
+
+{% block content %}
+{% csrf_token %}
+<!-- begin row -->
+
+<h3>Notificaciones</h3><br>
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <style>
+            .panel-inverse{
+                height: 800px;
+            }
+            .panel-heading{
+                height: 20px;
+            }
+        </style>
+        <div class="panel panel-inverse" style="overflow-y: auto;">
+            <div class="panel-body pet-padding-none" >
+                <div class="col-pet-18">
+                    <div class="col-head-100" style="text-align: center;">
+                        <a href="email_compose.html" class="btn btn-dark ps-40px pe-40px btn-sm">
+                            Nuevo
+                        </a>
+                    </div>
+                    <div class="col-headfree-100" >
+                        <div class="nav-title"><b>FOLDERS</b></div>
+                        <div>
+                            <ul class="nav nav-inbox">
+                                <li><a href="{% url 'notify:inbox' %}"><i class="fa fa-hdd fa-lg fa-fw me-2"></i> Inbox <span id="badgeinbox" class="badge fs-10px rounded-pill ms-auto fw-bolder pt-4px pb-5px px-8px badge-red">52</span></a></li>
+                                <li><a href="{% url 'notify:important' %}"><i class="fa fa-flag fa-lg fa-fw me-2"></i> Importante</a></li>
+                                <li><a href="{% url 'notify:send' %}"><i class="fa fa-envelope fa-lg fa-fw me-2"></i> Enviado</a></li>
+                                <li class="active"><a href="{% url 'notify:trash' %}"><i class="fa fa-trash-alt fa-lg fa-fw me-2"></i> Basura</a></li>
+                            </ul>
+                        </div>
+                        <div class="nav-title"><b>ETIQUETAS</b></div>
+                        <div>
+                            <ul class="nav nav-inbox">
+                                {% for q in etiqueta %}
+                                    <li><a href="javascript:;" data-id="{{ q.id }}"><i class="fa fa-fw fa-lg fs-12px me-2 fa-circle" style="color:{{ q.color }}"></i>{{ q.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-pet-82" style="height: 100% !important;">
+                    <!---->
+                        <div class="col-head-100" style="text-align: right;">
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+                        </div>
+                        <div class="col-headfree-100 transparent m-15 calc-m-30 border-bottom-hr hr-transparent" style="height: 100% !important;">
+                            <div class="row">
+                                <div class="col-12">
+                                    <table id="tbnotify">
+                                        <thead>
+                                            <tr>
+                                                <th>x</th>
+                                                <th>x</th>
+                                                <th>x</th>
+                                                <th>x</th>
+                                                <th>x</th>
+                                                <th>x</th>
+                                                <th>x</th>
+                                                <th>x</th>
+                                                <th>x</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>xxx</td>
+                                                <td>xxx</td>
+                                                <td>xxx</td>
+                                                <td>xxx</td>
+                                                <td>xxx</td>
+                                                <td>xxx</td>
+                                                <td>xxx</td>
+                                                <td>xxx</td>
+                                                <td>xxx</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    <!---->
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end row -->
+<!-- begin row -->
+
+{% endblock %}
+
+{% block style %}
+    <style>
+    .btn-name-mdl-create{
+        font-size: 14px;
+    }
+    .chip-user{
+        width: 100%;
+        text-align: center;
+    }
+    .bold{
+        font-weight: bold !important;
+        color:#0d3349;
+    }
+    .bbadge{
+        float:left;
+        width: 60px;
+        text-align: center;
+        margin-right:4px;
+        border-radius:4px;
+        font-size:10px;
+        padding:2px 5px;
+        color:#fff;
+    }
+    .badge {
+        background-color: transparent !important;
+    }
+    </style>
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready(function (){
+        function getRandomInt(max) {
+          return Math.floor(Math.random() * max);
+        }
+        const csrfmiddlewaretoken = '{{ csrf_token }}';
+        function getBoldFromSeeField(a){
+            var response = ""
+            if( parseInt(a) == 0){
+                response = "bold"
+            }else{
+                response = ""
+            }
+            return response
+        }
+        function getClassFromSeeField(a){
+            var response = ""
+            if( parseInt(a) == 0){
+                response = "background: #d1eaff; border: 2px solid #ffffff; box-shadow: -1px 1px 6px #607d8bd4;"
+            }else{
+                response = ""
+            }
+            return response
+        }
+        function getPriorityField(a){
+            var response = ""
+            if( parseInt(a) == 1){
+                response = {"type":"Alta", "color":"#00acac"}
+            }else{
+                if( parseInt(a) == 2){
+                    response = {"type":"Media", "color":"#f59c1a"}
+                }else{
+                    if( parseInt(a) == 3){
+                        response = {"type":"Baja", "color":"#7f7f7f"}
+                    }else{
+                        response = {"type":"Known", "color":"#7f7f7f"}
+                    }
+                }
+            }
+            return response
+        }
+        var tbtype = $('#tbnotify').DataTable({
+            destroy: true,
+            responsive: true,
+            ajax: {
+                type: 'POST',
+                url: '{% url "notify:datatables_notify_trash" %}',
+                data: csrfmiddlewaretoken,
+                dataType: 'json',
+            },
+
+            columns: [
+                {data: 'id', title: 'Id', visible:false,  type: 'string'},
+                {data: null, title: 'De', width: '14%', "render": function ( data, type, row, meta) {
+                        var classbold = getBoldFromSeeField(data.see)
+                        var classstyle = getClassFromSeeField(data.see)
+                        var bg = ["#ffcfcf","#ffb3b3","#d1faff","#b2f7ff","#ccffce","#a1d9a3","#fff3ce","#e7d393","#e0cfff","#b39cdc","#e7d2ca","#b99f96"];
+                        var xbg = getRandomInt(12)
+                        return '<div class="chip chip-md" style="'+classstyle+'">'+
+                                  '<img style="border:1px solid white; background:'+bg[xbg]+'" src="{% static 'img/users/user.png' %}" alt="User">'+
+                                  '<span class="chip-user ' + classbold + '">' + data.to +'</span>'
+                                '</div>';
+                    }
+                },
+                {data: null, title: 'Tipo', width: '11%', "render": function ( data, type, row, meta) {
+                        var classbold = getBoldFromSeeField(data.see)
+                        return '<span class="badge border border-primary px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center" style="color:' + data.colortype + ';border-color:' + data.colortype + ' !important;">' +
+                            '<i class="fa fa-circle fs-9px fa-fw me-5px"></i> ' +
+                            '<div class="' + classbold + '" style="color:' + data.colortype + ';">' + data.type + '</div>'
+                            '</span>';
+                    }
+                },
+                {data: null, title: 'Nombre', width: '12%', "render": function ( data, type, row, meta) {
+                        var classbold = getBoldFromSeeField(data.see)
+                        return '<div class="' + classbold + '">' + data.name + '</div>';
+                    }
+                },
+                {data: null, title: 'Contenido', width: '15%', "render": function ( data, type, row, meta) {
+                        var classbold = getBoldFromSeeField(data.see)
+                        var xcontent = 0;
+                        if((data.description).length > 30){
+                            xcontent = (data.description).substring(0, 30) + " ..."
+                        }else{
+                            xcontent = data.description
+                        }
+                        return '<div class="' + classbold + '">' + xcontent + '</div>';
+                    }
+                },
+                {data: null, title: 'Prioridad', width: '10%', "render": function ( data, type, row, meta) {
+                        var classbold = getBoldFromSeeField(data.see)
+                        var priority = getPriorityField(data.priority)
+                        return '<span class="badge border border-primary px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center" style="color:' + priority['color'] + '; border-color:' + priority['color'] + ' !important;">' +
+                            '<i class="fa fa-circle fs-9px fa-fw me-5px"></i> ' +
+                            '<div class="' + classbold + '" style="color:' + priority["color"] + ';">' + priority["type"] + '</div>'
+                            '</span>';
+                    }
+                },
+                {data: null, title: 'Creado', width: '11%', "render": function ( data, type, row, meta) {
+                        var classbold = getBoldFromSeeField(data.see)
+                        return '<div class="' + classbold + '">' + data.created + '</div>';
+                    }
+                },
+                {data: null, title: 'Modificado', width: '11%', "render": function ( data, type, row, meta) {
+                        var classbold = getBoldFromSeeField(data.see)
+                        return '<div class="' + classbold + '">' + data.modified + '</div>';
+                    }
+                },
+                {data: null, title: 'Acciones', width: '16%', "render": function ( data, type, row, meta) {
+                         return '' +
+                            '<a class="tooltipm" style="margin-right: 10px;" data-action="info" data-toggle="tooltip" data-placement="top" title="Ver detalle" style="cursor:pointer">' +
+                            '<iconify-icon style="font-size: 30px;cursor: pointer;" icon="solar:eye-closed-bold-duotone"></iconify-icon>' +
+                            '</a>'+
+                            '<a class="tooltipm" style="margin-right: 10px;" data-action="dedelete" data-id="active_tbtype" data-toggle="tooltip" data-placement="top" title="Sacar de basurero" style="cursor:pointer">' +
+                            '<iconify-icon style="font-size: 30px;cursor:pointer;color:#9e9e9e;transform: rotate(180deg);" icon="solar:paper-bin-bold-duotone"></iconify-icon>' +
+                            '</a>'+
+                            '<a class="tooltipm" style="margin-right: 10px;" data-action="archive" data-id="active_tbtype" data-toggle="tooltip" data-placement="top" title="Archivar notificación" style="cursor:pointer">' +
+                            '<iconify-icon style="font-size: 30px;cursor:pointer;color:#c40647;" icon="solar:minus-square-bold-duotone"></iconify-icon>' +
+                            '</a>';
+                    }
+                }
+            ],
+            pageLength: 25,
+            autoWidth: false,
+            columnDefs: {
+                "max-width": "50%", targets: [0, 1], className: "truncate",
+                checkboxes: {
+                    selectRow: true
+                }
+            },
+            fnRowCallback: function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+                if ( aData.see == 0){
+                    $('td', nRow).css('background-color', '#f1f2f3' );
+                    $('td', nRow).css('border-bottom', '1px solid #b5c3d0' );
+                    $('td', nRow).css('border-top', '1px solid #b5c3d0' );
+                }else{
+                }
+            },
+            fixedColumns: true,
+            bAutoWidth: false,
+            iDisplayLength: 25,
+            dom: 'Bfrtip',
+            select: {
+                style: 'multi'
+            },
+            buttons: [
+                {#{extend: 'copy', className: 'btn btn-primary glyphicon glyphicon-duplicate boton_data'},#}
+                {#{extend: 'csv', className: 'btn btn-primary glyphicon glyphicon-save-file boton_data'},#}
+                {#{extend: 'excel', className: 'btn btn-primary glyphicon glyphicon-list-alt boton_data'},#}
+                {#{extend: 'pdf', className: 'btn btn-primary glyphicon glyphicon-file'},#}
+                {#{extend: 'print', className: 'btn btn-primary glyphicon glyphicon-print boton_data'}#}
+            ]
+        });
+    })
+
+</script>
+
+{% endblock%}

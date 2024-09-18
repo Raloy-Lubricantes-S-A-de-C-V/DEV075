@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block sitio %}
-    <li class="breadcrumb-item"><a href="{% url 'notify:panel' %}">Notificaciones Globales</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'notify:type' %}">Tipo de notificaciones</a></li>
 {% endblock %}
 
 {% block content %}
@@ -17,7 +17,7 @@
                 <div class="panel-heading-btn">
                     <div class="row">
                         <div class="content-new">
-                            <a class="btn btn-dark ps-40px pe-40px btn-sm btn-sm2 btn-name-mdl-create" data-mdl-name="Crear notificación" data-mdl-sh="sh-2" data-toggle="modal" href="{% url 'notify:showid' %}">
+                            <a class="btn btn-dark ps-40px pe-40px btn-sm btn-sm2 btn-name-mdl-create" data-mdl-name="Crear tipo notificación" data-mdl-sh="sh-1" data-toggle="modal" href="#modal-without-animation">
                                 <iconify-icon class="new-icon" icon="solar:pen-bold-duotone"></iconify-icon>
                                 <span class="new-text">Nuevo</span>
                             </a>
@@ -30,28 +30,23 @@
                 </div>
             </div>
             <div class="panel-body m-20">
-
-                 <div class="row">
+                <div class="row">
                     <div class="col-12">
-                        <table id="tbnotify">
+                        <table id="tbtype">
                             <thead>
                                 <tr>
-                                    <th>x</th>
-                                    <th>x</th>
-                                    <th>x</th>
-                                    <th>x</th>
-                                    <th>x</th>
-                                    <th>x</th>
-                                    <th>x</th>
-                                    <th>x</th>
-                                    <th>x</th>
-                                    <th>x</th>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Color</th>
+                                    <th>Descripción</th>
+                                    <th>Activo</th>
+                                    <th>Ultima Modificación</th>
+                                    <th>Ultima Creación</th>
+                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>xxx</td>
-                                    <td>xxx</td>
                                     <td>xxx</td>
                                     <td>xxx</td>
                                     <td>xxx</td>
@@ -96,123 +91,37 @@
 {% block script %}
 <script>
     $(document).ready(function (){
-        function getRandomInt(max) {
-          return Math.floor(Math.random() * max);
-        }
-        function getClassFromSeeField(a){
-            var response = ""
-            if( parseInt(a) == 0){
-                response = "background: #d1eaff; border: 2px solid #ffffff; box-shadow: -1px 1px 6px #607d8bd4;"
-            }else{
-                response = ""
-            }
-            return response
-        }
         var csrfmiddlewaretoken = {'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val()}
-        function getBoldFromSeeField(a){
-            var response = ""
-            if( parseInt(a) == 0){
-                response = "bold"
-            }else{
-                response = ""
-            }
-            return response
-        }
-        function getPriorityField(a){
-            var response = ""
-            if( parseInt(a) == 1){
-                response = {"type":"Alta", "color":"#00acac"}
-            }else{
-                if( parseInt(a) == 2){
-                    response = {"type":"Media", "color":"#f59c1a"}
-                }else{
-                    if( parseInt(a) == 3){
-                        response = {"type":"Baja", "color":"#7f7f7f"}
-                    }else{
-                        response = {"type":"Known", "color":"#7f7f7f"}
-                    }
-                }
-            }
-            return response
-        }
-        var tbtype = $('#tbnotify').DataTable({
+        var tbtype = $('#tbtype').DataTable({
             destroy: true,
             responsive: true,
             ajax: {
                 type: 'POST',
-                url: '{% url "notify:datatables_notify" %}',
+                url: '{% url "notify:datatables_type_notify" %}',
                 data: csrfmiddlewaretoken,
                 dataType: 'json',
             },
-
             columns: [
                 {data: 'id', title: 'Id', visible:false,  type: 'string'},
-                {data: null, title: 'De', width: '7%', "render": function ( data, type, row, meta) {
-                        var classbold = getBoldFromSeeField(data.see)
-                        var classstyle = getClassFromSeeField(data.see)
-                        var bg = ["#ffcfcf","#ffb3b3","#d1faff","#b2f7ff","#ccffce","#a1d9a3","#fff3ce","#e7d393","#e0cfff","#b39cdc","#e7d2ca","#b99f96"];
-                        var xbg = getRandomInt(12)
-                        return '<div class="chip chip-md" style="'+classstyle+'">'+
-                                  '<img style="border:1px solid white; background:'+bg[xbg]+'" src="{% static 'img/users/user.png' %}" alt="User">'+
-                                  '<span class="chip-user ' + classbold + '">' + data.to +'</span>'
-                                '</div>';
+                {data: 'name', title: 'Nombre', className:'bold',  type: 'string'},
+                {data: null, title: 'Color', type: 'string', className:'ttype-color', "render": function (data, type, row, meta) {
+                        return '<span style="color:'+data.color+' !important;"><div>'+data.color+'</div></span>';
                     }
                 },
-                {data: null, title: 'para', width: '7%', "render": function ( data, type, row, meta) {
-                        var classbold = getBoldFromSeeField(data.see)
-                        var classstyle = getClassFromSeeField(data.see)
-                        var bg = ["#ffcfcf","#ffb3b3","#d1faff","#b2f7ff","#ccffce","#a1d9a3","#fff3ce","#e7d393","#e0cfff","#b39cdc","#e7d2ca","#b99f96"];
-                        var xbg = getRandomInt(12)
-                        return '<div class="chip chip-md" style="'+classstyle+'">'+
-                                  '<img style="border:1px solid white; background:'+bg[xbg]+'" src="{% static 'img/users/user.png' %}" alt="User">'+
-                                  '<span class="chip-user ' + classbold + '">' + data.user +'</span>'
-                                '</div>';
+                {data: 'description', title: 'Descripción', type: 'string'},
+                {data: null, title: 'Activo', type: 'string',  "render": function (data, type, row, meta) {
+                    var active = ""
+                    if(data.active == 1){
+                        active = '<span style="background:green"><div>Activo</div></span>';
+                    }else{
+                        active = '<span style="background:red"><div>Inactivo</div></span>';
+                    }
+                    return active;
                     }
                 },
-                {data: null, title: 'Tipo', width: '10%', "render": function ( data, type, row, meta) {
-                        var classbold = getBoldFromSeeField(data.see)
-                        return '<span class="badge border border-primary px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center" style="color:' + data.colortype + ';border-color:' + data.colortype + ' !important;">' +
-                            '<i class="fa fa-circle fs-9px fa-fw me-5px"></i> ' +
-                            '<div class="' + classbold + '" style="color:' + data.colortype + ';">' + data.type + '</div>'
-                            '</span>';
-                    }
-                },
-                {data: null, title: 'Nombre', width: '18%', "render": function ( data, type, row, meta) {
-                        var classbold = getBoldFromSeeField(data.see)
-                        return '<div class="' + classbold + '">' + data.name + '</div>';
-                    }
-                },
-                {data: null, title: 'Contenido', width: '18%', "render": function ( data, type, row, meta) {
-                        var classbold = getBoldFromSeeField(data.see)
-                        var xcontent = 0;
-                        if((data.description).length > 50){
-                            xcontent = (data.description).substring(0, 50) + " ..."
-                        }else{
-                            xcontent = data.description
-                        }
-                        return '<div class="' + classbold + '">' + xcontent + '</div>';
-                    }
-                },
-                {data: null, title: 'Prioridad', width: '8%', "render": function ( data, type, row, meta) {
-                        var classbold = getBoldFromSeeField(data.see)
-                        var priority = getPriorityField(data.priority)
-                        return '<span class="badge border border-primary px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center" style="color:' + priority['color'] + '; border-color:' + priority['color'] + ' !important;">' +
-                            '<i class="fa fa-circle fs-9px fa-fw me-5px"></i> ' +
-                            '<div class="' + classbold + '" style="color:' + priority["color"] + ';">' + priority["type"] + '</div>'
-                            '</span>';
-                    }
-                },
-                {data: null, title: 'Creado', width: '8%', "render": function ( data, type, row, meta) {
-                        var classbold = getBoldFromSeeField(data.see)
-                        return '<div class="' + classbold + '">' + data.created + '</div>';
-                    }
-                },
-                {data: null, title: 'Modificado', width: '8%', "render": function ( data, type, row, meta) {
-                        var classbold = getBoldFromSeeField(data.see)
-                        return '<div class="' + classbold + '">' + data.modified + '</div>';
-                    }
-                },
-                {data: null, title: 'Acciones', width: '32%', "render": function ( data, type, row, meta) {
+                {data: 'created', title: 'Creado', type: 'string'},
+                {data: 'modified', title: 'Modificado', type: 'string'},
+                {data: null, title: 'Acciones', width: '20%', "render": function ( data, type, row, meta) {
                          return '' +
                             '<a class="tooltipm" style="margin-right: 10px;" data-action="info" data-toggle="tooltip" data-placement="top" title="Ver detalle" style="cursor:pointer">' +
                             '<iconify-icon style="font-size: 30px;cursor: pointer;" icon="solar:eye-closed-bold-duotone"></iconify-icon>' +
@@ -232,14 +141,6 @@
                 "max-width": "50%", targets: [0, 1], className: "truncate",
                 checkboxes: {
                     selectRow: true
-                }
-            },
-            fnRowCallback: function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-                if ( aData.see == 0){
-                    $('td', nRow).css('background-color', '#f1f2f3' );
-                    $('td', nRow).css('border-bottom', '1px solid #b5c3d0' );
-                    $('td', nRow).css('border-top', '1px solid #b5c3d0' );
-                }else{
                 }
             },
             fixedColumns: true,

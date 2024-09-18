@@ -10,6 +10,16 @@ urlpatterns = [
         name='panel'
     ),
     path(
+        route='type',
+        view=views.Type.as_view(),
+        name='type'
+    ),
+    path(
+        route='inbox',
+        view=views.Inbox.as_view(),
+        name='inbox'
+    ),
+    path(
         route='create_type',
         view=views.CreateTypeNotify.as_view(),
         name='create_type'
@@ -28,6 +38,26 @@ urlpatterns = [
         route='datatables_notify',
         view=views.DatatablesNotify.as_view(),
         name='datatables_notify'
+    ),
+    path(
+        route='datatables_notify_inbox',
+        view=views.DatatablesNotifyInbox.as_view(),
+        name='datatables_notify_inbox'
+    ),
+    path(
+        route='datatables_notify_important',
+        view=views.DatatablesNotifyImportant.as_view(),
+        name='datatables_notify_important'
+    ),
+    path(
+        route='datatables_notify_trash',
+        view=views.DatatablesNotifyTrash.as_view(),
+        name='datatables_notify_trash'
+    ),
+    path(
+        route='datatables_notify_send',
+        view=views.DatatablesNotifySend.as_view(),
+        name='datatables_notify_send'
     ),
     path(
         route='showid',
@@ -51,23 +81,33 @@ urlpatterns = [
     ),
     path(
         route='inbox',
-        view=views.GetNotify.as_view(),
+        view=views.GetNotifyInbox.as_view(),
         name='inbox'
     ),
     path(
         route='important',
-        view=views.PostChangeActive.as_view(),
+        view=views.GetNotifyImportant.as_view(),
         name='important'
     ),
     path(
         route='send',
-        view=views.PostChangeActive.as_view(),
+        view=views.GetNotifySend.as_view(),
         name='send'
     ),
     path(
         route='trash',
-        view=views.PostChangeActive.as_view(),
+        view=views.GetNotifyTrash.as_view(),
         name='trash'
+    ),
+    path(
+        route='one',
+        view=views.PostChangeActive.as_view(),
+        name='one'
+    ),
+    path(
+        route='new',
+        view=views.New.as_view(),
+        name='new'
     ),
 
    

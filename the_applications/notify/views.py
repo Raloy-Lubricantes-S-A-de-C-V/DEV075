@@ -46,6 +46,115 @@ class Principal(LoginRequiredMixin, TemplateView):
 
         return context2
 
+class Type(LoginRequiredMixin, TemplateView):
+    template_name = 'notify/type.html'
+
+    def get_context_data(self, **kwargs):
+        context2 = super().get_context_data(**kwargs)
+        users = User.objects.all().values()
+        type_notify = TypeNotify.objects.all().values()
+        users_array = []
+        type_array = []
+        for user in users:
+            item = {
+                'id': user['id'],
+                'username': user['username']
+            }
+            users_array.append(item)
+        for type in type_notify:
+            item = {
+                'id': type['id'],
+                'name': type['name']
+            }
+            type_array.append(item)
+        context2['context'] = {
+            "users" : users_array,
+            "type_notify" : type_array
+        }
+        context2['name_app'] = "Roadly"
+        context2['info_app'] = "Ruteador de Raloy"
+
+        return context2
+class Inbox(LoginRequiredMixin, TemplateView): # ----------- ok
+    template_name = 'notify/inbox.html'
+
+    def get_context_data(self, **kwargs):
+        context2 = super().get_context_data(**kwargs)
+        users = User.objects.all().values()
+        type_notify = TypeNotify.objects.all().values()
+        users_array = []
+        type_array = []
+        for user in users:
+            item = {
+                'id': user['id'],
+                'username': user['username']
+            }
+            users_array.append(item)
+        for type in type_notify:
+            item = {
+                'id': type['id'],
+                'name': type['name']
+            }
+            type_array.append(item)
+        context2['context'] = {
+            "users" : users_array,
+            "type_notify" : type_array
+        }
+
+        query = Notify.objects.filter(user_id=self.request.user.id).values('type_id').annotate(
+            dcount=Count('type_id')).order_by()
+        etiqueta = []
+        for q in query:
+            xquery = TypeNotify.objects.filter(pk=q['type_id']).values()
+            for xq in xquery:
+                etiqueta.append({'name': xq['name'], 'color': xq['color'], 'id': xq['id']})
+
+        context2['etiqueta'] = etiqueta
+        context2['name_app'] = "Roadly"
+        context2['info_app'] = "Ruteador de Raloy"
+
+        return context2
+
+class New(LoginRequiredMixin, TemplateView):
+    template_name = 'notify/new.html'
+
+    def get_context_data(self, **kwargs):
+        context2 = super().get_context_data(**kwargs)
+        users = User.objects.all().values()
+        type_notify = TypeNotify.objects.all().values()
+        users_array = []
+        type_array = []
+        for user in users:
+            item = {
+                'id': user['id'],
+                'username': user['username']
+            }
+            users_array.append(item)
+        for type in type_notify:
+            item = {
+                'id': type['id'],
+                'name': type['name']
+            }
+            type_array.append(item)
+        context2['context'] = {
+            "users" : users_array,
+            "type_notify" : type_array
+        }
+
+        query = Notify.objects.filter(user_id=self.request.user.id).values('type_id').annotate(
+            dcount=Count('type_id')).order_by()
+        etiqueta = []
+        for q in query:
+            xquery = TypeNotify.objects.filter(pk=q['type_id']).values()
+            for xq in xquery:
+                etiqueta.append({'name': xq['name'], 'color': xq['color'], 'id': xq['id']})
+
+        context2['etiqueta'] = etiqueta
+        context2['name_app'] = "Roadly"
+        context2['info_app'] = "Ruteador de Raloy"
+
+        return context2
+
 
 class CreateTypeNotify(LoginRequiredMixin, TemplateView):
     template_name = 'notify/main.html'
@@ -99,6 +208,154 @@ class DatatablesTypeNotify(LoginRequiredMixin, TemplateView):
             }
             data.append(item)
         response['data']=data
+        return JsonResponse(response)
+
+    def get_context_data(self, context, **kwargs):
+        context2 = super().get_context_data(**kwargs)
+        context2['name_app'] = "Roadly"
+        context2['info_app'] = "Ruteador de Raloy"
+        return context2
+class DatatablesNotifyInbox(LoginRequiredMixin, TemplateView):
+    template_name = 'notify/inbox.html'
+
+
+    def post(self, request, *args, **kwargs):
+        query = Notify.objects.filter(user_id=request.user.id, active=1, important=0, trash=0).values()
+        response = {
+            'data':[],
+            'error': False,
+            'msj':''
+        }
+        data = []
+        for q in query:
+            item = {
+                'id': q['id'],
+                'user': User.objects.get(pk=q['user_id']).username,
+                'type': TypeNotify.objects.get(pk=q['type_id']).name,
+                'name': q['name'],
+                'description': q['description'],
+                'priority': q['priority'],
+                'picture': q['picture'],
+                'created': q['created'].strftime("📆%m/%d/%Y 🕝%H:%M:%S"),
+                'modified': q['modified'].strftime("📆%m/%d/%Y 🕝%H:%M:%S"),
+                'active': q['active'],
+                'see': q['see'],
+                'to': User.objects.get(pk=q['to']).username,
+                'colortype': TypeNotify.objects.get(pk=q['type_id']).color
+            }
+            data.append(item)
+        response['data'] = data
+        return JsonResponse(response)
+
+    def get_context_data(self, context, **kwargs):
+        context2 = super().get_context_data(**kwargs)
+        context2['name_app'] = "Roadly"
+        context2['info_app'] = "Ruteador de Raloy"
+        return context2
+class DatatablesNotifyImportant(LoginRequiredMixin, TemplateView):
+    template_name = 'notify/important.html'
+
+    def post(self, request, *args, **kwargs):
+        query = Notify.objects.filter(user_id=request.user.id, active=1, important=1, trash=0).values()
+        response = {
+            'data':[],
+            'error': False,
+            'msj':''
+        }
+        data = []
+        for q in query:
+            item = {
+                'id': q['id'],
+                'user': User.objects.get(pk=q['user_id']).username,
+                'type': TypeNotify.objects.get(pk=q['type_id']).name,
+                'name': q['name'],
+                'description': q['description'],
+                'priority': q['priority'],
+                'picture': q['picture'],
+                'created': q['created'].strftime("📆%m/%d/%Y 🕝%H:%M:%S"),
+                'modified': q['modified'].strftime("📆%m/%d/%Y 🕝%H:%M:%S"),
+                'active': q['active'],
+                'see': q['see'],
+                'to': User.objects.get(pk=q['to']).username,
+                'colortype': TypeNotify.objects.get(pk=q['type_id']).color
+            }
+            data.append(item)
+        response['data'] = data
+        return JsonResponse(response)
+
+    def get_context_data(self, context, **kwargs):
+        context2 = super().get_context_data(**kwargs)
+        context2['name_app'] = "Roadly"
+        context2['info_app'] = "Ruteador de Raloy"
+        return context2
+
+class DatatablesNotifyTrash(LoginRequiredMixin, TemplateView):
+    template_name = 'notify/trash.html'
+
+    def post(self, request, *args, **kwargs):
+        query = Notify.objects.filter(user_id=request.user.id, active=1, trash=1).values()
+        response = {
+            'data':[],
+            'error': False,
+            'msj':''
+        }
+        data = []
+        for q in query:
+            item = {
+                'id': q['id'],
+                'user': User.objects.get(pk=q['user_id']).username,
+                'type': TypeNotify.objects.get(pk=q['type_id']).name,
+                'name': q['name'],
+                'description': q['description'],
+                'priority': q['priority'],
+                'picture': q['picture'],
+                'created': q['created'].strftime("📆%m/%d/%Y 🕝%H:%M:%S"),
+                'modified': q['modified'].strftime("📆%m/%d/%Y 🕝%H:%M:%S"),
+                'active': q['active'],
+                'see': q['see'],
+                'to': User.objects.get(pk=q['to']).username,
+                'colortype': TypeNotify.objects.get(pk=q['type_id']).color
+            }
+            data.append(item)
+        response['data'] = data
+        return JsonResponse(response)
+
+    def get_context_data(self, context, **kwargs):
+        context2 = super().get_context_data(**kwargs)
+        context2['name_app'] = "Roadly"
+        context2['info_app'] = "Ruteador de Raloy"
+        return context2
+
+
+class DatatablesNotifySend(LoginRequiredMixin, TemplateView):
+    template_name = 'notify/trash.html'
+
+    def post(self, request, *args, **kwargs):
+        query = Notify.objects.filter(user_id=request.user.id, active=1).values()
+        response = {
+            'data':[],
+            'error': False,
+            'msj':''
+        }
+        data = []
+        for q in query:
+            item = {
+                'id': q['id'],
+                'user': User.objects.get(pk=q['user_id']).username,
+                'type': TypeNotify.objects.get(pk=q['type_id']).name,
+                'name': q['name'],
+                'description': q['description'],
+                'priority': q['priority'],
+                'picture': q['picture'],
+                'created': q['created'].strftime("📆%m/%d/%Y 🕝%H:%M:%S"),
+                'modified': q['modified'].strftime("📆%m/%d/%Y 🕝%H:%M:%S"),
+                'active': q['active'],
+                'see': q['see'],
+                'to': User.objects.get(pk=q['to']).username,
+                'colortype': TypeNotify.objects.get(pk=q['type_id']).color
+            }
+            data.append(item)
+        response['data'] = data
         return JsonResponse(response)
 
     def get_context_data(self, context, **kwargs):
@@ -266,9 +523,8 @@ def ShowId(request):
             'id': n['id'],
             'modified': n['modified'].replace(tzinfo=None).strftime("%Y-%m-%d %H:%M:%S")
         }
-    f.aqui_ando(n=2222, t=idNotify)
+
     query = Notify.objects.filter(user_id=request.user.id).values('type_id').annotate(dcount=Count('type_id')).order_by()
-    f.aqui_ando(n=3333, t=request)
     etiqueta = []
     for q in query:
         xquery = TypeNotify.objects.filter(pk=q['type_id']).values()
@@ -280,6 +536,7 @@ def ShowId(request):
         'etiqueta' : etiqueta,
         'notify' : nitem
     }
+
     return render(
         request=request,
         template_name='notify/show.html',
@@ -350,3 +607,209 @@ class PostChangeActive(LoginRequiredMixin, TemplateView):
         response['notify'] = notify.id
         return JsonResponse(response)
 
+class GetNotifyInbox(LoginRequiredMixin, TemplateView):
+    template_name = 'notify/inbox.html'
+
+    def post(self, request, *args, **kwargs):
+        ### --------- NOTIFICACIÓN ------------- ###
+        response = {
+            'data': [],
+            'error': False,
+            'msj': ''
+        }
+        noti = Notify.objects.filter(user_id=request.user.id, active=True, see=False).values()
+        f.aqui_ando(t=noti)
+        notis = []
+        for n in noti:
+            now = datetime.now(timezone.utc)
+            now = now.replace(tzinfo=None)
+            zdate = n['modified'].replace(tzinfo=None)
+            if n['priority'] == 1:
+                p = {"type":"Alta", "color":"#00acac"}
+            elif n['priority'] == 2:
+                p = {"type":"Media", "color":"#f59c1a"}
+            elif n['priority'] == 3:
+                p = {"type":"Baja", "color":"#b6b6b6"}
+            else:
+                p = {"type":"Known", "color":"#b6b6b6"}
+            item = {
+                'user': User.objects.get(pk=n['user_id']).username,
+                'type': TypeNotify.objects.get(pk=n['type_id']).name,
+                'title': n['name'],
+                'date': timeago.format(now.strftime("%Y-%m-%d %H:%M:%S"), zdate.strftime("%Y-%m-%d %H:%M:%S")),
+                'img': n['picture'],
+                'id': n['id'],
+                'priority': p
+            }
+            notis.append(item)
+        response['data'] = notis
+        f.aqui_ando(n=2, t=response)
+        return JsonResponse(response)
+        ### --------- NOTIFICACIÓN ------------- ###
+
+class GetNotifyImportant(LoginRequiredMixin, TemplateView):
+    template_name = 'notify/important.html'
+
+    def post(self, request, *args, **kwargs):
+        ### --------- NOTIFICACIÓN ------------- ###
+        response = {
+            'data': [],
+            'error': False,
+            'msj': ''
+        }
+        noti = Notify.objects.filter(user_id=request.user.id, active=True, see=False).values()
+        f.aqui_ando(t=noti)
+        notis = []
+        for n in noti:
+            now = datetime.now(timezone.utc)
+            now = now.replace(tzinfo=None)
+            zdate = n['modified'].replace(tzinfo=None)
+            if n['priority'] == 1:
+                p = {"type":"Alta", "color":"#00acac"}
+            elif n['priority'] == 2:
+                p = {"type":"Media", "color":"#f59c1a"}
+            elif n['priority'] == 3:
+                p = {"type":"Baja", "color":"#b6b6b6"}
+            else:
+                p = {"type":"Known", "color":"#b6b6b6"}
+            item = {
+                'user': User.objects.get(pk=n['user_id']).username,
+                'type': TypeNotify.objects.get(pk=n['type_id']).name,
+                'title': n['name'],
+                'date': timeago.format(now.strftime("%Y-%m-%d %H:%M:%S"), zdate.strftime("%Y-%m-%d %H:%M:%S")),
+                'img': n['picture'],
+                'id': n['id'],
+                'priority': p
+            }
+            notis.append(item)
+        response['data'] = notis
+        f.aqui_ando(n=2, t=response)
+        return JsonResponse(response)
+        ### --------- NOTIFICACIÓN ------------- ###
+
+    def get_context_data(self, **kwargs):
+        context2 = super().get_context_data(**kwargs)
+        query = Notify.objects.filter(user_id=self.request.user.id).values('type_id').annotate(
+            dcount=Count('type_id')).order_by()
+        etiqueta = []
+        for q in query:
+            xquery = TypeNotify.objects.filter(pk=q['type_id']).values()
+            for xq in xquery:
+                etiqueta.append({'name': xq['name'], 'color': xq['color'], 'id': xq['id']})
+
+        context2['etiqueta'] = etiqueta
+        context2['name_app'] = "Roadly"
+        context2['info_app'] = "Ruteador de Raloy"
+        return context2
+
+
+class GetNotifyTrash(LoginRequiredMixin, TemplateView):
+    template_name = 'notify/trash.html'
+
+    def post(self, request, *args, **kwargs):
+        ### --------- NOTIFICACIÓN ------------- ###
+        response = {
+            'data': [],
+            'error': False,
+            'msj': ''
+        }
+        noti = Notify.objects.filter(user_id=request.user.id, active=True, see=False).values()
+        f.aqui_ando(t=noti)
+        notis = []
+        for n in noti:
+            now = datetime.now(timezone.utc)
+            now = now.replace(tzinfo=None)
+            zdate = n['modified'].replace(tzinfo=None)
+            if n['priority'] == 1:
+                p = {"type":"Alta", "color":"#00acac"}
+            elif n['priority'] == 2:
+                p = {"type":"Media", "color":"#f59c1a"}
+            elif n['priority'] == 3:
+                p = {"type":"Baja", "color":"#b6b6b6"}
+            else:
+                p = {"type":"Known", "color":"#b6b6b6"}
+            item = {
+                'user': User.objects.get(pk=n['user_id']).username,
+                'type': TypeNotify.objects.get(pk=n['type_id']).name,
+                'title': n['name'],
+                'date': timeago.format(now.strftime("%Y-%m-%d %H:%M:%S"), zdate.strftime("%Y-%m-%d %H:%M:%S")),
+                'img': n['picture'],
+                'id': n['id'],
+                'priority': p
+            }
+            notis.append(item)
+        response['data'] = notis
+        f.aqui_ando(n=2, t=response)
+        return JsonResponse(response)
+        ### --------- NOTIFICACIÓN ------------- ###
+
+    def get_context_data(self, **kwargs):
+        context2 = super().get_context_data(**kwargs)
+        query = Notify.objects.filter(user_id=self.request.user.id).values('type_id').annotate(
+            dcount=Count('type_id')).order_by()
+        etiqueta = []
+        for q in query:
+            xquery = TypeNotify.objects.filter(pk=q['type_id']).values()
+            for xq in xquery:
+                etiqueta.append({'name': xq['name'], 'color': xq['color'], 'id': xq['id']})
+
+        context2['etiqueta'] = etiqueta
+        context2['name_app'] = "Roadly"
+        context2['info_app'] = "Ruteador de Raloy"
+        return context2
+
+
+class GetNotifySend(LoginRequiredMixin, TemplateView):
+    template_name = 'notify/send.html'
+
+    def post(self, request, *args, **kwargs):
+        ### --------- NOTIFICACIÓN ------------- ###
+        response = {
+            'data': [],
+            'error': False,
+            'msj': ''
+        }
+        noti = Notify.objects.filter(user_id=request.user.id, active=True).values()
+        f.aqui_ando(9999999999999,t=noti)
+        notis = []
+        for n in noti:
+            now = datetime.now(timezone.utc)
+            now = now.replace(tzinfo=None)
+            zdate = n['modified'].replace(tzinfo=None)
+            if n['priority'] == 1:
+                p = {"type":"Alta", "color":"#00acac"}
+            elif n['priority'] == 2:
+                p = {"type":"Media", "color":"#f59c1a"}
+            elif n['priority'] == 3:
+                p = {"type":"Baja", "color":"#b6b6b6"}
+            else:
+                p = {"type":"Known", "color":"#b6b6b6"}
+            item = {
+                'user': User.objects.get(pk=n['user_id']).username,
+                'type': TypeNotify.objects.get(pk=n['type_id']).name,
+                'title': n['name'],
+                'date': timeago.format(now.strftime("%Y-%m-%d %H:%M:%S"), zdate.strftime("%Y-%m-%d %H:%M:%S")),
+                'img': n['picture'],
+                'id': n['id'],
+                'priority': p
+            }
+            notis.append(item)
+        response['data'] = notis
+        f.aqui_ando(n=2, t=response)
+        return JsonResponse(response)
+        ### --------- NOTIFICACIÓN ------------- ###
+
+    def get_context_data(self, **kwargs):
+        context2 = super().get_context_data(**kwargs)
+        query = Notify.objects.filter(user_id=self.request.user.id).values('type_id').annotate(
+            dcount=Count('type_id')).order_by()
+        etiqueta = []
+        for q in query:
+            xquery = TypeNotify.objects.filter(pk=q['type_id']).values()
+            for xq in xquery:
+                etiqueta.append({'name': xq['name'], 'color': xq['color'], 'id': xq['id']})
+
+        context2['etiqueta'] = etiqueta
+        context2['name_app'] = "Roadly"
+        context2['info_app'] = "Ruteador de Raloy"
+        return context2

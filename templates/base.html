@@ -90,7 +90,10 @@
     <div id="content" class="content">
         <!-- begin breadcrumb -->
         <ol class="breadcrumb float-xl-right">
-            <li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'general_settings:ping' %}">Home</a></li>
+            {% block sitio %}
+
+            {% endblock %}
         </ol>
         <!-- end breadcrumb -->
         <!-- begin page-header -->
@@ -187,9 +190,9 @@
         $.post("{% url 'settings:getnoty' %}",{'csrfmiddlewaretoken':csrfmiddlewaretoken}).done(function( data ) {
             xdata = data.data
             if(xdata.length > 0){
-                $('#badgeinbox').addClass("badge");
-                $('#badgeinbox').addClass("badge-red");
+                $('#badgeinbox').removeClass("badge");
                 $('#badgeinbox').text(xdata.length);
+                $('#badgeinbox').addClass("badge-red2");
                 $('#bell').append('<i class="fa fa-bell fa-bell-pulse"></i>');
                 $('#bell').append('<span class="label">' + xdata.length + '</span>');
                 $('#bell-wants').text('NOTIFICACIONES (' + xdata.length + ')');
