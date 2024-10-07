@@ -17,7 +17,7 @@
                 <div class="panel-heading-btn">
                     <div class="row">
                         <div class="content-new">
-                            <a class="btn btn-dark ps-40px pe-40px btn-sm btn-sm2 btn-name-mdl-create" data-mdl-name="Crear notificación" data-mdl-sh="sh-2" data-toggle="modal" href="{% url 'notify:showid' %}">
+                            <a class="btn btn-dark ps-40px pe-40px btn-sm btn-sm2 btn-name-mdl-create" data-mdl-name="Crear notificación" data-mdl-sh="sh-2" data-toggle="modal" href="#modal-without-animation">
                                 <iconify-icon class="new-icon" icon="solar:pen-bold-duotone"></iconify-icon>
                                 <span class="new-text">Nuevo</span>
                             </a>
@@ -213,14 +213,19 @@
                     }
                 },
                 {data: null, title: 'Acciones', width: '32%', "render": function ( data, type, row, meta) {
+                    if(data.see == 1){
+                        icon = "solar:eye-bold-duotone";
+                    }else{
+                        icon = "solar:eye-closed-bold-duotone";
+                    }
                          return '' +
-                            '<a class="tooltipm" style="margin-right: 10px;" data-action="info" data-toggle="tooltip" data-placement="top" title="Ver detalle" style="cursor:pointer">' +
-                            '<iconify-icon style="font-size: 30px;cursor: pointer;" icon="solar:eye-closed-bold-duotone"></iconify-icon>' +
+                            '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="info" data-toggle="tooltip" data-placement="top" title="Ver detalle" style="cursor:pointer">' +
+                            '<iconify-icon style="font-size: 30px;cursor: pointer;" icon="' + icon + '"></iconify-icon>' +
                             '</a>'+
-                            '<a class="tooltipm" style="margin-right: 10px;" data-action="archive" data-id="active_tbtype" data-toggle="tooltip" data-placement="top" title="Archivar notificación" style="cursor:pointer">' +
+                            '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="archive" data-toggle="tooltip" data-placement="top" title="Archivar notificación" style="cursor:pointer">' +
                             '<iconify-icon style="font-size: 30px;cursor:pointer;color:#c40647;" icon="solar:minus-square-bold-duotone"></iconify-icon>' +
                             '</a>'+
-                            '<a class="tooltipm" style="margin-right: 10px;" data-action="dearchive" data-id="active_tbtype" data-toggle="tooltip" data-placement="top" title="Desasrchivar notificación" style="cursor:pointer">' +
+                            '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="dearchive" data-toggle="tooltip" data-placement="top" title="Desasrchivar notificación" style="cursor:pointer">' +
                             '<iconify-icon style="font-size: 30px;cursor:pointer;color:#009688;" icon="solar:minimize-square-minimalistic-bold-duotone"></iconify-icon>' +
                             '</a>';
                     }
@@ -239,7 +244,11 @@
                     $('td', nRow).css('background-color', '#f1f2f3' );
                     $('td', nRow).css('border-bottom', '1px solid #b5c3d0' );
                     $('td', nRow).css('border-top', '1px solid #b5c3d0' );
-                }else{
+                }else{}
+                if(aData.active == 0){
+                    $('td', nRow).css('background-color', 'rgb(255 227 227)' );
+                    $('td', nRow).css('border-bottom', '1px solid rgb(171 11 47)' );
+                    $('td', nRow).css('border-top', '1px solid rgb(171 11 47)' );
                 }
             },
             fixedColumns: true,
@@ -257,6 +266,112 @@
                 {#{extend: 'print', className: 'btn btn-primary glyphicon glyphicon-print boton_data'}#}
             ]
         });
+        ///////////////////
+        $('#tbnotify tbody').on('click', 'a', function (e) {
+            e.preventDefault();
+            var elemnets = $(this).attr("data-action");
+            switch (elemnets) {
+                case "info":
+                    xid = $(this).attr("data-id");
+                    window.location.href = "{% url 'notify:showid' %}?csrfmiddlewaretoken=" + csrfmiddlewaretoken + "&id="+xid;
+                    break;
+                case "archive":
+                    xid = $(this).attr("data-id");
+                    Swal.fire({
+                                html: '<iconify-icon class="icon-swal" icon="solar:folder-error-bold-duotone"></iconify-icon><br><br><b><h4>¿Desea archivar la notificación?</h4></b><h6>Si archivas la notificación no la podrán ver en el modulo de mensajes desde Inbox </h6>',
+                                icon: "question",
+                                customClass: {
+                                    confirmButton: 'btn-success',
+                                    cancelButton: 'btn-danger',
+                                },
+                                padding:'50px',
+                                confirmButtonText:'Proceder',
+                                cancelButtonText:'Cancelar',
+                                showCancelButton: true,
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        $.post("{% url 'notify:post_change_active' %}",{'csrfmiddlewaretoken':csrfmiddlewaretoken,'id':xid}).done(function (data){
+                            if(data.error){
+                                Swal.fire({
+                                  icon: "error",
+                                  title: "Oops...",
+                                  customClass: {
+                                    confirmButton: 'btn-success',
+                                    cancelButton: 'btn-danger',
+                                  },
+                                  confirmButtonText:'Entendido',
+                                  html: "Ocurrio un error : " + data.msj
+                                }).then(function(){
+                                    $('#tbnotify').DataTable().ajax.reload();
+                                });
+                            }else{
+                                Swal.fire({
+                                  icon: "success",
+                                  title: "Genial...",
+                                  customClass: {
+                                    confirmButton: 'color-success',
+                                    cancelButton: 'color-cancel',
+                                  },
+                                  confirmButtonText:'Entendido',
+                                  html: data.msj
+                                }).then(function(){
+                                    $('#tbnotify').DataTable().ajax.reload();
+                                });
+                            }
+                        });
+                      }
+                    });
+                    break;
+                case 'dearchive':
+                    xid = $(this).attr("data-id");
+                    Swal.fire({
+                                html: '<iconify-icon class="icon-swal" icon="solar:folder-open-bold-duotone"></iconify-icon><br><br><b><h4>¿Desea desarchivar la notificación?</h4></b><h6>Si desarchivas la notificación ya la podrán ver en el modulo de mensajes desde Inbox </h6>',
+                                icon: "question",
+                                customClass: {
+                                    confirmButton: 'btn-success',
+                                    cancelButton: 'btn-danger',
+                                },
+                                padding:'50px',
+                                confirmButtonText:'Proceder',
+                                cancelButtonText:'Cancelar',
+                                showCancelButton: true,
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        $.post("{% url 'notify:post_change_deactive' %}",{'csrfmiddlewaretoken':csrfmiddlewaretoken,'id':xid}).done(function (data){
+                            if(data.error){
+                                Swal.fire({
+                                  icon: "error",
+                                  title: "Oops...",
+                                  customClass: {
+                                    confirmButton: 'btn-success',
+                                    cancelButton: 'btn-danger',
+                                  },
+                                  confirmButtonText:'Entendido',
+                                  html: "Ocurrio un error : " + data.msj
+                                }).then(function(){
+                                    $('#tbnotify').DataTable().ajax.reload();
+                                });
+                            }else{
+                                Swal.fire({
+                                  icon: "success",
+                                  title: "Genial...",
+                                  customClass: {
+                                    confirmButton: 'color-success',
+                                    cancelButton: 'color-cancel',
+                                  },
+                                  confirmButtonText:'Entendido',
+                                  html: data.msj
+                                }).then(function(){
+                                    $('#tbnotify').DataTable().ajax.reload();
+                                });
+                            }
+                        });
+                      }
+                    });
+                    break;
+            }
+        });
+        ///////////////////
         {% if active_type_notify %}
             $('#modal-without-animation').modal('show');
             name = $("#btn_notify_1").attr("data-mdl-name");
@@ -277,7 +392,7 @@
 
 </script>
 
-{% endblock%}-
+{% endblock%}
 
 {% block modalcreate %}
     <div class="modal_typenotify sh-1">

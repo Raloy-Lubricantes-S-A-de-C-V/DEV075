@@ -45,7 +45,7 @@
                         <div>
                             <ul class="nav nav-inbox">
                                 {% for q in etiqueta %}
-                                    <li><a href="javascript:;" data-id="{{ q.id }}"><i class="fa fa-fw fa-lg fs-12px me-2 fa-circle" style="color:{{ q.color }}"></i>{{ q.name }}</a></li>
+                                    <li><a href="javascript:;" data-id="{{ q.id }}" data-user="{{ user_id }}"><i class="fa fa-fw fa-lg fs-12px me-2 fa-circle" style="color:{{ q.color }}"></i>{{ q.name }}</a></li>
                                 {% endfor %}
                             </ul>
                         </div>
@@ -242,16 +242,21 @@
                     }
                 },
                 {data: null, title: 'Acciones', width: '16%', "render": function ( data, type, row, meta) {
-                         return '' +
-                            '<a class="tooltipm" style="margin-right: 10px;" data-action="info" data-toggle="tooltip" data-placement="top" title="Ver detalle" style="cursor:pointer">' +
-                            '<iconify-icon style="font-size: 30px;cursor: pointer;" icon="solar:eye-closed-bold-duotone"></iconify-icon>' +
-                            '</a>' +
-                            '<a class="tooltipm" style="margin-right: 10px;" data-action="deimportant" data-id="deactive_tbtype" data-toggle="tooltip" data-placement="top" title="Quitar importante" style="cursor:pointer">' +
-                            '<iconify-icon style="font-size: 30px;cursor:pointer;color:#9e9e9e;transform: rotate(180deg);" icon="solar:flag-bold-duotone"></iconify-icon>' +
-                            '</a>'+
-                            '<a class="tooltipm" style="margin-right: 10px;" data-action="delete" data-id="active_tbtype" data-toggle="tooltip" data-placement="top" title="Mandar a basura" style="cursor:pointer">' +
-                            '<iconify-icon style="font-size: 30px;cursor:pointer;color:#ff5a4e;" icon="solar:paper-bin-bold-duotone"></iconify-icon>' +
-                            '</a>';
+                    if(data.see == 1){
+                        icon = "solar:eye-bold-duotone";
+                    }else{
+                        icon = "solar:eye-closed-bold-duotone";
+                    }
+                    return '' +
+                        '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="info" data-toggle="tooltip" data-placement="top" title="Ver detalle" style="cursor:pointer">' +
+                        '<iconify-icon style="font-size: 30px;cursor: pointer;" icon="' + icon + '"></iconify-icon>' +
+                        '</a>' +
+                        '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="deimportant" data-toggle="tooltip" data-placement="top" title="Quitar importante" style="cursor:pointer">' +
+                        '<iconify-icon style="font-size: 30px;cursor:pointer;color:#9e9e9e;transform: rotate(180deg);" icon="solar:flag-bold-duotone"></iconify-icon>' +
+                        '</a>'+
+                        '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="delete" data-toggle="tooltip" data-placement="top" title="Mandar a basura" style="cursor:pointer">' +
+                        '<iconify-icon style="font-size: 30px;cursor:pointer;color:#ff5a4e;" icon="solar:paper-bin-bold-duotone"></iconify-icon>' +
+                        '</a>';
                     }
                 }
             ],
@@ -285,6 +290,110 @@
                 {#{extend: 'pdf', className: 'btn btn-primary glyphicon glyphicon-file'},#}
                 {#{extend: 'print', className: 'btn btn-primary glyphicon glyphicon-print boton_data'}#}
             ]
+        });
+        $('#tbnotify tbody').on('click', 'a', function (e) {
+            e.preventDefault();
+            var elemnets = $(this).attr("data-action");
+            switch (elemnets) {
+                case "info":
+                    xid = $(this).attr("data-id");
+                    window.location.href = "{% url 'notify:showid' %}?csrfmiddlewaretoken=" + csrfmiddlewaretoken + "&id="+xid;
+                    break;
+                case "deimportant":
+                    xid = $(this).attr("data-id");
+                    Swal.fire({
+                                html: '<iconify-icon class="icon-swal" icon="solar:multiple-forward-left-bold-duotone"></iconify-icon><br><br><b><h4>¿Desea desmarcar como Importante?</h4></b><h6>Sí desmarca la notificación como Importante, regresará a su buzón.</h6>',
+                                icon: "question",
+                                customClass: {
+                                    confirmButton: 'btn-success',
+                                    cancelButton: 'btn-danger',
+                                },
+                                padding:'50px',
+                                confirmButtonText:'Proceder',
+                                cancelButtonText:'Cancelar',
+                                showCancelButton: true,
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        $.post("{% url 'notify:post_change_important' %}",{'csrfmiddlewaretoken':csrfmiddlewaretoken,'id':xid}).done(function (data){
+                            if(data.error){
+                                Swal.fire({
+                                  icon: "error",
+                                  title: "Oops...",
+                                  customClass: {
+                                    confirmButton: 'btn-success',
+                                    cancelButton: 'btn-danger',
+                                  },
+                                  confirmButtonText:'Entendido',
+                                  html: "Ocurrio un error : " + data.msj
+                                }).then(function(){
+                                    $('#tbnotify').DataTable().ajax.reload();
+                                });
+                            }else{
+                                Swal.fire({
+                                  icon: "success",
+                                  title: "Genial...",
+                                  customClass: {
+                                    confirmButton: 'color-success',
+                                    cancelButton: 'color-cancel',
+                                  },
+                                  confirmButtonText:'Entendido',
+                                  html: data.msj
+                                }).then(function(){
+                                    $('#tbnotify').DataTable().ajax.reload();
+                                });
+                            }
+                        });
+                      }
+                    });
+                    break;
+                case 'delete':
+                    xid = $(this).attr("data-id");
+                    Swal.fire({
+                                html: '<iconify-icon class="icon-swal" icon="solar:trash-bin-trash-bold-duotone"></iconify-icon><br><br><b><h4>¿Desea pasar la notificación a Papelera?</h4></b><h6>Si envías la notificación a Papelera, será eliminada de su sección de Importante</h6>',
+                                icon: "question",
+                                customClass: {
+                                    confirmButton: 'btn-success',
+                                    cancelButton: 'btn-danger',
+                                },
+                                padding:'50px',
+                                confirmButtonText:'Proceder',
+                                cancelButtonText:'Cancelar',
+                                showCancelButton: true,
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        $.post("{% url 'notify:post_change_trash' %}",{'csrfmiddlewaretoken':csrfmiddlewaretoken,'id':xid}).done(function (data){
+                            if(data.error){
+                                Swal.fire({
+                                  icon: "error",
+                                  title: "Oops...",
+                                  customClass: {
+                                    confirmButton: 'btn-success',
+                                    cancelButton: 'btn-danger',
+                                  },
+                                  confirmButtonText:'Entendido',
+                                  html: "Ocurrio un error : " + data.msj
+                                }).then(function(){
+                                    $('#tbnotify').DataTable().ajax.reload();
+                                });
+                            }else{
+                                Swal.fire({
+                                  icon: "success",
+                                  title: "Genial...",
+                                  customClass: {
+                                    confirmButton: 'color-success',
+                                    cancelButton: 'color-cancel',
+                                  },
+                                  confirmButtonText:'Entendido',
+                                  html: data.msj
+                                }).then(function(){
+                                    $('#tbnotify').DataTable().ajax.reload();
+                                });
+                            }
+                        });
+                      }
+                    });
+                    break;
+            }
         });
     })
 

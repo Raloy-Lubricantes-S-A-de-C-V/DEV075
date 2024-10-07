@@ -64,9 +64,6 @@
         </div>
     </div>
 </div>
-<!-- end row -->
-<!-- begin row -->
-
 {% endblock %}
 
 {% block style %}
@@ -123,13 +120,10 @@
                 {data: 'modified', title: 'Modificado', type: 'string'},
                 {data: null, title: 'Acciones', width: '20%', "render": function ( data, type, row, meta) {
                          return '' +
-                            '<a class="tooltipm" style="margin-right: 10px;" data-action="info" data-toggle="tooltip" data-placement="top" title="Ver detalle" style="cursor:pointer">' +
-                            '<iconify-icon style="font-size: 30px;cursor: pointer;" icon="solar:eye-closed-bold-duotone"></iconify-icon>' +
-                            '</a>'+
-                            '<a class="tooltipm" style="margin-right: 10px;" data-action="archive" data-id="active_tbtype" data-toggle="tooltip" data-placement="top" title="Archivar notificación" style="cursor:pointer">' +
+                            '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="archive" data-toggle="tooltip" data-placement="top" title="Archivar notificación" style="cursor:pointer">' +
                             '<iconify-icon style="font-size: 30px;cursor:pointer;color:#c40647;" icon="solar:minus-square-bold-duotone"></iconify-icon>' +
                             '</a>'+
-                            '<a class="tooltipm" style="margin-right: 10px;" data-action="dearchive" data-id="active_tbtype" data-toggle="tooltip" data-placement="top" title="Desasrchivar notificación" style="cursor:pointer">' +
+                            '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="dearchive" data-toggle="tooltip" data-placement="top" title="Desasrchivar notificación" style="cursor:pointer">' +
                             '<iconify-icon style="font-size: 30px;cursor:pointer;color:#009688;" icon="solar:minimize-square-minimalistic-bold-duotone"></iconify-icon>' +
                             '</a>';
                     }
@@ -141,6 +135,13 @@
                 "max-width": "50%", targets: [0, 1], className: "truncate",
                 checkboxes: {
                     selectRow: true
+                }
+            },
+            fnRowCallback: function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+                if(aData.active == 0){
+                    $('td', nRow).css('background-color', 'rgb(255 227 227)' );
+                    $('td', nRow).css('border-bottom', '1px solid rgb(171 11 47)' );
+                    $('td', nRow).css('border-top', '1px solid rgb(171 11 47)' );
                 }
             },
             fixedColumns: true,
@@ -158,6 +159,108 @@
                 {#{extend: 'print', className: 'btn btn-primary glyphicon glyphicon-print boton_data'}#}
             ]
         });
+        /////////////////
+        $('#tbtype tbody').on('click', 'a', function (e) {
+            e.preventDefault();
+            var elemnets = $(this).attr("data-action");
+            switch (elemnets) {
+                case "archive":
+                    xid = $(this).attr("data-id");
+                    Swal.fire({
+                                html: '<iconify-icon class="icon-swal" icon="solar:folder-error-bold-duotone"></iconify-icon><br><br><b><h4>¿Desea archivar el tipo notificación?</h4></b><h6>Si archivas el tipo de notificación no podrá ser seleccionado en la creación de nuevos mensajes por interfaz </h6>',
+                                icon: "question",
+                                customClass: {
+                                    confirmButton: 'btn-success',
+                                    cancelButton: 'btn-danger',
+                                },
+                                padding:'50px',
+                                confirmButtonText:'Proceder',
+                                cancelButtonText:'Cancelar',
+                                showCancelButton: true,
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        $.post("{% url 'notify:post_change_active_type' %}",{'csrfmiddlewaretoken':csrfmiddlewaretoken,'id':xid}).done(function (data){
+                            if(data.error){
+                                Swal.fire({
+                                  icon: "error",
+                                  title: "Oops...",
+                                  customClass: {
+                                    confirmButton: 'btn-success',
+                                    cancelButton: 'btn-danger',
+                                  },
+                                  confirmButtonText:'Entendido',
+                                  html: "Ocurrio un error : " + data.msj
+                                }).then(function(){
+                                    $('#tbtype').DataTable().ajax.reload();
+                                });
+                            }else{
+                                Swal.fire({
+                                  icon: "success",
+                                  title: "Genial...",
+                                  customClass: {
+                                    confirmButton: 'color-success',
+                                    cancelButton: 'color-cancel',
+                                  },
+                                  confirmButtonText:'Entendido',
+                                  html: data.msj
+                                }).then(function(){
+                                    $('#tbtype').DataTable().ajax.reload();
+                                });
+                            }
+                        });
+                      }
+                    });
+                    break;
+                case 'dearchive':
+                    xid = $(this).attr("data-id");
+                    Swal.fire({
+                                html: '<iconify-icon class="icon-swal" icon="solar:folder-open-bold-duotone"></iconify-icon><br><br><b><h4>¿Desea desarchivar el tipo de notificación?</h4></b><h6>Si desarchivas el tipo de notificación, será activado en las interfases de mensajes para ser seleccionado</h6>',
+                                icon: "question",
+                                customClass: {
+                                    confirmButton: 'btn-success',
+                                    cancelButton: 'btn-danger',
+                                },
+                                padding:'50px',
+                                confirmButtonText:'Proceder',
+                                cancelButtonText:'Cancelar',
+                                showCancelButton: true,
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        $.post("{% url 'notify:post_change_deactive_type' %}",{'csrfmiddlewaretoken':csrfmiddlewaretoken,'id':xid}).done(function (data){
+                            if(data.error){
+                                Swal.fire({
+                                  icon: "error",
+                                  title: "Oops...",
+                                  customClass: {
+                                    confirmButton: 'btn-success',
+                                    cancelButton: 'btn-danger',
+                                  },
+                                  confirmButtonText:'Entendido',
+                                  html: "Ocurrio un error : " + data.msj
+                                }).then(function(){
+                                    $('#tbtype').DataTable().ajax.reload();
+                                });
+                            }else{
+                                Swal.fire({
+                                  icon: "success",
+                                  title: "Genial...",
+                                  customClass: {
+                                    confirmButton: 'color-success',
+                                    cancelButton: 'color-cancel',
+                                  },
+                                  confirmButtonText:'Entendido',
+                                  html: data.msj
+                                }).then(function(){
+                                    $('#tbtype').DataTable().ajax.reload();
+                                });
+                            }
+                        });
+                      }
+                    });
+                    break;
+            }
+        });
+        /////////////////
         {% if active_type_notify %}
             $('#modal-without-animation').modal('show');
             name = $("#btn_notify_1").attr("data-mdl-name");

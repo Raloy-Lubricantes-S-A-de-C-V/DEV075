@@ -22,7 +22,7 @@ class Principal(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context2 = super().get_context_data(**kwargs)
         users = User.objects.all().values()
-        type_notify = TypeNotify.objects.all().values()
+        type_notify = TypeNotify.objects.all().filter(active=True).values()
         users_array = []
         type_array = []
         for user in users:
@@ -110,6 +110,7 @@ class Inbox(LoginRequiredMixin, TemplateView): # ----------- ok
                 etiqueta.append({'name': xq['name'], 'color': xq['color'], 'id': xq['id']})
 
         context2['etiqueta'] = etiqueta
+        context2['user_id'] = self.request.user.id
         context2['name_app'] = "Roadly"
         context2['info_app'] = "Ruteador de Raloy"
 
@@ -328,10 +329,10 @@ class DatatablesNotifyTrash(LoginRequiredMixin, TemplateView):
 
 
 class DatatablesNotifySend(LoginRequiredMixin, TemplateView):
-    template_name = 'notify/trash.html'
+    template_name = 'notify/send.html'
 
     def post(self, request, *args, **kwargs):
-        query = Notify.objects.filter(user_id=request.user.id, active=1).values()
+        query = Notify.objects.filter(user_id=request.user.id).values()
         response = {
             'data':[],
             'error': False,
@@ -543,6 +544,27 @@ def ShowId(request):
         context=context
     )
 
+
+@login_required
+def LabelShow(request):
+    idLabel = request.GET['id']
+    idUser = request.GET['user']
+    notify = Notify.objects.filter(type=idLabel, to=idUser, active=True, trash=False).values()
+    nitem = []
+    
+    context = {
+        'name_app' : "Roadly",
+        'info_app' : "Ruteador de Raloy",
+        'etiqueta' : etiqueta,
+        'notify' : nitem
+    }
+
+    return render(
+        request=request,
+        template_name='notify/show.html',
+        context=context
+    )
+
 class PostChangeImportant(LoginRequiredMixin, TemplateView):
     template_name = 'notify/show.html'
 
@@ -565,6 +587,8 @@ class PostChangeImportant(LoginRequiredMixin, TemplateView):
         notify.save()
         response['notify'] = notify.id
         return JsonResponse(response)
+
+
 class PostChangeTrash(LoginRequiredMixin, TemplateView):
     template_name = 'notify/show.html'
 
@@ -603,6 +627,63 @@ class PostChangeActive(LoginRequiredMixin, TemplateView):
         f.aqui_ando(t=notify.active)
         notify.active = 0
         response['msj'] = 'Se ha archivado la notificación, si requiere verla nuevamente comuniquese con su administrador'
+        notify.save()
+        response['notify'] = notify.id
+        return JsonResponse(response)
+
+class PostChangeDeactive(LoginRequiredMixin, TemplateView):
+    template_name = 'notify/show.html'
+
+    def post(self, request, *args, **kwargs):
+        response = {
+            'data': [],
+            'error': False,
+            'msj': ''
+        }
+        id = request.POST['id']
+        notify = Notify.objects.get(pk=id)
+        notify.modified = datetime.now(timezone.utc)
+        f.aqui_ando(t=notify.active)
+        notify.active = 1
+        response['msj'] = 'Se ha desarchivado la notificación.'
+        notify.save()
+        response['notify'] = notify.id
+        return JsonResponse(response)
+
+class PostChangeActiveType(LoginRequiredMixin, TemplateView):
+    template_name = 'notify/show.html'
+
+    def post(self, request, *args, **kwargs):
+        response = {
+            'data': [],
+            'error': False,
+            'msj': ''
+        }
+        id = request.POST['id']
+        notify = TypeNotify.objects.get(pk=id)
+        notify.modified = datetime.now(timezone.utc)
+        f.aqui_ando(t=notify.active)
+        notify.active = 0
+        response['msj'] = 'Se ha archivado el tipo de notificación'
+        notify.save()
+        response['notify'] = notify.id
+        return JsonResponse(response)
+
+class PostChangeDeactiveType(LoginRequiredMixin, TemplateView):
+    template_name = 'notify/show.html'
+
+    def post(self, request, *args, **kwargs):
+        response = {
+            'data': [],
+            'error': False,
+            'msj': ''
+        }
+        id = request.POST['id']
+        notify = TypeNotify.objects.get(pk=id)
+        notify.modified = datetime.now(timezone.utc)
+        f.aqui_ando(t=notify.active)
+        notify.active = 1
+        response['msj'] = 'Se ha desarchivado el tipo de notificación.'
         notify.save()
         response['notify'] = notify.id
         return JsonResponse(response)
@@ -698,6 +779,7 @@ class GetNotifyImportant(LoginRequiredMixin, TemplateView):
                 etiqueta.append({'name': xq['name'], 'color': xq['color'], 'id': xq['id']})
 
         context2['etiqueta'] = etiqueta
+        context2['user_id'] = self.request.user.id
         context2['name_app'] = "Roadly"
         context2['info_app'] = "Ruteador de Raloy"
         return context2
@@ -755,6 +837,7 @@ class GetNotifyTrash(LoginRequiredMixin, TemplateView):
 
         context2['etiqueta'] = etiqueta
         context2['name_app'] = "Roadly"
+        context2['user_id'] = self.request.user.id
         context2['info_app'] = "Ruteador de Raloy"
         return context2
 
@@ -810,6 +893,7 @@ class GetNotifySend(LoginRequiredMixin, TemplateView):
                 etiqueta.append({'name': xq['name'], 'color': xq['color'], 'id': xq['id']})
 
         context2['etiqueta'] = etiqueta
+        context2['user_id'] = self.request.user.id
         context2['name_app'] = "Roadly"
         context2['info_app'] = "Ruteador de Raloy"
         return context2

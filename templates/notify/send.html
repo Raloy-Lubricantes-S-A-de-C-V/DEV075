@@ -45,7 +45,7 @@
                         <div>
                             <ul class="nav nav-inbox">
                                 {% for q in etiqueta %}
-                                    <li><a href="javascript:;" data-id="{{ q.id }}"><i class="fa fa-fw fa-lg fs-12px me-2 fa-circle" style="color:{{ q.color }}"></i>{{ q.name }}</a></li>
+                                    <li><a href="javascript:;" data-id="{{ q.id }}" data-user="{{ user_id }}"><i class="fa fa-fw fa-lg fs-12px me-2 fa-circle" style="color:{{ q.color }}"></i>{{ q.name }}</a></li>
                                 {% endfor %}
                             </ul>
                         </div>
@@ -246,13 +246,15 @@
                     }
                 },
                 {data: null, title: 'Acciones', width: '16%', "render": function ( data, type, row, meta) {
-                         return '' +
-                            '<a class="tooltipm" style="margin-right: 10px;" data-action="info" data-toggle="tooltip" data-placement="top" title="Ver detalle" style="cursor:pointer">' +
-                            '<iconify-icon style="font-size: 30px;cursor: pointer;" icon="solar:eye-closed-bold-duotone"></iconify-icon>' +
-                            '</a>'+
-                            '<a class="tooltipm" style="margin-right: 10px;" data-action="delete" data-id="active_tbtype" data-toggle="tooltip" data-placement="top" title="Mandar a basura" style="cursor:pointer">' +
-                            '<iconify-icon style="font-size: 30px;cursor:pointer;color:#ff5a4e;" icon="solar:paper-bin-bold-duotone"></iconify-icon>' +
-                            '</a>';
+                    if(data.see == 1){
+                        icon = "solar:eye-bold-duotone";
+                    }else{
+                        icon = "solar:eye-closed-bold-duotone";
+                    }
+                    return '' +
+                        '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="info" data-toggle="tooltip" data-placement="top" title="Ver detalle" style="cursor:pointer">' +
+                        '<iconify-icon style="font-size: 30px;cursor: pointer;" icon="' + icon + '"></iconify-icon>' +
+                        '</a>';
                     }
                 }
             ],
@@ -287,6 +289,19 @@
                 {#{extend: 'print', className: 'btn btn-primary glyphicon glyphicon-print boton_data'}#}
             ]
         });
+        //////////
+        $('#tbnotify tbody').on('click', 'a', function (e) {
+            e.preventDefault();
+            var elemnets = $(this).attr("data-action");
+            switch (elemnets) {
+                case "info":
+                    xid = $(this).attr("data-id");
+                    window.location.href = "{% url 'notify:showid' %}?csrfmiddlewaretoken=" + csrfmiddlewaretoken + "&id="+xid;
+                    break;
+
+            }
+        });
+        //////////
     })
 
 </script>

@@ -23,7 +23,7 @@
                             Nuevo
                         </a>
                     </div>
-                    <div class="col-headfree-100" >
+                    <div class="col-headfree-100" style="height: 670px;">
                         <div class="nav-title"><b>FOLDERS</b></div>
                         <div>
                             <ul class="nav nav-inbox">
@@ -54,12 +54,16 @@
                             <a id="btn-notify--trash" data-id="{{ notify.id }}" href="javascript:;" class="btn btn-white btn-sm"><i class="fa fa-fw fa-trash"></i> <span class="d-none d-lg-inline">Basurero</span></a>
                             <a id="btn-notify--archivar" data-id="{{ notify.id }}" href="javascript:;" class="btn btn-white btn-sm" style="color:red;"><i class="fa fa-fw fa-archive"></i> <span class="d-none d-lg-inline">Archivar</span></a>
                         </div>
+                        <div style="text-align: right;display:inline;position: absolute;right: 30px;">
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+                        </div>
                     </div>
                     <div class="col-headfree-100 transparent m-15 calc-m-30 border-bottom-hr" style="height: 100% !important;">
                         <h3>
                             {% if notify.title %}
                                 <h4>{{ notify.title }}</h4>
-                                <div class="block">
+                                <div class="block" style="margin-top: 30px;">
                                     {% for b in notify.badge %}
                                         {% if b.name == 'Importante' %}
                                             <span class="bbadge" style="background:{{ b.color }};width: 85px;"><i class="fa fa-flag fa-xs fa-fw me-2"></i>{{ b.name }}</span>
@@ -111,7 +115,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-headfree-100 transparent m-15 calc-m-30 border-bottom-hr hr-transparent" style="height: 100% !important;">
+                    <div class="col-headfree-100 transparent m-15 calc-m-30 border-bottom-hr hr-transparent" style="height: 100% !important;display: inline-table;border-top: 1px solid #cacaca !important;padding-top: 25px;">
                         {% if notify.message %}
                             <p>{{ notify.message }}</p>
                         {% else %}

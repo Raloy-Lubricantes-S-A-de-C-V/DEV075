@@ -65,6 +65,11 @@ urlpatterns = [
         name='showid'
     ),
     path(
+        route='labelshow',
+        view=views.LabelShow,
+        name='labelshow'
+    ),
+    path(
         route='post_change_important',
         view=views.PostChangeImportant.as_view(),
         name='post_change_important'
@@ -78,6 +83,21 @@ urlpatterns = [
         route='post_change_active',
         view=views.PostChangeActive.as_view(),
         name='post_change_active'
+    ),
+    path(
+        route='post_change_deactive',
+        view=views.PostChangeDeactive.as_view(),
+        name='post_change_deactive'
+    ),
+    path(
+        route='post_change_active_type',
+        view=views.PostChangeActiveType.as_view(),
+        name='post_change_active_type'
+    ),
+    path(
+        route='post_change_deactive_type',
+        view=views.PostChangeDeactiveType.as_view(),
+        name='post_change_deactive_type'
     ),
     path(
         route='inbox',

@@ -40309,8 +40309,8 @@ textarea{
     border: 1px solid #ccc;
 }
 .dropdown-menu.media-list .dropdown-header {
-    color: #b0bebe !important;
-    background: #37474f !important;
+    color: #ffffff !important;
+    background: #9E9E9E !important;
     font-size: 12px !important;
 }
 .dropdown-menu.media-list .dropdown-footer {
@@ -40534,4 +40534,15 @@ div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm) {
 
 #page-loader {
     z-index: 9999;
+}
+
+.btn-success {
+    color: #fff !important;
+    background-color: #009688 !important;
+    border-color: #009688 !important;
+}
+.icon-swal{
+    font-size: 90px;
+    cursor: pointer;
+    color: #b6b6b6;
 }
