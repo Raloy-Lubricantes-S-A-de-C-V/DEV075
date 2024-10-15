@@ -12,11 +12,7 @@ from .models import ModelConfig
 
 @login_required
 def ping(request):
-    context = {
-        'name_app' : "Roadly",
-        'info_app' : "Ruteador de Raloy"
-    }
-    return render(request, 'panel.html', context)
+    return render(request, 'panel.html')
 
 @login_required
 def dashboard(request):
@@ -59,6 +55,25 @@ class GetNotify(LoginRequiredMixin, TemplateView):
             }
             notis.append(item)
         response['data'] = notis
+        f.aqui_ando(n=2, t=response)
+        return JsonResponse(response)
+        ### --------- NOTIFICACIÓN ------------- ###
+class GetNavbar(LoginRequiredMixin, TemplateView):
+    template_name = 'notify/main.html'
+
+    def post(self, request, *args, **kwargs):
+        ### --------- NOTIFICACIÓN ------------- ###
+        response = {
+            'data': [],
+            'error': False,
+            'msj': ''
+        }
+        context = {
+            'name_app' : "Roadly",
+            'info_app' : "Ruteador de Raloy",
+            'user_id': "{} {}".format(self.request.user.first_name, self.request.user.last_name)
+        }
+        response['data'] = context
         f.aqui_ando(n=2, t=response)
         return JsonResponse(response)
         ### --------- NOTIFICACIÓN ------------- ###

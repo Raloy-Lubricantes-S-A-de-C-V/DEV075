@@ -41,8 +41,7 @@ class Principal(LoginRequiredMixin, TemplateView):
             "users" : users_array,
             "type_notify" : type_array
         }
-        context2['name_app'] = "Roadly"
-        context2['info_app'] = "Ruteador de Raloy"
+
 
         return context2
 
@@ -71,8 +70,7 @@ class Type(LoginRequiredMixin, TemplateView):
             "users" : users_array,
             "type_notify" : type_array
         }
-        context2['name_app'] = "Roadly"
-        context2['info_app'] = "Ruteador de Raloy"
+
 
         return context2
 class Inbox(LoginRequiredMixin, TemplateView): # ----------- ok
@@ -111,8 +109,6 @@ class Inbox(LoginRequiredMixin, TemplateView): # ----------- ok
 
         context2['etiqueta'] = etiqueta
         context2['user_id'] = self.request.user.id
-        context2['name_app'] = "Roadly"
-        context2['info_app'] = "Ruteador de Raloy"
 
         return context2
 
@@ -151,8 +147,6 @@ class New(LoginRequiredMixin, TemplateView):
                 etiqueta.append({'name': xq['name'], 'color': xq['color'], 'id': xq['id']})
 
         context2['etiqueta'] = etiqueta
-        context2['name_app'] = "Roadly"
-        context2['info_app'] = "Ruteador de Raloy"
 
         return context2
 
@@ -169,8 +163,7 @@ class CreateTypeNotify(LoginRequiredMixin, TemplateView):
             form.save()
             return redirect('notify:panel')
         else:
-            context['name_app'] = "Roadly"
-            context['info_app'] = "Ruteador de Raloy"
+            pass
         context['form'] = form
         context['active_type_notify'] = True
         return render(
@@ -181,8 +174,6 @@ class CreateTypeNotify(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, context, **kwargs):
         context2 = super().get_context_data(**kwargs)
-        context2['name_app'] = "Roadly"
-        context2['info_app'] = "Ruteador de Raloy"
         return context2
 
 class DatatablesTypeNotify(LoginRequiredMixin, TemplateView):
@@ -213,8 +204,6 @@ class DatatablesTypeNotify(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, context, **kwargs):
         context2 = super().get_context_data(**kwargs)
-        context2['name_app'] = "Roadly"
-        context2['info_app'] = "Ruteador de Raloy"
         return context2
 class DatatablesNotifyInbox(LoginRequiredMixin, TemplateView):
     template_name = 'notify/inbox.html'
@@ -250,8 +239,6 @@ class DatatablesNotifyInbox(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, context, **kwargs):
         context2 = super().get_context_data(**kwargs)
-        context2['name_app'] = "Roadly"
-        context2['info_app'] = "Ruteador de Raloy"
         return context2
 class DatatablesNotifyImportant(LoginRequiredMixin, TemplateView):
     template_name = 'notify/important.html'
@@ -286,8 +273,6 @@ class DatatablesNotifyImportant(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, context, **kwargs):
         context2 = super().get_context_data(**kwargs)
-        context2['name_app'] = "Roadly"
-        context2['info_app'] = "Ruteador de Raloy"
         return context2
 
 class DatatablesNotifyTrash(LoginRequiredMixin, TemplateView):
@@ -323,8 +308,6 @@ class DatatablesNotifyTrash(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, context, **kwargs):
         context2 = super().get_context_data(**kwargs)
-        context2['name_app'] = "Roadly"
-        context2['info_app'] = "Ruteador de Raloy"
         return context2
 
 
@@ -361,8 +344,6 @@ class DatatablesNotifySend(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, context, **kwargs):
         context2 = super().get_context_data(**kwargs)
-        context2['name_app'] = "Roadly"
-        context2['info_app'] = "Ruteador de Raloy"
         return context2
 
 class CreateNotify(LoginRequiredMixin, TemplateView):
@@ -428,8 +409,6 @@ class CreateNotify(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, context, **kwargs):
         context2 = super().get_context_data(**kwargs)
-        context2['name_app'] = "Roadly"
-        context2['info_app'] = "Ruteador de Raloy"
         return context2
 
 class DatatablesNotify(LoginRequiredMixin, TemplateView):
@@ -466,8 +445,6 @@ class DatatablesNotify(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, context, **kwargs):
         context2 = super().get_context_data(**kwargs)
-        context2['name_app'] = "Roadly"
-        context2['info_app'] = "Ruteador de Raloy"
         return context2
 
 
@@ -532,8 +509,6 @@ def ShowId(request):
         for xq in xquery:
             etiqueta.append({'name': xq['name'], 'color': xq['color'], 'id':xq['id']})
     context = {
-        'name_app' : "Roadly",
-        'info_app' : "Ruteador de Raloy",
         'etiqueta' : etiqueta,
         'notify' : nitem
     }
@@ -553,9 +528,6 @@ def LabelShow(request):
     nitem = []
     
     context = {
-        'name_app' : "Roadly",
-        'info_app' : "Ruteador de Raloy",
-        'etiqueta' : etiqueta,
         'notify' : nitem
     }
 
@@ -780,8 +752,6 @@ class GetNotifyImportant(LoginRequiredMixin, TemplateView):
 
         context2['etiqueta'] = etiqueta
         context2['user_id'] = self.request.user.id
-        context2['name_app'] = "Roadly"
-        context2['info_app'] = "Ruteador de Raloy"
         return context2
 
 
@@ -836,9 +806,7 @@ class GetNotifyTrash(LoginRequiredMixin, TemplateView):
                 etiqueta.append({'name': xq['name'], 'color': xq['color'], 'id': xq['id']})
 
         context2['etiqueta'] = etiqueta
-        context2['name_app'] = "Roadly"
         context2['user_id'] = self.request.user.id
-        context2['info_app'] = "Ruteador de Raloy"
         return context2
 
 
@@ -894,6 +862,4 @@ class GetNotifySend(LoginRequiredMixin, TemplateView):
 
         context2['etiqueta'] = etiqueta
         context2['user_id'] = self.request.user.id
-        context2['name_app'] = "Roadly"
-        context2['info_app'] = "Ruteador de Raloy"
         return context2

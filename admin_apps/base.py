@@ -41,9 +41,6 @@ LOCAL_APPS=(
     'the_applications.general_settings',
     'the_applications.users',
     'the_applications.applications',
-    'the_applications.networks',
-    'the_applications.services',
-    'the_applications.software',
     'the_applications.notify',
 )
 

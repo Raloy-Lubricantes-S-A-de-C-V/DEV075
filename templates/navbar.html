@@ -3,7 +3,7 @@
     <!-- begin navbar-header -->
     <div class="navbar-header">
         <a href="{% url 'general_settings:ping' %}" class="navbar-brand"><span class="navbar-logo"></span>
-            <b>{{ name_app }} |</b> <div style="margin-left: 5px;">{{ info_app }}</div></a>
+            <b><span id="name_app"></span> |</b> <div style="margin-left: 5px;"><span id="info_app"></span></div></a>
         <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
             <span class="icon-bar"></span>
         </button>
@@ -11,7 +11,7 @@
     <!-- end navbar-header --><!-- begin header-nav -->
     <ul class="navbar-nav navbar-right">
         <li class="navbar-form">
-            <form action="" method="POST" name="search_form">
+            <form action="" method="POST" name="search_form" id="search_form">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Enter keyword"/>
                     <button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>
@@ -46,13 +46,13 @@
                     <img src="{% static 'img/users/user.png' %}" class="rounded-circle" height="50"/>
                     {% endif %}
                 </div>
-                <span class="d-none d-md-inline">Adam Schwartz</span> <b class="caret"></b>
+                <span class="d-none d-md-inline"><span id="id_user"></span></span> <b class="caret"></b>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-                <a href="javascript:;" class="dropdown-item">Edit Profile</a>
-                <a href="javascript:;" class="dropdown-item"><span class="badge badge-danger pull-right">2</span> Inbox</a>
-                <a href="javascript:;" class="dropdown-item">Calendar</a>
-                <a href="javascript:;" class="dropdown-item">Setting</a>
+                <a href="{% url 'users:update_profile' %}" class="dropdown-item">Editar Perfil</a>
+                <a href="{% url 'notify:inbox' %}" class="dropdown-item"><span class="badge badge-danger pull-right badgeinbox2"></span> Inbox</a>
+                <a href="javascript:;" class="dropdown-item" style="text-decoration: none;font-weight: normal">Calendar</a>
+                <a href="javascript:;" class="dropdown-item" style="text-decoration: none;font-weight: normal">Setting</a>
                 <div class="dropdown-divider"></div>
                 <a href="{% url 'users:logout' %}" class="dropdown-item">Log Out</a>
             </div>

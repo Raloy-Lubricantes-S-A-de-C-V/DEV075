@@ -181,6 +181,7 @@
     });
     const csrfmiddlewaretoken = '{{ csrf_token }}';
     bell();
+    navbar();
     setInterval("bell()", 60000);
     function bell(){
         console.log(csrfmiddlewaretoken);
@@ -192,7 +193,9 @@
             if(xdata.length > 0){
                 $('#badgeinbox').removeClass("badge");
                 $('#badgeinbox').text(xdata.length);
+                $('#badgeinbox2').text(xdata.length);
                 $('#badgeinbox').addClass("badge-red2");
+                $('#badgeinbox2').addClass("badge-red2");
                 $('#bell').append('<i class="fa fa-bell fa-bell-pulse"></i>');
                 $('#bell').append('<span class="label">' + xdata.length + '</span>');
                 $('#bell-wants').text('NOTIFICACIONES (' + xdata.length + ')');
@@ -230,6 +233,16 @@
             }
         });
     }
+    function navbar(){
+        console.log(csrfmiddlewaretoken);
+        $.post("{% url 'settings:getnavbar' %}",{'csrfmiddlewaretoken':csrfmiddlewaretoken}).done(function( data ) {
+            xdata = data.data
+            console.log(xdata);
+            $('#name_app').text(xdata["name_app"]);
+            $('#info_app').text(xdata["info_app"]);
+            $('#id_user').text(xdata["user_id"]);
+        });
+    }
     $(document).click(function(e){
         id = e.target.id
         if(id.indexOf("gonotify") > -1){
@@ -238,6 +251,9 @@
             //$.get("{% url 'notify:showid' %}",{'csrfmiddlewaretoken':csrfmiddlewaretoken,'id':xid});
         }
     });
+    $('#search_form').submit(function(event){
+        event.preventDefault();
+    })
 </script>
 
 {% block script %}{% endblock script %}
