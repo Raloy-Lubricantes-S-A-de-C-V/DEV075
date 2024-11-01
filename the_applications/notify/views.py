@@ -377,8 +377,6 @@ class CreateNotify(LoginRequiredMixin, TemplateView):
             form.save(d)
             return redirect('notify:panel')
         else:
-            context['name_app'] = "Roadly"
-            context['info_app'] = "Ruteador de Raloy"
             users = User.objects.all().values()
             type_notify = TypeNotify.objects.all().values()
             users_array = []
@@ -489,7 +487,6 @@ def ShowId(request):
         if n['active'] == 0:
             bimportant = {'name':'Correo archivado, no visible', 'color':'#ff0000'}
             bages.append(bimportant)
-        f.aqui_ando(n=1111, t=bages)
         nitem = {
             'title': n['name'],
             'img': n['picture'],
@@ -549,7 +546,6 @@ class PostChangeImportant(LoginRequiredMixin, TemplateView):
         id = request.POST['id']
         notify = Notify.objects.get(pk=id)
         notify.modified = datetime.now(timezone.utc)
-        f.aqui_ando(t=notify.important)
         if notify.important == 0:
             notify.important = 1
             response['msj'] = 'Se ha marcado la notificación como Importante'
@@ -573,7 +569,6 @@ class PostChangeTrash(LoginRequiredMixin, TemplateView):
         id = request.POST['id']
         notify = Notify.objects.get(pk=id)
         notify.modified = datetime.now(timezone.utc)
-        f.aqui_ando(t=notify.trash)
         if notify.trash == 0:
             notify.trash = 1
             response['msj'] = 'Se ha marcado la notificación como Basura'
@@ -596,7 +591,6 @@ class PostChangeActive(LoginRequiredMixin, TemplateView):
         id = request.POST['id']
         notify = Notify.objects.get(pk=id)
         notify.modified = datetime.now(timezone.utc)
-        f.aqui_ando(t=notify.active)
         notify.active = 0
         response['msj'] = 'Se ha archivado la notificación, si requiere verla nuevamente comuniquese con su administrador'
         notify.save()
@@ -615,7 +609,6 @@ class PostChangeDeactive(LoginRequiredMixin, TemplateView):
         id = request.POST['id']
         notify = Notify.objects.get(pk=id)
         notify.modified = datetime.now(timezone.utc)
-        f.aqui_ando(t=notify.active)
         notify.active = 1
         response['msj'] = 'Se ha desarchivado la notificación.'
         notify.save()
@@ -634,7 +627,6 @@ class PostChangeActiveType(LoginRequiredMixin, TemplateView):
         id = request.POST['id']
         notify = TypeNotify.objects.get(pk=id)
         notify.modified = datetime.now(timezone.utc)
-        f.aqui_ando(t=notify.active)
         notify.active = 0
         response['msj'] = 'Se ha archivado el tipo de notificación'
         notify.save()
@@ -653,7 +645,6 @@ class PostChangeDeactiveType(LoginRequiredMixin, TemplateView):
         id = request.POST['id']
         notify = TypeNotify.objects.get(pk=id)
         notify.modified = datetime.now(timezone.utc)
-        f.aqui_ando(t=notify.active)
         notify.active = 1
         response['msj'] = 'Se ha desarchivado el tipo de notificación.'
         notify.save()
@@ -671,7 +662,6 @@ class GetNotifyInbox(LoginRequiredMixin, TemplateView):
             'msj': ''
         }
         noti = Notify.objects.filter(user_id=request.user.id, active=True, see=False).values()
-        f.aqui_ando(t=noti)
         notis = []
         for n in noti:
             now = datetime.now(timezone.utc)
@@ -696,7 +686,6 @@ class GetNotifyInbox(LoginRequiredMixin, TemplateView):
             }
             notis.append(item)
         response['data'] = notis
-        f.aqui_ando(n=2, t=response)
         return JsonResponse(response)
         ### --------- NOTIFICACIÓN ------------- ###
 
@@ -711,7 +700,6 @@ class GetNotifyImportant(LoginRequiredMixin, TemplateView):
             'msj': ''
         }
         noti = Notify.objects.filter(user_id=request.user.id, active=True, see=False).values()
-        f.aqui_ando(t=noti)
         notis = []
         for n in noti:
             now = datetime.now(timezone.utc)
@@ -736,7 +724,6 @@ class GetNotifyImportant(LoginRequiredMixin, TemplateView):
             }
             notis.append(item)
         response['data'] = notis
-        f.aqui_ando(n=2, t=response)
         return JsonResponse(response)
         ### --------- NOTIFICACIÓN ------------- ###
 
@@ -766,7 +753,6 @@ class GetNotifyTrash(LoginRequiredMixin, TemplateView):
             'msj': ''
         }
         noti = Notify.objects.filter(user_id=request.user.id, active=True, see=False).values()
-        f.aqui_ando(t=noti)
         notis = []
         for n in noti:
             now = datetime.now(timezone.utc)
@@ -791,7 +777,6 @@ class GetNotifyTrash(LoginRequiredMixin, TemplateView):
             }
             notis.append(item)
         response['data'] = notis
-        f.aqui_ando(n=2, t=response)
         return JsonResponse(response)
         ### --------- NOTIFICACIÓN ------------- ###
 
@@ -821,7 +806,6 @@ class GetNotifySend(LoginRequiredMixin, TemplateView):
             'msj': ''
         }
         noti = Notify.objects.filter(user_id=request.user.id, active=True).values()
-        f.aqui_ando(9999999999999,t=noti)
         notis = []
         for n in noti:
             now = datetime.now(timezone.utc)
@@ -846,7 +830,6 @@ class GetNotifySend(LoginRequiredMixin, TemplateView):
             }
             notis.append(item)
         response['data'] = notis
-        f.aqui_ando(n=2, t=response)
         return JsonResponse(response)
         ### --------- NOTIFICACIÓN ------------- ###
 

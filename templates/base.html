@@ -3,11 +3,11 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>Color Admin | Dashboard</title>
+    <title>Roadly</title>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
     <meta content="" name="description"/>
     <meta content="" name="author"/>
-    
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
     <!-- ================== BEGIN BASE CSS STYLE ================== -->
     <link href="{% static 'assets/css/transparent/peter.css' %}" rel="stylesheet"/>
     <link href="{% static 'assets/css/material/app.min.css' %}" rel="stylesheet"/>
@@ -15,11 +15,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
     <link href="{% static 'assets/plugins/jvectormap-next/jquery-jvectormap.css' %}" rel="stylesheet"/>
-    <link href="{% static 'assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.css' %}" rel="stylesheet"/>
     <link href="{% static 'assets/plugins/gritter/css/jquery.gritter.css' %}" rel="stylesheet"/>
-    <link href="//cdn.datatables.net/2.1.4/css/dataTables.dataTables.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.min.css">
+    <!---- =============================================== --->
+    <link href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" rel="stylesheet"/>
+    <link href="https://cdn.datatables.net/fixedheader/4.0.1/css/fixedHeader.dataTables.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/searchpanes/2.3.3/css/searchPanes.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/2.1.0/css/select.dataTables.css">
     <!-- ================== END PAGE LEVEL STYLE ================== -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
     {% block style %}{% endblock style %}
 
 </head>
@@ -115,9 +120,9 @@
 <script src="{% static 'assets/js/app.min.js' %}"></script>
 <script src="{% static 'assets/js/peter.js' %}"></script>
 <script src="{% static 'assets/js/theme/material.min.js' %}"></script>
+<script src="{% static 'assets/js/double.js' %}"></script>
 <!-- ================== END BASE JS ================== -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="{% static 'js/password/password.js' %}"></script>
 <!-- ================== BEGIN PAGE LEVEL JS ================== -->
 <script src="{% static 'assets/plugins/gritter/js/jquery.gritter.js' %}"></script>
 <script src="{% static 'assets/plugins/flot/source/jquery.canvaswrapper.js' %}"></script>
@@ -139,13 +144,22 @@
 <script src="{% static 'assets/plugins/flot/source/jquery.flot.selection.js' %}"></script>
 <script src="{% static 'assets/plugins/flot/source/jquery.flot.symbol.js' %}"></script>
 <script src="{% static 'assets/plugins/flot/source/jquery.flot.legend.js' %}"></script>
-<script src="../assets/plugins/jquery-sparkline/jquery.sparkline.min.js"></script>
 <script src="{% static 'assets/plugins/jvectormap-next/jquery-jvectormap.min.js' %}"></script>
 <script src="{% static 'assets/plugins/jvectormap-next/jquery-jvectormap-world-mill.js' %}"></script>
-<script src="{% static 'assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js' %}"></script>
 <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
-<script src="//cdn.datatables.net/2.1.4/js/dataTables.min.js"></script>
+<!--<script src="//cdn.datatables.net/2.1.4/js/dataTables.min.js"></script>-->
+<!-- DATATABLES --->
+<script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdn.datatables.net/searchpanes/2.3.3/js/dataTables.searchPanes.js"></script>
+<script src="https://cdn.datatables.net/searchpanes/2.3.3/js/searchPanes.dataTables.js"></script>
+<script src="https://cdn.datatables.net/select/2.1.0/js/dataTables.select.js"></script>
+<script src="https://cdn.datatables.net/select/2.1.0/js/select.dataTables.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/4.0.1/js/dataTables.fixedHeader.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/4.0.1/js/fixedHeader.dataTables.js"></script>
+<!----->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script>
     COLOR_BLACK_TRANSPARENT_2 = 'rgba(255,255,255,0.15)';
     COLOR_DARK_LIGHTER = 'rgba(0,0,0,0.5)';
@@ -254,6 +268,18 @@
     $('#search_form').submit(function(event){
         event.preventDefault();
     })
+    
+    $(".smin").click(function(){
+        routing = parseInt($(this).attr("data-t"));
+        var clases = $("#page-container").attr("class");
+        if(clases.indexOf('page-sidebar-minified') > 0){
+            $(this).attr("data-t","0")
+            $(this).removeClass("t-rotate-180")
+        }else{
+            $(this).attr("data-t","1")
+            $(this).addClass("t-rotate-180")
+        }
+    });
 </script>
 
 {% block script %}{% endblock script %}

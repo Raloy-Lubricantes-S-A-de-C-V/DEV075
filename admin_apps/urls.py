@@ -28,4 +28,5 @@ urlpatterns = [
     path('settings/', include(('the_applications.general_settings.urls', 'general_settings'), namespace='settings')),
     path('apps/', include(('the_applications.applications.urls', 'apps'), namespace='apps')),
     path('notify/', include(('the_applications.notify.urls', 'notify'), namespace='notify')),
+    path('data/', include(('the_applications.datasheet.urls', 'data'), namespace='data')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

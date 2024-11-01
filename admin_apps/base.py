@@ -42,6 +42,7 @@ LOCAL_APPS=(
     'the_applications.users',
     'the_applications.applications',
     'the_applications.notify',
+    'the_applications.datasheet',
 )
 
 
