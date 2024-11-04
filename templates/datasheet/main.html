@@ -1,0 +1,793 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block sitio %}
+    <li class="breadcrumb-item"><a href="{% url 'data:' %}">Data List</a></li>
+{% endblock %}
+
+
+{% block content %}
+{% csrf_token %}
+<!-- begin row -->
+<h3>Data List</h3><br>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title">.</h4>
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                </div>
+            </div>
+            <div class="panel-body m-20">
+                 <div class="row">
+                     <div class="col-12 m-b-30" >
+                         <div class="card cpage" style="padding: 30px;">
+                              <div class="cpage-ctrl">
+                                 <div class="cphead xcpage-head-0">
+                                     <a class="btn btn-bluehard m-r-4 m-b-5" data-mdl-name="Listado de DataList's descargados." data-mdl-sh="cpage-btn" data-card="cpage-0">
+                                        <iconify-icon class="new-icon" icon="solar:list-arrow-down-minimalistic-bold-duotone"></iconify-icon>
+                                        <span class="new-text">Lista</span>
+                                     </a>
+                                     {% if context.type_data == "ODOO" %}
+                                         <a class="btn btn-bluehard m-r-4 m-b-5" data-mdl-name="Proceso de descarga de información para ruteo. Este proceso esta pre-configurado con la data de Odoo." data-mdl-sh="cpage-btn" data-card="cpage-1">
+                                            <iconify-icon class="new-icon" icon="solar:download-bold-duotone"></iconify-icon>
+                                            <span class="new-text">Descargar</span>
+                                         </a>
+                                     {% elif context.type_data == "EPICOR" %}
+                                         <a class="btn btn-bluehard m-r-4 m-b-5" data-mdl-name="Proceso de descarga de información para ruteo. Este proceso esta pre-configurado con la data de Epicor." data-mdl-sh="cpage-btn" data-card="cpage-1">
+                                            <iconify-icon class="new-icon" icon="solar:download-bold-duotone"></iconify-icon>
+                                            <span class="new-text">Descargar</span>
+                                         </a>
+                                     {% else %}
+                                     {% endif %}
+                                     <a class="btn btn-bluehard m-r-4 m-b-5" data-mdl-name="Proceso que permite fusionar dos DataList's. Al momento de de fusionar se crea un nuevo DataList." data-mdl-sh="cpage-btn" data-card="cpage-2">
+                                        <iconify-icon class="new-icon" icon="solar:dna-bold-duotone"></iconify-icon>
+                                        <span class="new-text">Fusionar</span>
+                                     </a>
+                                     <a class="btn btn-bluehard m-r-4 m-b-5" data-mdl-name="Proceso que permite copiar un DataList a un nuevo DataList." data-mdl-sh="cpage-btn" data-card="cpage-3">
+                                        <iconify-icon class="new-icon" icon="solar:copy-bold-duotone"></iconify-icon>
+                                        <span class="new-text">Copiar</span>
+                                     </a>
+                                 </div>
+                                 <div class="cpbody xcpage-body-0"> </div>
+                             </div>
+                             <div class="cpage-card cpage-0">
+                                 <div class="phead cpage-head-0">A1</div>
+                                 <div class="pbody cpage-body-0">
+
+                                 </div>
+                             </div>
+                             <div class="cpage-card cpage-1">
+                                 <div class="phead cpage-head-1">B1</div>
+                                 <div class="pbody cpage-body-1">
+
+                                 </div>
+                             </div>
+                             <div class="cpage-card cpage-2">
+                                 <div class="phead cpage-head-2">C1</div>
+                                 <div class="pbody cpage-body-2">
+
+                                 </div>
+                             </div>
+                             <div class="cpage-card cpage-3">
+                                 <div class="phead cpage-head-3">D1</div>
+                                 <div class="pbody cpage-body-3">
+
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="col-12 m-b-30" >
+                         <div class="card lcpage" style="padding: 30px;border: none !important;">
+                             <div class="lcpage-00">
+                                 <div class="lphead lcpage-head-00"></div>
+                                 <div class="lpbody lcpage-body-00">
+                                     <img style="filter:opacity(0.5); width: 50%;margin-left: 25%;" src="{% static 'img/datalist/poster6.png' %}">
+
+                                 </div>
+                             </div>
+                             <div class="cpage-card lcpage-0">
+                                 <div class="lphead lcpage-head-0">
+                                    <div class="row" style="margin-bottom:20px;">
+                                             <div class="col-3">
+                                                 <div class="card-filter">
+                                                     <div class="title">
+                                                         Estado DL
+                                                     </div>
+                                                     <select id="state" class="form-control status-dropdown">
+                                                        <option value="">Todo</option>
+                                                        <option value="Libre">Libre</option>
+                                                        <option value="Asignado">Asignado</option>
+                                                        <option value="Analizado">Analizado</option>
+                                                        <option value="Clasificado">Clasificado</option>
+                                                        <option value="Aprobado">Aprobado</option>
+                                                     </select>
+                                                 </div>
+                                             </div>
+                                             <div class="col-3">
+                                                 <div class="card-filter">
+                                                     <div class="title">
+                                                         Estado de Copia DL
+                                                     </div>
+                                                     <select id="copia" class="form-control status-dropdown">
+                                                        <option value="">Todo</option>
+                                                        <option value="Copiado">Copiado</option>
+                                                        <option value="Copia">Copia</option>
+                                                     </select>
+                                                 </div>
+                                             </div>
+                                             <div class="col-3">
+                                                 <div class="card-filter">
+                                                     <div class="title">
+                                                         Estado de Fusión DL
+                                                     </div>
+                                                     <select id="fusion" class="form-control status-dropdown">
+                                                        <option value="">Todo</option>
+                                                        <option value="Fusionado">Fusionado</option>
+                                                        <option value="Base">Base</option>
+                                                     </select>
+                                                 </div>
+                                             </div>
+                                             <div class="col-3">
+                                                 <div class="card-filter">
+                                                     <div class="title">
+                                                         Rango de Creación
+                                                     </div>
+                                                     <div class="container">
+                                                        <input class="form-control" id="period" width="276" />
+                                                    </div>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 <div class="lpbody lcpage-body-0">
+                                     <div class="col-12">
+                                         <table id="tb" class="display cell-border compact stripe">
+                                            <thead>
+                                                <tr>
+                                                    <th>x</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>x</td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>x</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                 </div>
+                             </div>
+                             <div class="cpage-card lcpage-1">
+                                 <div class="lphead lcpage-head-1">
+                                     <h4>
+                                         {% if context.type_data == "ODOO" %}
+                                             Descarga de remisiones
+                                         {% elif context.type_data == "EPICOR" %}
+                                             Descarga de pedidos
+                                         {% else %}
+                                             No definido
+                                        {% endif %}
+                                     </h4>
+                                 </div>
+                                 <div class="lpbody lcpage-body-1">
+                                     <form  action="{% url 'data:' %}" method="post">
+                                         {% csrf_token %}
+                                         <input type="text" name="activebtn" id="activebtn" hidden/>
+                                         {{ context.form_create }}
+                                         <br>
+                                         <input class="btn btn-success" type="submit" value="Descargar">
+                                     </form>
+                                 </div>
+                             </div>
+                             <div class="cpage-card lcpage-2">
+                                 <div class="lphead lcpage-head-2">
+                                     <h4>Fusionar DataList</h4>
+                                 </div>
+                                 <div class="lpbody lcpage-body-2">
+                                    <form  action="{% url 'data:fusion_datalist' %}" method="post">
+                                         {% csrf_token %}
+                                          <div id="reload_fision">
+                                              {{ context.form_fusion }}
+                                          </div>
+                                         <br>
+                                         <input class="btn btn-success" type="submit" value="Fusionar">
+                                     </form>
+                                 </div>
+                             </div>
+                             <div class="cpage-card lcpage-3">
+                                 <div class="lphead lcpage-head-3">
+                                     <h4>Copiar DataList</h4>
+                                 </div>
+                                 <div class="lpbody lcpage-body-3">
+                                      <form  action="{% url 'data:copy_datalist' %}" method="post">
+                                         {% csrf_token %}
+                                          <div id="reload_copy">
+                                              {{ context.form_copy }}
+                                          </div>
+                                         <br>
+                                         <input class="btn btn-success" type="submit" value="Copiar">
+                                     </form>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end row -->
+<!-- begin row -->
+
+{% endblock %}
+
+{% block style %}
+    <style>
+    .btn-name-mdl-create{
+        font-size: 14px;
+    }
+    .chip-user{
+        width: 100%;
+        text-align: center;
+    }
+    .bold{
+        font-weight: bold !important;
+        color:#0d3349;
+    }
+    .badge{
+        background: transparent !important;
+    }
+    .state-li{
+        color: #000000;
+        border: 1px solid #00000038;
+        background: #c6c6c6;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-as{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #009688;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-an{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #03A9F4;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-cl{
+        color: #000000;
+        border: 1px solid #00000038;
+        background: #ffb64c;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-ap{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #4CAF50;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-o-cp{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #8859db;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-o-ca{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #22c4b5;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-f-fs{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #e44949;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    table.dataTable.cell-border>tbody>tr>* {
+        border-right: none !important;
+    }
+    table.dataTable.cell-border>tbody>tr>*:first-child {
+        border-left: none !important;
+    }
+    table.dataTable.display tbody tr:hover.selected > .sorting_1, table.dataTable.order-column.hover tbody tr:hover.selected > .sorting_1 {
+        box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    table.dataTable.stripe > tbody > tr:nth-child(odd).selected > *, table.dataTable.display > tbody > tr:nth-child(odd).selected > * {
+        box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    table.dataTable.display > tbody > tr.selected + tr.selected > td {
+        box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    table.dataTable.display > tbody > tr.selected:hover > * {
+        box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    table.dataTable.display > tbody tr.selected > .sorting_1{
+        box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    table.dataTable.hover > tbody > tr.selected:hover > *, table.dataTable.display > tbody > tr.selected:hover > * {
+      box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    table.dataTable.stripe > tbody > tr:nth-child(odd).selected > *, table.dataTable.display > tbody > tr:nth-child(odd).selected > * {
+      box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    </style>
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready(function (){
+        {% if active_btn > 0 %}
+            Swal.fire({
+                html: '<iconify-icon style="color:#4caf50" class="icon-swal" icon="solar:like-bold-duotone"></iconify-icon><br><br><b><h3><b>Genial!!</b></h3></b><h5>Se ha creado un nuevo DataList con folio<b>"{{ folio }}"</b>. Recuerde que ya puede ser utilizado en su proceso de Ruteo</h5>',
+                icon: "success",
+                showCancelButton: false,
+                confirmButtonBackground: "#009688",
+                confirmButtonText: "Enterado"
+            }).then((result) => {
+              if (result.isConfirmed) {
+                  window.location.href = "{% url 'data:' %}";
+              }
+            });
+        {% endif %}
+        {% if active_btn2 > 0 %}
+            Swal.fire({
+                html: '<iconify-icon style="color:#4caf50" class="icon-swal" icon="solar:like-bold-duotone"></iconify-icon><br><br><b><h3><b>Genial!!</b></h3></b><h5>Se ha creado una copia del DataList <i>"{{ after }}"</i>  con codigo <b>"{{ before }}"</b>. Recuerde que ya puede ser utilizado en su proceso de Ruteo</h5>',
+                icon: "success",
+                showCancelButton: false,
+                confirmButtonBackground: "#009688",
+                confirmButtonText: "Enterado"
+            }).then((result) => {
+              if (result.isConfirmed) {
+                  window.location.href = "{% url 'data:' %}";
+              }
+            });
+        {% endif %}
+        {% if active_btn3 > 0 %}
+            Swal.fire({
+                html: '<iconify-icon style="color:#e91e63" class="icon-swal" icon="solar:dislike-bold-duotone"></iconify-icon><br><br><b><h3><b>Oopps!!</b></h3></b><h5>No se puede fusionar el mismo DataList <b>"{{ folio }}"</b>. Vuelva a intentarlo seleccionando diferentes DataList</h5>',
+                icon: "error",
+                showCancelButton: false,
+                confirmButtonBackground: "#009688",
+                confirmButtonText: "Enterado"
+            }).then((result) => {
+              if (result.isConfirmed) {
+                  window.location.href = "{% url 'data:' %}";
+              }
+            });
+        {% endif %}
+        {% if active_btn4 > 0 %}
+            Swal.fire({
+                html: '<iconify-icon style="color:#4caf50" class="icon-swal" icon="solar:like-bold-duotone"></iconify-icon><br><br><b><h3><b>Genial!!</b></h3></b><h5>Se han funsionado corretamente los DataList <i>"{{ folio1 }}"</i> y <i>"{{ folio2 }}"</i> creando el folio <b>"{{ folio }}"</b>. Recuerde que ya puede ser utilizado en su proceso de Ruteo</h5>',
+                icon: "success",
+                showCancelButton: false,
+                confirmButtonBackground: "#009688",
+                confirmButtonText: "Enterado"
+            }).then((result) => {
+              if (result.isConfirmed) {
+                  window.location.href = "{% url 'data:' %}";
+              }
+            });
+        {% endif %}
+        function getRandomInt(max) {
+          return Math.floor(Math.random() * max);
+        }
+
+        $('.btn-bluehard').click(function() {
+            $(".cpage-delete").remove();
+            var action = $(this).attr("data-card");
+            var description = $(this).attr("data-mdl-name");
+            var number = parseInt(action.split('-')[1]);
+            console.log(action)
+            console.log(description)
+            console.log(number)
+            for (var i = 0; i < 10; i++) {
+                $('.cpage-' + i).hide('fast');
+                $('.lcpage-' + i).hide('fast');
+            }
+            $('#activebtn').val(number);
+            $('.lcpage-00').hide('fast');
+            $('.cpage-' + number).show('fast');
+            $('.lcpage-' + number).show('fast');
+            $('.btn-bluehard').hide('fast');
+            $(this).after("<span class='cpage-delete'><b>Información : </b>" + description + "</span>")
+            $(this).show('fast');
+            $(".cpage-head-" + number).html('<a class="rew-btn" ><iconify-icon style="font-size: 14px;" icon="solar:multiple-forward-left-bold-duotone"></iconify-icon>Volver</a>');
+            // $(".cpage-body-" + number).text("");
+            $(".rew-btn").click(function(){
+                $(".cpage-delete").remove();
+                $('.btn-bluehard').show('fast');
+                $('.lcpage-00').show('fast');
+                $('.cpage-card').hide('fast');
+            });
+            switch (parseInt(number)){
+                case 0:
+                    //////////////////////////////////////////////////////
+                    $('#tb').DataTable().destroy();
+                    new DataTable('#tb',{
+                        fixedHeader: {
+                            header: true,
+                            footer: true
+                        },
+                        ajax: {
+                            type: 'POST',
+                            url: '{% url "data:datatables_header" %}',
+                            data: csrfmiddlewaretoken,
+                            dataType: 'json',
+                        },
+                        columns: [
+                            {data: 'id', title: 'Id', visible:false,  type: 'string'},
+                            {data: null, title: 'Acciones', width: '16%', "render": function ( data, type, row, meta) {
+                                if((data.state=="Libre")){
+                                    add = '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="archive" data-toggle="tooltip" data-placement="top" title="Archivar Data List" style="cursor:pointer">' +
+                                        '<iconify-icon style="font-size: 30px;cursor:pointer;color:#c40647;" icon="solar:minus-square-bold-duotone"></iconify-icon>' +
+                                        '</a>'+
+                                        '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="dearchive" data-toggle="tooltip" data-placement="top" title="Desasrchivar Data List" style="cursor:pointer">' +
+                                        '<iconify-icon style="font-size: 30px;cursor:pointer;color:#009688;" icon="solar:minimize-square-minimalistic-bold-duotone"></iconify-icon>' +
+                                        '</a>'+
+                                        '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="delete" data-toggle="tooltip" data-placement="top" title="Eliminar Data List" style="cursor:pointer">' +
+                                        '<iconify-icon style="font-size: 30px;cursor:pointer;color:#f44336;" icon="solar:trash-bin-trash-bold-duotone"></iconify-icon>' +
+                                        '</a>';
+                                }else{
+                                    if((data.state=="Asignado")||(data.state=="Analizado")){
+                                        add = '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="archive" data-toggle="tooltip" data-placement="top" title="Archivar Data List" style="cursor:pointer">' +
+                                            '<iconify-icon style="font-size: 30px;cursor:pointer;color:#c40647;" icon="solar:minus-square-bold-duotone"></iconify-icon>' +
+                                            '</a>'+
+                                            '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="dearchive" data-toggle="tooltip" data-placement="top" title="Desasrchivar Data List" style="cursor:pointer">' +
+                                            '<iconify-icon style="font-size: 30px;cursor:pointer;color:#009688;" icon="solar:minimize-square-minimalistic-bold-duotone"></iconify-icon>' +
+                                            '</a>'
+                                    }else{
+                                        add = "";
+                                    }
+                                }
+                                return '' +
+                                        '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="info" data-toggle="tooltip" data-placement="top" title="Ver detalle" style="cursor:pointer">' +
+                                        '<iconify-icon style="font-size: 30px;cursor: pointer;" icon="solar:eye-closed-bold-duotone"></iconify-icon>' +
+                                        '</a>'+ add
+                                        ;
+                                }
+                            },
+                            {data: null, title: 'Folio DL',  width: '14.28%', "render": function ( data, type, row, meta) {
+                                    return '<div class="bold">' + data.name + '</div>';
+                                }
+                            },
+                            {data: null, title: 'Estado DL', width: '14.28%', "render": function ( data, type, row, meta) {
+                                    state = '';
+                                    switch (data.state){
+                                        case "Libre":
+                                            state = "state-li"
+                                            break;
+                                        case "Asignado":
+                                            state = "state-as"
+                                            break;
+                                        case "Analizado":
+                                            state = "state-an"
+                                            break;
+                                        case "Clasificado":
+                                            state = "state-cl"
+                                            break;
+                                        case "Aprobado":
+                                            state = "state-ap"
+                                            break;
+                                    }
+                                    return '<div class="' + state + '">' + data.state + '</div>';
+                                }
+                            },
+                            {data: null, title: 'Copia DL', width: '14.28%', "render": function ( data, type, row, meta) {
+                                    state = '';
+                                    switch (data.state_copy){
+                                        case "":
+                                            state = "state-o"
+                                            break;
+                                        case "Copiado":
+                                            state = "state-o-cp"
+                                            break;
+                                        case "Copia":
+                                            state = "state-o-ca"
+                                            break;
+                                    }
+                                    return '<div class="' + state + '">' + data.state_copy + '</div>';
+                                }
+                            },
+                            {data: null, title: 'Fusion DL', width: '14.28%', "render": function ( data, type, row, meta) {
+                                    state = '';
+                                    switch (data.state_fusion){
+                                        case "":
+                                            state = "state-f"
+                                            break;
+                                        case "Fusionado":
+                                            state = "state-f-fs"
+                                            break;
+                                        case "Base":
+                                            state = "state-li"
+                                            break;
+                                    }
+                                    return '<div class="' + state + '">' + data.state_fusion + '</div>';
+                                }
+                            },
+                            {data: null, title: 'Creado por', width: '14.25%', "render": function ( data, type, row, meta) {
+                                    var bg = ["#ffcfcf","#ffb3b3","#d1faff","#b2f7ff","#ccffce","#a1d9a3","#fff3ce","#e7d393","#e0cfff","#b39cdc","#e7d2ca","#b99f96"];
+                                    var xbg = getRandomInt(12)
+                                    return '<div class="chip chip-md" style="">'+
+                                              '<img style="border:1px solid white; background:'+bg[xbg]+'" src="{% static 'img/users/user.png' %}" alt="User">'+
+                                              '<span class="chip-user">' + data.create_uid +'</span>'
+                                            '</div>';
+                                }
+                            },
+                            {data: null, title: 'Creado el', width: '14.25%', "render": function ( data, type, row, meta) {
+                                    return '<div class="">' + data.create_date + '</div>';
+                                }
+                            }
+                        ],
+                        pageLength: 40,
+                        autoWidth: true,
+                        columnDefs:[
+                            {
+                                "max-width": "50%", targets: [0, 1], className: "truncate",
+                                checkboxes: {
+                                    selectRow: true
+                                },
+
+                            },
+                        ],
+                        fnRowCallback: function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+                            if ( aData.state == "Aprobado"){
+                                $('td', nRow).css('background-color', 'rgba(0,150,136,0.17)' );
+                                $('td', nRow).css('border-bottom', '1px solid #b5c3d0' );
+                                $('td', nRow).css('border-top', '1px solid #b5c3d0' );
+                            }
+                            if ( aData.active == false ){
+                                $('td', nRow).css('background-color', 'rgba(150,0,0,0.17)' );
+                                $('td', nRow).css('border-bottom', '1px solid #b5c3d0' );
+                                $('td', nRow).css('border-top', '1px solid #b5c3d0' );
+                            }
+                        },
+                        fixedColumns: true,
+                        bAutoWidth: true,
+                        iDisplayLength: 40,
+                        select: {
+                            style: 'multi',
+                        },
+                        bScrollCollapse: true,
+                        buttons: [],
+                        order: [[1, 'asc']]
+                    });
+                    $('.btn-bluehard').focus();
+                    $('#period').daterangepicker({
+                        timePicker: true,
+                        opens: 'left',
+                        startDate: moment().startOf('hour'),
+                        endDate: moment().startOf('hour').add(24, 'hour'),
+                        locale: {
+                          format: 'M/DD hh:mm A'
+                        }
+                      });
+                    $('#state').on('change', function(e){
+                      var status = $(this).val();
+                      $('.status-dropdown').val(status)
+                      console.log(status)
+                      //dataTable.column(6).search('\\s' + status + '\\s', true, false, true).draw();
+                      $('#tb').DataTable().column(3).search(status).draw();
+                     });
+                     $('#copia').on('change', function(e){
+                      var copy = $(this).val();
+                      $('.status-dropdown').val(copy)
+                      console.log(copy)
+                      //dataTable.column(6).search('\\s' + status + '\\s', true, false, true).draw();
+                      $('#tb').DataTable().column(4).search(copy).draw();
+                     });
+                     $('#fusion').on('change', function(e){
+                      var fusion = $(this).val();
+                      $('.status-dropdown').val(fusion)
+                      console.log(fusion)
+                      //dataTable.column(6).search('\\s' + status + '\\s', true, false, true).draw();
+                      $('#tb').DataTable().column(5).search(fusion).draw();
+                     });
+                     $('#period').on('change', function(e){
+                          var period = $(this).val();
+                          $('.status-dropdown').val(period)
+                          alert("Por el momento esta acción no esta disponible")
+
+                        // dataTable.column(6).search('\\s' + status + '\\s', true, false, true).draw();
+                        // $('#tb').DataTable().column(5).search(fusion).draw();
+                     });
+                    //////////////////////////////////////////////////////
+                    break;
+                case 1:
+                    $.post(
+                        "{% url 'data:get_last_id' %}",
+                        {'csrfmiddlewaretoken':csrfmiddlewaretoken}
+                    ).done(function (data){
+                           if(data.data){
+                               console.log(data.data)
+                               $("#id_name").val(data.data['name'])
+                           }
+                    });
+                    break;
+                    $('.btn-bluehard').focus();
+                case 2:
+                    $.post(
+                        "{% url 'data:get_select_fusion' %}",
+                        {'csrfmiddlewaretoken':csrfmiddlewaretoken}
+                    ).done(function (data){
+                            var d = data.data
+                            var option = ''
+                           for(var i=0;i<d.length;i++){
+                                option = option + '<option value="'+d[i]['id']+'">'+d[i]['name']+'</option>';
+                           }
+                           $("#id_header_fusion_1").empty();
+                           $("#id_header_fusion_1").html(option);
+                           $("#id_header_fusion_2").empty();
+                           $("#id_header_fusion_2").html(option);
+                    });
+                    $('.btn-bluehard').focus();
+                    break;
+                case 3:
+                    $.post(
+                        "{% url 'data:get_select_copy' %}",
+                        {'csrfmiddlewaretoken':csrfmiddlewaretoken}
+                    ).done(function (data){
+                            var d = data.data
+                            var option = ''
+                           for(var i=0;i<d.length;i++){
+                                option = option + '<option value="'+d[i]['id']+'">'+d[i]['name']+'</option>';
+                           }
+                           $("#id_header_copy_1").empty();
+                           $("#id_header_copy_1").html(option);
+                    });
+                    $('.btn-bluehard').focus();
+                    break;
+            }
+        });
+
+        $('#tb tbody').on('click', 'a', function (e) {
+            e.preventDefault();
+            var elemnets = $(this).attr("data-action");
+            switch (elemnets) {
+                case "info":
+                    xid = $(this).attr("data-id");
+                    window.location.href = "{% url 'data:showid' %}?csrfmiddlewaretoken=" + csrfmiddlewaretoken + "&id="+xid;
+                    break;
+                case "archive":
+                    console.log(0);
+                    xid = $(this).attr("data-id");
+                    $.post(
+                        "{% url 'data:active_deactive_datalist' %}",
+                        {'csrfmiddlewaretoken':csrfmiddlewaretoken,'id':xid,'action':0}
+                    ).done(function (data){
+                           if(data.error){
+                                state = "error"
+                                msj_aux_1 = '<iconify-icon style="color:#e91e63" class="icon-swal" icon="solar:dislike-bold-duotone"></iconify-icon><br><br><b><h3><b>Oopps!!</b></h3></b>'
+                           }else{
+                                state = "success"
+                                msj_aux_1 = '<iconify-icon style="color:#4caf50" class="icon-swal" icon="solar:like-bold-duotone"></iconify-icon><br><br><b><h3><b>Genial!!</b></h3></b>'
+                           }
+                           Swal.fire({
+                                html: msj_aux_1 + "<h5>" + data.msj + "</h5>",
+                                icon: state,
+                                showCancelButton: false,
+                                confirmButtonBackground: "#009688",
+                                confirmButtonText: "Enterado"
+                            }).then((result) => {
+                              if (result.isConfirmed) {
+                                  $('#tb').DataTable().ajax.reload();
+                              }
+                            });
+                    });
+                    break;
+                case 'dearchive':
+                    console.log(1);
+                    xid = $(this).attr("data-id");
+                    $.post(
+                        "{% url 'data:active_deactive_datalist' %}",
+                        {'csrfmiddlewaretoken':csrfmiddlewaretoken,'id':xid,'action':1}
+                    ).done(function (data){
+                           if(data.error){
+                                state = "error"
+                                msj_aux_1 = '<iconify-icon style="color:#e91e63" class="icon-swal" icon="solar:dislike-bold-duotone"></iconify-icon><br><br><b><h3><b>Oopps!!</b></h3></b>'
+                           }else{
+                                state = "success"
+                                msj_aux_1 = '<iconify-icon style="color:#4caf50" class="icon-swal" icon="solar:like-bold-duotone"></iconify-icon><br><br><b><h3><b>Genial!!</b></h3></b>'
+                           }
+                           Swal.fire({
+                                html: msj_aux_1 + "<h5>" + data.msj + "</h5>",
+                                icon: state,
+                                showCancelButton: false,
+                                confirmButtonBackground: "#009688",
+                                confirmButtonText: "Enterado"
+                            }).then((result) => {
+                              if (result.isConfirmed) {
+                                  $('#tb').DataTable().ajax.reload();
+                              }
+                            });
+                    });
+                    break;
+                case 'delete':
+                    xid = $(this).attr("data-id");
+                    $.post(
+                        "{% url 'data:delete_datalist' %}",
+                        {'csrfmiddlewaretoken':csrfmiddlewaretoken,'id':xid}
+                    ).done(function (data){
+                           if(data.error){
+                                state = "error"
+                                msj_aux_1 = '<iconify-icon style="color:#e91e63" class="icon-swal" icon="solar:dislike-bold-duotone"></iconify-icon><br><br><b><h3><b>Oopps!!</b></h3></b>'
+                           }else{
+                                state = "success"
+                                msj_aux_1 = '<iconify-icon style="color:#4caf50" class="icon-swal" icon="solar:like-bold-duotone"></iconify-icon><br><br><b><h3><b>Genial!!</b></h3></b>'
+                           }
+                           Swal.fire({
+                                html: msj_aux_1 + "<h5>" + data.msj + "</h5>",
+                                icon: state,
+                                showCancelButton: false,
+                                confirmButtonBackground: "#009688",
+                                confirmButtonText: "Enterado"
+                            }).then((result) => {
+                              if (result.isConfirmed) {
+                                  $('#tb').DataTable().ajax.reload();
+                              }
+                            });
+                    });
+                    break;
+            }
+        });
+        ///------------------------------------------- ///
+
+        ///////////////////
+
+    })
+
+</script>
+{% endblock%}
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+

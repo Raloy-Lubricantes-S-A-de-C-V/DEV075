@@ -1,0 +1,531 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block sitio %}
+    <li class="breadcrumb-item"><a href="{% url 'data:' %}">Data List</a></li>
+    <li class="breadcrumb-item"><a id="goback" >{{ name_header }}</a></li>
+    <li class="breadcrumb-item"><a id="goback2" >{{ ref }}</a></li>
+{% endblock %}
+
+
+{% block content %}
+{% csrf_token %}
+<!-- begin row -->
+<h3>Detalle de linea Data List (<b>{{ name_header }}</b>)</h3><br>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title">.</h4>
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                </div>
+            </div>
+            <div class="panel-body m-20">
+                 <div class="row">
+                     <div class="col-12 m-b-30" >
+                         <div class="card cpage" style="padding: 30px;">
+                              <div class="cpage-ctrl">
+                                 <div class="cphead xcpage-head-0">
+                                     <h4>Linea : <b>{{ ref }}</b></h4>
+                                     <ul id="state-chilp">
+                                         <li id="{{ state }}">{{ state }}</li>
+                                         <li id="{{ state_copy }}">{{ state_copy }}</li>
+                                         <li id="{{ state_fusion }}">{{ state_fusion }}</li>
+                                     </ul>
+                                     <a class="rew-btn"><iconify-icon icon="solar:multiple-forward-left-bold-duotone"></iconify-icon>Volver</a>
+                                 </div>
+                                 <div class="cpbody xcpage-body-0" style="padding-top:20px;">
+                                     <div class="card-complete">
+                                         <div class="cchead">
+                                             TOTAL LITROS
+                                         </div>
+                                         <div class="ccbody">
+                                             <span class="bdy-1">
+                                                4,123
+                                             </span>
+                                         </div>
+                                     </div>
+                                  </div>
+                                  <div class="card-complete">
+                                     <div class="cchead">
+                                         TOTAL CLIENTES
+                                     </div>
+                                     <div class="ccbody">
+                                         <span class="bdy-2">
+                                            4,123
+                                         </span>
+                                     </div>
+                                 </div>
+                                  <div class="card-complete">
+                                     <div class="cchead">
+                                         TOTAL DETERMINANTES
+                                     </div>
+                                     <div class="ccbody">
+                                         <span class="bdy-3">
+                                            4,123
+                                         </span>
+                                     </div>
+                                 </div>
+                                  <div class="card-complete">
+                                     <div class="cchead">
+                                         TOTAL PRODUCTOS
+                                     </div>
+                                     <div class="ccbody">
+                                         <span class="bdy-4">
+                                            4,123
+                                         </span>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="col-12 m-b-30" >
+                         <div class="card lcpage" style="padding: 30px;border: none !important;">
+                             <div class="lcpage-00">
+                                 <div class="lphead lcpage-head-00"></div>
+                                 <div class="top-scroll-wrapper">
+                                     <div class="top-scroll"></div>
+                                 </div>
+                                 <div class="lpbody lcpage-body-00 tb-long table-wrapper">
+                                     <table id="tb" class="display nowrap" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end row -->
+<!-- begin row -->
+
+{% endblock %}
+
+{% block style %}
+    <style>
+    .btn-name-mdl-create{
+        font-size: 14px;
+    }
+    .chip-user{
+        width: 100%;
+        text-align: center;
+    }
+    .bold{
+        font-weight: bold !important;
+        color:#0d3349;
+    }
+    .badge{
+        background: transparent !important;
+    }
+    .state-li{
+        color: #000000;
+        border: 1px solid #00000038;
+        background: #eeeeee;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-li-2{
+        color: #ffffff;
+        border: 1px solid rgba(0, 0, 0, 0.44);
+        background: #3F51B5;
+        font-size : 10px;
+        display: inline-block;
+        min-width: 80px;
+        max-width: 80px;
+        padding: 3px 7px;
+        text-align: center;
+        margin-left: 5px;
+        border-radius: 5px;
+    }
+    .state-as{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #009688;
+        display: inline-block;
+        min-width: 60px;
+        max-width: 60px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-an{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #03A9F4;
+        display: inline-block;
+        min-width: 60px;
+        max-width: 60px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-cl{
+        color: #000000;
+        border: 1px solid #00000038;
+        background: #ffb64c;
+        display: inline-block;
+        min-width: 60px;
+        max-width: 60px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-ap{  /********************/
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #4CAF50;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-o-cp{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #8859db;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-o-ca{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #22c4b5;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-f-fs{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #e44949;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .tb-long{
+        border-right: 1px solid #d2d2d2;
+        overflow-x: scroll;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        box-shadow: inset -13px -9px 11px 1px #e7e7e7;
+        overflow-x: scroll;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    .w100{
+        min-width: 100px !important;
+    }
+    .w150{
+        min-width: 150px !important;
+    }
+    .w200{
+        min-width: 200px !important;
+    }
+    .w250{
+        min-width: 250px !important;
+    }
+    .w300{
+        min-width: 300px !important;
+    }
+    .center{
+        text-align: center;
+    }
+    .top-scroll-wrapper {
+        overflow-x: auto;
+        overflow-y: hidden;
+        margin-bottom: 10px;
+    }
+    .top-scroll{
+        height: 1px; /* Altura mínima para que sea invisible */
+    }
+    .table-wrapper{
+        overflow-x: auto;
+    }
+    .prod{
+        color: #5f5f5f;
+        background: #f2f2f2;
+        padding: 5px 15px;
+        font-size: 15px;
+        border: 1px solid #bababa;
+        font-weight: 800;
+        float: left;
+        margin-left: 10px;
+    }
+    .card-complete{
+        background: #FFFFFF;
+        display: block;
+        width: 150px;
+        height: 80px;
+        text-align: center;
+        position: relative;
+        padding: 5px;
+        border: 1px solid #8c8c8c;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.12);
+        border-radius: 3px;
+        float: left;
+        margin-left: 10px;
+    }
+    .card-complete .cchead{
+        color: #a9a9a9;
+        font-size: 10px;
+        font-weight: bold;
+    }
+    .card-complete .ccbody{
+        color: #6b6b6b;
+        font-size: 20px;
+        font-weight: bold;
+        padding-top: 10px;
+    }
+    </style>
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready(function (){
+        {% if active_btn > 0 %}
+            Swal.fire({
+                html: '<iconify-icon class="icon-swal" icon="solar:like-bold-duotone"></iconify-icon><br><br><b><h3><b>Genial!!</b></h3></b><h5>Se ha creado un nuevo DataList con folio<b>"{{ folio }}"</b>. Recuerde que ya puede ser utilizado en su proceso de Ruteo</h5>',
+                icon: "success",
+                showCancelButton: false,
+                confirmButtonBackground: "#009688",
+                confirmButtonText: "Enterado"
+            }).then((result) => {
+              if (result.isConfirmed) {
+                  window.location.href = "{% url 'data:' %}";
+              }
+            });
+        {% endif %}
+        function getRandomInt(max) {
+          return Math.floor(Math.random() * max);
+        }
+        $(".rew-btn").click(function(){
+            window.location.href = "{% url 'data:showid' %}?csrfmiddlewaretoken=" + csrfmiddlewaretoken + "&id={{ id_header }}";
+        });
+        $("#goback").click(function (){
+            window.location.href = "{% url 'data:showid' %}?csrfmiddlewaretoken=" + csrfmiddlewaretoken + "&id={{ id_header }}";
+        });
+        $("#goback2").click(function (){
+            window.location.href = "{% url 'data:showref' %}?csrfmiddlewaretoken=" + csrfmiddlewaretoken + "&ref="+xref;
+        });
+        son=$('#state-chilp').children();
+        $("#state-chilp").after("<div id='state-chilp-new'></div>");
+        $("#state-chilp").remove()
+        for (var i = 0; i<son.length; i++){
+            var li = son[i].id;
+            if(li.length > 0){
+                $("#state-chilp-new").append("<div class='state-li-2'>" + li + "</div>");
+            }
+        }
+        var tb = $('#tb').DataTable({
+            destroy: true,
+            responsive: true,
+            ajax: {
+                type: 'POST',
+                url: '{% url "data:datatables_datasheet_line" %}',
+                data: {csrfmiddlewaretoken, 'id':'{{ id_header }}', 'ref':'{{ ref }}'},
+                dataType: 'json',
+            },
+            columns: [
+                {data: 'number', title: 'Id',className: 'center bold', visible:true,  type: 'string'},
+                {data: 'ref', title: 'Referencia', className: 'center', visible:true,  type: 'string'},
+                {data: 'partner', title: 'Cliente', className: 'center', visible:true,  type: 'string'},
+                {data: 'delivery_name', title: 'Determinante', className: 'center', visible:true,  type: 'string'},
+                {data: null, title: 'SKU', "render": function ( data, type, row, meta) {
+                        return '<span class="state-li">'+data.sku+'</span>';
+                    }
+                },
+                {data: 'description', title: 'Descripción', visible:true,  type: 'string'},
+                {data: null, title: 'Paquete', "render": function ( data, type, row, meta) {
+                        return '<span class="state-o-ca">'+data.package_type+'</span>';
+                    }
+                },
+                {data: 'product_uom', title: 'UOM', className: 'center', visible:true,  type: 'string'},
+                {data: null, title: 'UOM L', "render": function ( data, type, row, meta) {
+                        if(data.product_uomt == "LITRO"){
+                            xclass = "state-f-fs"
+                        }else{
+                            xclass = "state-li"
+                        }
+                        return '<span class="'+xclass+'">'+data.product_uomt+'</span>';
+                    }
+                },
+                {data: 'product_sat', title: 'UOM SAT', className: 'center', visible:true,  type: 'string'},
+                {data: null, title: 'Almacen', "render": function ( data, type, row, meta) {
+                        return '<span class="state-li">'+data.site+'</span>';
+                    }
+                },
+                {data: 'weight', title: 'Volumén', className: 'center', visible:true,  type: 'string'},
+                {data: 'pieces', title: 'Piezas', className: 'center', visible:true,  type: 'string'},
+                {data: 'boxes', title: 'Cajas', className: 'center', visible:true,  type: 'string'},
+                {data: 'pallets', title: 'Palets', className: 'center', visible:true,  type: 'string'},
+                {data: 'udv', title: 'UDV', className: 'center bold', visible:true,  type: 'string'},
+                {data: 'qty', title: 'Cantidad', className: 'center bold', visible:true,  type: 'string'}
+            ],
+            pageLength: 25,
+            autoWidth: false,
+            columnDefs: {
+                "max-width": "50%", targets: [0, 1], className: "truncate",
+                checkboxes: {
+                    selectRow: true
+                }
+            },
+            fnRowCallback: function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {},
+            fixedColumns: true,
+            bAutoWidth: false,
+            iDisplayLength: 25,
+            dom: 'Bfrtip',
+            select: {
+                style: 'multi'
+            },
+            fixedHeader: {
+                header: true,
+                footer: true
+            },
+            bScrollCollapse: true,
+            buttons: []
+        });
+        scrollTopTables();
+        $('#tb').on('click', 'a', function (e) {
+            e.preventDefault();
+            var elemnets = $(this).attr("data-action");
+            switch (elemnets) {
+                case "info":
+                    xref = $(this).attr("data-id");
+                    window.location.href = "{% url 'data:showref' %}?csrfmiddlewaretoken=" + csrfmiddlewaretoken + "&ref="+xref;
+                    break;
+                case "archive":
+                    alert("Se archiva")
+                    break;
+                case 'dearchive':
+                    alert("Se desarchiva")
+                    break;
+            }
+        });
+        $("#page-container").addClass("show")
+        $("#page-container").addClass("page-sidebar-minified")
+
+        ///------------------------------------------- ///
+
+        ///////////////////
+        function scrollTopTables(){
+            $.fn.dataTable.ext.errMode = 'none';
+            var table = $('#tb').DataTable({
+                scrollX: true,
+                paging: false,
+                searching: false
+            });
+
+            // Obtén el ancho del contenedor de la tabla para aplicarlo al contenedor superior
+            var tableScrollWidth = $('#tb').parent().get(0).scrollWidth;
+
+            // Asigna el mismo ancho al contenedor de scroll superior
+            $('.top-scroll').width(tableScrollWidth + 1100);
+
+            // Sincroniza el scroll entre el contenedor superior y la tabla
+            $('.top-scroll-wrapper').on('scroll', function() {
+                $('.table-wrapper').scrollLeft($(this).scrollLeft());
+            });
+
+            // Sincroniza el scroll entre la tabla y el contenedor superior
+            $('.table-wrapper').on('scroll', function() {
+                $('.top-scroll-wrapper').scrollLeft($(this).scrollLeft());
+            });
+        }
+
+        $(".smin").attr("data-t","1")
+        $(".smin").addClass("t-rotate-180")
+
+        /*************/
+        $.post("{% url 'data:total_litro_ref' %}",{csrfmiddlewaretoken, 'id':"{{ id_header }}", 'ref':"{{ ref }}"}).done(function(data){
+            if(data.error){
+                Swal.fire({
+                  title: 'Upps !!',
+                  text: data.msj,
+                  icon: 'error',
+                }).then(function (){
+                    location.reload();
+                });
+            }else{
+                $(".bdy-1").text(data.data);
+            }
+        });
+        $.post("{% url 'data:total_cliente_ref' %}",{csrfmiddlewaretoken, 'id':"{{ id_header }}", 'ref':"{{ ref }}"}).done(function(data){
+            if(data.error){
+                Swal.fire({
+                  title: 'Upps !!',
+                  text: data.msj,
+                  icon: 'error',
+                }).then(function (){
+                    location.reload();
+                });
+            }else{
+                $(".bdy-2").text(data.data);
+            }
+        });
+        $.post("{% url 'data:total_determinante_ref' %}",{csrfmiddlewaretoken, 'id':"{{ id_header }}", 'ref':"{{ ref }}"}).done(function(data){
+            if(data.error){
+                Swal.fire({
+                  title: 'Upps !!',
+                  text: data.msj,
+                  icon: 'error',
+                }).then(function (){
+                    location.reload();
+                });
+            }else{
+                $(".bdy-3").text(data.data);
+            }
+        });
+        $.post("{% url 'data:total_productos_ref' %}",{csrfmiddlewaretoken, 'id':"{{ id_header }}", 'ref':"{{ ref }}"}).done(function(data){
+            if(data.error){
+                Swal.fire({
+                  title: 'Upps !!',
+                  text: data.msj,
+                  icon: 'error',
+                }).then(function (){
+                    location.reload();
+                });
+            }else{
+                $(".bdy-4").text(data.data);
+            }
+        });
+        /*************/
+
+    })
+
+</script>
+
+{% endblock%}
+

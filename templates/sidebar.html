@@ -4,41 +4,20 @@
 <!-- begin #sidebar -->
 <div id="sidebar" class="sidebar">
     <!-- begin sidebar scrollbar -->
-    <div data-scrollbar="true" data-height="100%">
+    <div data-scrollbar="true" data-height="100%" style="background: linear-gradient(21deg, rgb(203 217 225) 0%, rgb(238 248 254) 35%, rgb(255 255 255) 100%);">
         <!-- begin sidebar user -->
         <ul class="nav">
             <li class="nav-profile">
-                <a href="javascript:;" data-toggle="nav-profile">
+                <a href="javascript:;" data-toggle="nav-profile" style="height: 200px;">
                     <div class="cover with-shadow"></div>
-                    
-                    <div class="image">
-                        {% if request.user.profile.picture %}
-                        <img src="{{ request.user.profile.picture.url }}" class="rounded-circle" width="50"
-                             height="50"/>
-                        {% else %}
-                        <img src="{% static 'img/users/user.png' %}" class="rounded-circle" height="50"/>
-                        {% endif %}
-                    </div>
-                    
-                    <div class="info"><b class="caret pull-right"></b> <h5>{{ request.user }}</h5></div>
-                        
-                        {% if request.user.profile.biography %}
-                        <div class="col-md-12 p-4">
-                            <small><i class="fas fa-bookmark"></i>&nbsp;{{ request.user.profile.biography }}</small>
-                        </div>
-                        {% endif %}
-                        {% if request.user.profile.phone_number %}
-                        <div class="col-md-12 p-4">
-                            <small><i class="fas fa-phone-alt"></i>&nbsp;{{ request.user.profile.phone_number }}</small>
-                        </div>
-                        {% endif %}
+                    <div class="down"><iconify-icon icon="solar:round-arrow-down-bold-duotone"></iconify-icon></div>
                 </a>
             </li>
             <li>
                 <ul class="nav nav-profile">
                     <li><a href="{% url 'users:update_profile' %}"><i class="fa fa-cog"></i>Editar Perfil</a></li>
                     <li><a href="javascript:;"><i class="fa fa-question-circle"></i> Ayuda</a></li>
-                    </li>
+
                 </ul>
             </li>
         </ul>
@@ -47,12 +26,11 @@
     <!-- begin sidebar nav -->
     <ul class="nav">
         <li class="nav-header">Navigation</li>
-        
         <!-- Panel Delvelop = Use active in class has-sub -->
         <li class="has-sub">
             <a href="javascript:;">
                 <a href="{% url 'general_settings:ping' %}">
-                    <i class="fa fa-th-large"></i>
+                    <iconify-icon class="solar-navbar" icon="solar:widget-bold-duotone"></iconify-icon>
                     <span>My Panel</span>
                 </a>
             </a>
@@ -62,7 +40,7 @@
         <li class="has-sub">
             <a href="javascript:;">
                 <b class="caret"></b>
-                <i class="fa fa-bell"></i>
+                <iconify-icon class="solar-navbar" icon="solar:bell-bold-duotone"></iconify-icon>
                 <span>Notificaciones</span>
             </a>
             <ul class="sub-menu">
@@ -85,16 +63,29 @@
             </ul>
         </li>
         <li class="has-sub ">
+            <a href="{% url 'data:' %}">
+                <iconify-icon class="solar-navbar" icon="solar:bill-list-bold-duotone"></iconify-icon>
+                <span>Data List</span>
+            </a>
+        </li>
+        <li class="has-sub ">
             <a href="#">
-                <i class="fa fa-cube "></i>
+                <iconify-icon class="solar-navbar" icon="solar:box-minimalistic-bold-duotone"></iconify-icon>
                 <span>New App</span>
             </a>
         </li>
 
-        
+        <style>
+            .sidebar-minify-btn:hover, .sidebar-minify-btn:after, .sidebar-minify-btn:active{
+                background: red !important;
+            }
+        </style>
         <!-- begin sidebar minify button -->
-        <li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i
-                class="fa fa-angle-double-left"></i></a></li>
+        <li class="smin" data-t="0">
+            <a href="javascript:;" data-click="sidebar-minify" style="padding: 0px !important;">
+                <iconify-icon class="solar-navbar green" style="margin:0px !important;" icon="solar:round-arrow-left-bold-duotone"></iconify-icon>
+            </a>
+        </li>
         <!-- end sidebar minify button -->
     </ul>
     <!-- end sidebar nav -->
