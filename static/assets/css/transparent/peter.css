@@ -40614,13 +40614,54 @@ body::-webkit-scrollbar-thumb {
     border: 1px solid rgb(33 33 33 / 23%) !important;
 }
 .rew-btn iconify-icon{
-    font-size: 14px !important;
+    font-size: 15px !important;
+    display: inline-block;
+    position: relative;
+    top: 4px;
+    right: 2px;
+    color: #fff;
+}
+.rew-btn:hover{
+    text-decoration: none;
 }
 .rew-btn{
-    color:#3F51B5 !important;
+    background: #3F51B5 !important;
     cursor: pointer !important;
     margin-top: 10px !important;
-    display: block !important;
+    display: inline-block !important;
+    position: relative;
+    padding: 2px 6px;
+    padding-bottom: 6px;
+    color: #fff !important;
+    font-size: 10px;
+    margin-right: 1px;
+}
+.rew-btn2 iconify-icon{
+    font-size: 15px !important;
+    display: inline-block;
+    position: relative;
+    top: 4px;
+    right: 3px;
+    color: #fff;
+}
+.rew-btn2:hover{
+    text-decoration: none;
+}
+.rew-btn2{
+    background: #3F51B5 !important;
+    cursor: pointer !important;
+    margin-top: 10px !important;
+    display: inline-block !important;
+    position: relative;
+    padding: 2px 6px;
+    padding-bottom: 6px;
+    color: #fff !important;
+    font-size: 10px;
+    margin-right: 1px;
+}
+.phead{
+    text-align: left;
+    padding-top: 10px;
 }
 .sidebar .nav>li>a, .sidebar .nav>li>a>i {
     color: #3F51B5 !important;
@@ -40787,4 +40828,73 @@ table.dataTable.stripe > tbody > tr:nth-child(odd).selected > *, table.dataTable
 }
 .chip-son-dl:hover, .chip-father-dl:hover{
    color:#efff9d;
+}
+.tapadera-notify, .tapaderanotify{
+    background: transparent;
+    display: block;
+    position: absolute;
+    width: calc(100% - 30px);
+    height: 60px;
+    cursor: pointer;
+}
+.rav-value{
+    border-color:#4CAF50 !important;
+}
+.rc-model{
+    border-color:#FFC107 !important;
+}
+.rc-seed{
+    border-color: #ff0751 !important;
+}
+.rav-field{
+    border-color: #ff0751 !important;
+}
+.rav-model{
+    border-color: #0c7cd5 !important;
+}
+.rav-fields{
+    border-color: #22c4b5 !important;
+}
+.ckanban{
+    float:left;
+    margin:10px;
+    box-shadow: 5px 5px 10px -2px #00000030;
+}
+.card-img-top{
+    width: 70% !important;
+    margin: 5px 15% !important;
+}
+.med-card{
+    background: #f5f5f5;
+    width: calc(50% - 10px);
+    float: left;
+    height: 40px;
+    border-radius: 2px;
+    margin: 5px;
+    box-shadow: 1px 1px 4px -2px #6e6e6e;
+    border: 1px solid #0000001c;
+}
+.med-card span{
+    width: 40px;
+    display: block;
+    position: relative;
+    height: 100%;
+    float: left;
+}
+.med-card div{
+    background: #ffffff00;
+    height: 100%;
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+    color: #03A9F4;
+    font-size: 15px;
+}
+.card-body{
+    background: #fff;
+
+}
+.card-layout{
+    margin-top: 15px;
+    margin-bottom: 15px;
 }

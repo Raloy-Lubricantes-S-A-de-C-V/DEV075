@@ -231,7 +231,7 @@
                             '<span style="margin-right:4px;border-radius:4px;font-size:10px;padding:2px 5px;color:#fff;background:' + xdata[i]['priority']['color'] + ';">' + xdata[i]['priority']['type'] + '</span>'+
                             '<div class="text-muted f-s-11" style="margin-top: 5px;">' + xdata[i]['date'] + '</div>'+
                         '</div>' +
-                        '<div class="tapadera-notify"></div>'+
+                        '<div class="tapaderanotify" data-id="'+xdata[i]['id']+'"></div>'+
                     '</a>';
                     $("#add_notify").append(noti)
                     if(i == 5){
@@ -239,6 +239,11 @@
                     }
                 }
                 console.log(xdata);
+                $(".tapaderanotify").click(function(e){
+                    xid = $(this).attr("data-id");
+                    console.log("redireccionamiento notify");
+                    window.location.href = "{% url 'notify:showid' %}?csrfmiddlewaretoken=" + csrfmiddlewaretoken + "&id="+xid;
+                });
             }else{
                 $('#bell').append('<i class="fa fa-bell"></i>');
                 $('#badgeinbox').text("");

@@ -1,0 +1,349 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block sitio %}
+    <li class="breadcrumb-item"><a href="{% url 'zones:' %}">Zonas</a></li>
+    <li class="breadcrumb-item"><a href="">{{ name }}</a></li>
+{% endblock %}
+
+
+{% block content %}
+{% csrf_token %}
+<!-- begin row -->
+<h3>Zona ({{ name }})</h3><br>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title">.</h4>
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                </div>
+            </div>
+            <div class="panel-body m-20">
+                 <div class="row">
+                     <div class="col-12 m-b-30" >
+                         <div class="card" style="padding: 30px;border: none !important;">
+                             <div class="cpage-card" style="display: block;">
+                                <div class="lphead">
+                                    <a class="rew-btn" href="{% url 'zones:' %}" ><iconify-icon style="font-size: 14px;" icon="solar:multiple-forward-left-bold-duotone"></iconify-icon>Volver</a>
+                                </div>
+                                 <div class="lpbody">
+                                    <style>
+                                         .helptext{top: 5px !important;}
+                                    </style>
+                                    <form id="act-model" action="{% url 'zones:update_model_model' %}" method="post">
+                                        {% csrf_token %}
+                                        {{ form }}
+                                        <br>
+                                        <input class="btn btn-success" type="submit" value="Actualizar">
+                                     </form>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end row -->
+<!-- begin row -->
+
+{% endblock %}
+
+{% block style %}
+    <style>
+    .rc-id{
+        display:none;
+    }
+    .btn-name-mdl-create{
+        font-size: 14px;
+    }
+    .chip-user{
+        width: 100%;
+        text-align: center;
+    }
+    .bold{
+        font-weight: bold !important;
+        color:#0d3349;
+    }
+    .badge{
+        background: transparent !important;
+    }
+    .lphead{
+        margin-bottom: 20px !important;
+    }
+    .state-li{
+        color: #000000;
+        border: 1px solid #00000038;
+        background: #c6c6c6;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-as{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #009688;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-an{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #03A9F4;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-cl{
+        color: #000000;
+        border: 1px solid #00000038;
+        background: #ffb64c;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-ap{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #4CAF50;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-o-cp{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #8859db;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-o-ca{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #22c4b5;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-f-fs{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #e44949;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    table.dataTable.cell-border>tbody>tr>* {
+        border-right: none !important;
+    }
+    table.dataTable.cell-border>tbody>tr>*:first-child {
+        border-left: none !important;
+    }
+    table.dataTable.display tbody tr:hover.selected > .sorting_1, table.dataTable.order-column.hover tbody tr:hover.selected > .sorting_1 {
+        box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    table.dataTable.stripe > tbody > tr:nth-child(odd).selected > *, table.dataTable.display > tbody > tr:nth-child(odd).selected > * {
+        box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    table.dataTable.display > tbody > tr.selected + tr.selected > td {
+        box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    table.dataTable.display > tbody > tr.selected:hover > * {
+        box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    table.dataTable.display > tbody tr.selected > .sorting_1{
+        box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    table.dataTable.hover > tbody > tr.selected:hover > *, table.dataTable.display > tbody > tr.selected:hover > * {
+      box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    table.dataTable.stripe > tbody > tr:nth-child(odd).selected > *, table.dataTable.display > tbody > tr:nth-child(odd).selected > * {
+      box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    .rc-endpoint, .rc-file, .rc-external, .rc-internal {
+        display: none;
+    }
+    .add-fields--internal input, .add-fields--external input, .add-fields--file input{
+        height: 35.3px;
+    }
+    #edos-z-collector{
+        display: block;
+        width: 100%;
+        height: calc(1.5em + .875rem + 2px);
+        padding: .4375rem .75rem;
+        font-size: .8125rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #212121;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    }
+    .edos-append{
+        display: block;
+        position: relative;
+        float: left;
+        background: #d0d0d0;
+        padding: 2px 10px;
+        margin: 0px 5px;
+        border-radius: 4px;
+        font-weight: 700;
+    }
+    .edos-append a{
+        background: #626262;
+        margin-left: 8px;
+        padding: 2px 5px;
+        font-size: 8px;
+        color: #dcdcdc !important;
+        border-radius: 50%;
+        margin-top: 2px;
+        display: block;
+        position: relative;
+        float: right;
+        cursor: pointer;
+    }
+    .badge.edos{
+        color: #ffffff;
+        border-radius: 0px;
+        font-size: 14px;
+        padding: 8px 8px;
+        margin: 2px;
+    }
+    </style>
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready(function (){
+        $("[for=id_id]").hide();
+        if('{{ first }}' == 'True'){
+            $('.errorlist').remove();
+        }
+        {% if response.error == True  %}
+            Swal.fire({
+                html: '<iconify-icon style="color:#f44336" class="icon-swal" icon="solar:dislike-bold-duotone"></iconify-icon><br><br><b><h3><b>Oopps !!</b></h3></b><h5>{{ response.msj }}</h5>',
+                icon: "error",
+                showCancelButton: false,
+                confirmButtonBackground: "#009688",
+                confirmButtonText: "Enterado"
+            }).then((result) => {
+              if (result.isConfirmed) {
+                  window.location.href = "{% url 'typetransport:' %}";
+              }
+            });
+        {% elif response.error == False %}
+            Swal.fire({
+                html: '<iconify-icon style="color:#4caf50" class="icon-swal" icon="solar:like-bold-duotone"></iconify-icon><br><br><b><h3><b>Genial!!</b></h3></b><h5>{{ response.msj }}</h5>',
+                icon: "success",
+                showCancelButton: false,
+                confirmButtonBackground: "#009688",
+                confirmButtonText: "Enterado"
+            }).then((result) => {
+              if (result.isConfirmed) {
+                  window.location.href = "{% url 'typetransport:' %}";
+              }
+            });
+        {% endif %}
+        ///////////////////////////////////////////////////////////////////////////////////
+        var az = $(".edos-z");
+        var bz = $("#edos-z-collector");
+        $("#edos-z-contain").remove();
+        az.hide();
+        $.post(
+            "{% url "zones:post_get_states" %}",
+            {'csrfmiddlewaretoken':csrfmiddlewaretoken}
+        ).done(function (data){
+            console.log("********************* >");
+            var word = az.val();
+            var word_split = word.split(",");
+            var selecthtml = "<option></option>";
+            for(var i = 0 ; i < (data.data).length ; i ++){
+                selecthtml = selecthtml + '<option>['+data.data[i]["id"]+'] - '+data.data[i]["name"]+'</option>';
+            }
+            var htmlc = "";
+            for(var j=0; j<word_split.length; j++){
+                for(var k = 0 ; k < (data.data).length ; k ++){
+                    if((parseInt(data.data[k]["id"])) == (parseInt(word_split[j]))){
+                        console.log("---->  **** " + data.data[k]["name"]);
+                        htmlc = htmlc + '<div id="edos-append-'+data.data[k]["id"]+'" class="edos-append" data-id="'+data.data[k]["id"]+'" data-name="'+data.data[k]["name"]+'"><span>'+data.data[k]["name"]+'</span><a class="clear-edos" data-id="edos-append-'+data.data[k]["id"]+'">X</a></div>';
+                    }
+                }
+            }
+            az.after('<div id="edos-z-contain" class="col-12" style="width: 100%;height: 70px;padding-left: 0px;padding-right: 0px;"><div id="edos-z-collector" class="col-12" style="float:left; margin-bottom: 5px;"></div><select id="edos-selected" class="form-control col-3" style="float:left;">'+selecthtml+'</select><i class="fa fa-globe" style="font-size: 20px;margin-left: 5px;margin-top: 8px;color: #cecece;"></i></div>');
+            $("#edos-z-collector").append(htmlc);
+            $("#edos-selected").change(function(){
+                var sel = $("#edos-selected option:selected").text();
+                var idz = sel.split("]")[0].split("[")[1]
+                var namez = sel.split("-")[1].trim(" ");
+                $("#edos-z-collector").append('<div id="edos-append-'+idz+'" class="edos-append" data-id="'+idz+'" data-name="'+namez+'"><span>'+namez+'</span><a class="clear-edos" data-id="edos-append-'+idz+'">X</a></div>');
+                console.log(sel);
+                $(".clear-edos").click(function(){
+                    var dom = $(this).attr("data-id");
+                    $("#"+dom).remove();
+                    //////////
+                    var collector = $("#edos-z-collector").children();
+                    idsz = "";
+                    for(var j = 0 ; j < collector.length ; j ++){
+                        var dataId = $("#"+collector[j].id).attr("data-id");
+                        idsz = idsz + "," + dataId;
+                    }
+                    idsz = idsz.substring(1, idsz.length);
+                    console.log(idsz);
+                    $("#id_edos").val(idsz);
+                    /////////
+                });
+                //////////
+                var collector = $("#edos-z-collector").children();
+                idsz = "";
+                for(var j = 0 ; j < collector.length ; j ++){
+                    var dataId = $("#"+collector[j].id).attr("data-id");
+                    idsz = idsz + "," + dataId;
+                }
+                idsz = idsz.substring(1, idsz.length);
+                console.log(idsz);
+                $("#id_edos").val(idsz);
+                /////////
+            });
+            console.log("********************* <");
+        });
+        ///////////////////////////////////////////////////////////////////////////////////
+    });
+
+</script>
+{% endblock%}
+

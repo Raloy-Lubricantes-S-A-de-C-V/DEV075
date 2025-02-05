@@ -1,0 +1,1485 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block sitio %}
+    <li class="breadcrumb-item"><a href="{% url 'rules:' %}">Condiciones</a></li>
+{% endblock %}
+
+
+{% block content %}
+{% csrf_token %}
+<!-- begin row -->
+<h3>Condiciones</h3><br>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title">.</h4>
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                </div>
+            </div>
+            <div class="panel-body m-20">
+                 <div class="row">
+                     <div class="col-12 m-b-30" >
+                         <div class="card cpage" style="padding: 30px;">
+                              <div class="cpage-ctrl">
+                                 <div class="cphead xcpage-head-0">
+                                     <a class="btn btn-bluehard m-r-4 m-b-5" data-mdl-name="Listado de Condiciones." data-mdl-sh="cpage-btn" data-card="cpage-0">
+                                        <iconify-icon class="new-icon" icon="solar:list-arrow-down-minimalistic-bold-duotone"></iconify-icon>
+                                        <span class="new-text">Lista Condición</span>
+                                     </a>
+                                     <a class="btn btn-bluehard m-r-4 m-b-5" data-mdl-name="Agregar condición para generar una función de evaluación que será utilizada en los escenarios y posteriormente se evaluará en los análisis." data-mdl-sh="cpage-btn" data-card="cpage-1">
+                                        <iconify-icon class="new-icon" icon="solar:add-square-bold-duotone"></iconify-icon>
+                                        <span class="new-text">Agregar Condición</span>
+                                     </a>
+                                     <a class="btn btn-bluehard m-r-4 m-b-5" data-mdl-name="Evalua el funcionamiento de una condición con un Data List previamente generado." data-mdl-sh="cpage-btn" data-card="cpage-2">
+                                        <iconify-icon class="new-icon" icon="solar:checklist-bold-duotone"></iconify-icon>
+                                        <span class="new-text">Evaluar Condición</span>
+                                     </a>
+                                     <a class="btn btn-bluehard m-r-4 m-b-5" style="background-color:#00BCD4 !important;border-color:#00BCD4 !important;" data-mdl-name="Listado de modelos disponibles para el análisis de los Data List." data-mdl-sh="cpage-btn" data-card="cpage-4">
+                                        <iconify-icon class="new-icon" icon="solar:list-arrow-down-minimalistic-bold-duotone"></iconify-icon>
+                                        <span class="new-text">Lista Modelo</span>
+                                     </a>
+                                     <a class="btn btn-bluehard m-r-4 m-b-5" style="background-color:#00BCD4 !important;border-color:#00BCD4 !important;" data-mdl-name="Agregar modelo que será utilizado en las condiciones, Si no dan de alta no podrán ser usados para la evaluación." data-mdl-sh="cpage-btn" data-card="cpage-3">
+                                        <iconify-icon class="new-icon" icon="solar:add-square-bold-duotone"></iconify-icon>
+                                        <span class="new-text">Agregar Modelo</span>
+                                     </a>
+                                 </div>
+                                 <div class="cpbody xcpage-body-0"> </div>
+                             </div>
+                             <div class="cpage-card cpage-0">
+                                 <div class="phead cpage-head-0">A1</div>
+                                 <div class="pbody cpage-body-0">
+
+                                 </div>
+                             </div>
+                             <div class="cpage-card cpage-1">
+                                 <div class="phead cpage-head-1">B1</div>
+                                 <div class="pbody cpage-body-1">
+
+                                 </div>
+                             </div>
+                             <div class="cpage-card cpage-2">
+                                 <div class="phead cpage-head-2">C1</div>
+                                 <div class="pbody cpage-body-2">
+
+                                 </div>
+                             </div>
+                             <div class="cpage-card cpage-3">
+                                 <div class="phead cpage-head-3">D1</div>
+                                 <div class="pbody cpage-body-3">
+
+                                 </div>
+                             </div>
+                             <div class="cpage-card cpage-4">
+                                 <div class="phead cpage-head-4">E1</div>
+                                 <div class="pbody cpage-body-4">
+
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="col-12 m-b-30" >
+                         <div class="card lcpage" style="padding: 30px;border: none !important;">
+                             <div class="lcpage-00">
+                                 <div class="lphead lcpage-head-00"></div>
+                                 <div class="lpbody lcpage-body-00">
+                                     <img style="filter:opacity(0.7); width: 50%;margin-left:24%;" src="{% static 'img/datalist/rule.gif' %}">
+                                 </div>
+                             </div>
+                             <div class="cpage-card lcpage-0">
+                                 <div class="lphead lcpage-head-0">
+                                    <h4>Listado de Condiciones</h4>
+                                 </div>
+                                 <div class="lpbody lcpage-body-0">
+                                     <div class="col-12">
+                                         <table id="tb" class="display cell-border compact stripe">
+                                            <thead>
+                                                <tr>
+                                                    <th>x</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>x</td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>x</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                 </div>
+                             </div>
+                             <div class="cpage-card lcpage-1">
+                                 <div class="lphead lcpage-head-1">
+                                     <h4>
+                                         Agregar nueva Condición
+                                     </h4>
+                                 </div>
+                                 <div class="lpbody lcpage-body-1">
+                                     <form  action="{% url 'rules:create' %}" method="post">
+                                         {% csrf_token %}
+                                         {% load form_extras %}
+                                         <div class="xrc-hr--ok">
+                                             <div class="xrc-1"></div>
+                                             <div class="xrc-2">CONDICIÓN</div>
+                                             <div class="xrc-3"></div>
+                                         </div>
+                                         {% for field in header %}
+                                             {% if field|get_class == "rc-main" %}
+                                                 <div class="form-group row {{ field|get_class }}">
+                                                    <div for="{{ field.label }}" class="col-sm-12 col-form-label">
+                                                        {{ field.label_tag }}
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        {{ field }}
+                                                        {% if field.help_text %}
+                                                            <small class="helptext">{{ field.help_text }}</small>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                             {% endif %}
+                                         {% endfor %}
+                                         <div class="xrc-hr--ok">
+                                             <div class="xrc-1"></div>
+                                             <div class="xrc-2">MODELO</div>
+                                             <div class="xrc-3"></div>
+                                         </div>
+                                         {% for field in header %}
+                                             {% if field|get_class == "rc-type-action"%}
+                                                 <div class="form-group row {{ field|get_class2 }}">
+                                                    <div for="{{ field.label }}" class="col-sm-12 col-form-label">
+                                                        {{ field.label_tag }}
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        {{ field }}
+                                                        {% if field.help_text %}
+                                                            <small class="helptext">{{ field.help_text }}</small>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                             {% endif %}
+                                         {% endfor %}
+                                         <div class="xrc-hr--ok">
+                                             <div class="xrc-1"></div>
+                                             <div class="xrc-2">EVALUACIÓN</div>
+                                             <div class="xrc-3"></div>
+                                         </div>
+                                         {% for field in header %}
+                                             {% if field|get_class == "rc-eval"%}
+                                                 <div class="form-group row {{ field|get_class }}">
+                                                    <div for="{{ field.label }}" class="col-sm-12 col-form-label {{ field|get_class2 }}">
+                                                        {{ field.label_tag }}
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        {{ field }}
+                                                        {% if field.help_text %}
+                                                            <small class="helptext">{{ field.help_text }}</small>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                             {% endif %}
+                                         {% endfor %}
+                                         <div class="xrc-hr--ok">
+                                             <div class="xrc-1"></div>
+                                             <div class="xrc-2">ENTRADAS</div>
+                                             <div class="xrc-3"></div>
+                                         </div>
+                                         {% for field in header %}
+                                             {% if field|get_class == "rx-eval"%}
+                                                 {% if field|get_class ==  "rx-eval"  %}
+                                                    <div class="form-group row {{ field|get_class2 }}">
+                                                 {% else %}
+                                                    <div class="form-group row {{ field|get_class }}">
+                                                 {% endif %}
+                                                    <div for="{{ field.label }}" class="col-sm-12 col-form-label">
+                                                        {{ field.label_tag }}
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        {{ field }}
+                                                        {% if field.help_text %}
+                                                            <small class="helptext">{{ field.help_text }}</small>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                             {% endif %}
+                                         {% endfor %}
+                                         <div class="xrc-hr--ok">
+                                             <div class="xrc-1"></div>
+                                             <div class="xrc-2">SALIDAS</div>
+                                             <div class="xrc-3"></div>
+                                         </div>
+                                        {% for field in header %}
+                                             {% if field|get_class == "rz-eval"%}
+                                                 <div class="form-group row {{ field|get_class }}">
+                                                    <div for="{{ field.label }}" class="col-sm-12 col-form-label">
+                                                        {{ field.label_tag }}
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        {{ field }}
+                                                        {% if field.help_text %}
+                                                            <small class="helptext">{{ field.help_text }}</small>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                             {% endif %}
+                                         {% endfor %}
+                                         <input style="margin-top: 25px;" class="btn btn-success" type="submit" value="Guardar">
+                                     </form>
+                                 </div>
+                             </div>
+                             <div class="cpage-card lcpage-2">
+                                 <div class="lphead lcpage-head-2">
+                                     <h4>Evaluar Condición</h4>
+                                 </div>
+                                 <div class="lpbody lcpage-body-2">
+                                    <form  action="{% url 'data:fusion_datalist' %}" method="post">
+                                         {% csrf_token %}
+                                         <input class="btn btn-success" type="submit" value="Fusionar">
+                                     </form>
+                                 </div>
+                             </div>
+                             <div class="cpage-card lcpage-3">
+                                 <div class="lphead lcpage-head-3">
+                                     <h4>Agregar Modelo</h4>
+                                 </div>
+                                 <div class="lpbody lcpage-body-3">
+                                    <style>
+                                         .helptext{top: 5px !important;}
+                                    </style>
+                                    <form enctype="multipart/form-data" id="act-model" action="{% url 'rules:model' %}" method="post">
+                                        {% csrf_token %}
+                                        {% load form_extras %}
+                                        {% for field in models %}
+                                                <div class="form-group row {{ field|get_class }}">
+                                                <div for="{{ field.label }}" class="col-sm-12 col-form-label">
+                                                    {{ field.label_tag }}
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    {{ field }}
+                                                    {% if field.help_text %}
+                                                        <small class="helptext">{{ field.help_text }}</small>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                        <br>
+                                        <input class="btn btn-success" type="submit" value="Agregar">
+                                     </form>
+                                 </div>
+                             </div>
+                             <div class="cpage-card lcpage-4">
+                                 <div class="lphead lcpage-head-4">
+                                     <h4>Lista de Modelos</h4>
+                                 </div>
+                                 <div class="lpbody lcpage-body-4">
+                                     <div class="col-12">
+                                         <table id="tb2" class="display cell-border compact stripe">
+                                            <thead>
+                                                <tr>
+                                                    <th>x</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>x</td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>x</th>
+                                                </tr>
+                                            </tfoot>
+                                         </table>
+                                    </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end row -->
+<!-- begin row -->
+
+{% endblock %}
+
+{% block style %}
+    <style>
+    .btn-name-mdl-create{
+        font-size: 14px;
+    }
+    .chip-user{
+        width: 100%;
+        text-align: center;
+    }
+    .bold{
+        font-weight: bold !important;
+        color:#0d3349;
+    }
+    .badge{
+        background: transparent !important;
+    }
+    .state-li{
+        color: #000000;
+        border: 1px solid #00000038;
+        background: #c6c6c6;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-as{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #009688;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-an{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #03A9F4;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-cl{
+        color: #000000;
+        border: 1px solid #00000038;
+        background: #ffb64c;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-ap{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #4CAF50;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-o-cp{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #8859db;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-o-ca{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #22c4b5;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-f-fs{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #e44949;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    table.dataTable.cell-border>tbody>tr>* {
+        border-right: none !important;
+    }
+    table.dataTable.cell-border>tbody>tr>*:first-child {
+        border-left: none !important;
+    }
+    table.dataTable.display tbody tr:hover.selected > .sorting_1, table.dataTable.order-column.hover tbody tr:hover.selected > .sorting_1 {
+        box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    table.dataTable.stripe > tbody > tr:nth-child(odd).selected > *, table.dataTable.display > tbody > tr:nth-child(odd).selected > * {
+        box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    table.dataTable.display > tbody > tr.selected + tr.selected > td {
+        box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    table.dataTable.display > tbody > tr.selected:hover > * {
+        box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    table.dataTable.display > tbody tr.selected > .sorting_1{
+        box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    table.dataTable.hover > tbody > tr.selected:hover > *, table.dataTable.display > tbody > tr.selected:hover > * {
+      box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    table.dataTable.stripe > tbody > tr:nth-child(odd).selected > *, table.dataTable.display > tbody > tr:nth-child(odd).selected > * {
+      box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    .rc-endpoint, .rc-file, .rc-external, .rc-internal {
+        display: none;
+    }
+    .add-fields--internal input, .add-fields--external input, .add-fields--file input, .add-fields--endpoint input{
+        height: 35.3px;
+    }
+    .xrc-hr--ok .xrc-1{
+        width: 40%;
+        display: block;
+        position: relative;
+        float: left;
+    }
+    .xrc-hr--ok .xrc-2{
+        background: #fff;
+        border-radius: 15px 0px 15px 0px;
+        width: 20%;
+        display: block;
+        position: relative;
+        float: left;
+        text-align: center;
+        font-weight: bold;
+        color: #3f51b5;
+    }
+    .xrc-hr--ok .xrc-3{
+        width: 40%;
+        display: block;
+        position: relative;
+        float: left;
+    }
+    .xrc-hr--ok{
+        margin-top: 50px;
+        margin-bottom: 50px;
+        display: flex;
+        position: relative;
+        width: 100%;
+        background: #d5d9ef;
+        border: 3px solid #d5d9ef;
+        border-radius: 15px;
+    }
+    .rav-values-comp, .rav-fields-comp, .rav-model-comp{
+        display:none;
+    }
+    </style>
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready(function (){
+        console.log( $("#id_type").find("option:selected").val() + "<----------");
+        switch ($("#id_type").find("option:selected").val()) {
+            case 'internal':
+                $(".rc-internal").css('display','block');
+                $(".rc-external").css('display','none');
+                $(".rc-file").css('display','none');
+                $(".rc-endpoint").css('display','none');
+                break;
+            case 'external':
+                $(".rc-external").css('display','block');
+                $(".rc-internal").css('display','none');
+                $(".rc-file").css('display','none');
+                $(".rc-endpoint").css('display','none');
+                break;
+            case 'file':
+                $(".rc-file").css('display','block');
+                $(".rc-internal").css('display','none');
+                $(".rc-external").css('display','none');
+                $(".rc-endpoint").css('display','none');
+                break;
+            case 'api':
+                $(".rc-endpoint").css('display','block');
+                $(".rc-internal").css('display','none');
+                $(".rc-external").css('display','none');
+                $(".rc-file").css('display','none');
+                break;
+        }
+        switch($("#id_typec").find("option:selected").val()){
+            case 'current':
+                $(".rc-current").css('display','block');
+                $(".rc-model").css('display','none');
+                $(".rc-models").css('display','none');
+                $(".rc-seed").css('display','none');
+                break;
+            case 'model':
+                $(".rc-model").css('display','block');
+                $(".rc-current").css('display','none');
+                $(".rc-models").css('display','none');
+                $(".rc-seed").css('display','none');
+                break;
+            case 'models':
+                $(".rc-models").css('display','block');
+                $(".rc-model").css('display','block');
+                $(".rc-current").css('display','none');
+                $(".rc-seed").css('display','none');
+                break;
+            case 'semilla':
+                $(".rc-seed").css('display','block');
+                $(".rc-model").css('display','none');
+                $("rc-current").css('display','none');
+                $(".rc-models").css('display','none');
+                break;
+        }
+        switch($("#id_eval").find("option:selected").val()){
+            case 'value':
+                $(".rav-value").css('display','block');
+                $(".rav-field").css('display','none');
+                $(".rav-model").css('display','none');
+                $(".rav-fields").css('display','none');
+                $(".rav-values").css('display','none');
+                break;
+            case 'field':
+                $(".rav-field").css('display','block');
+                $(".rav-value").css('display','none');
+                $(".rav-model").css('display','none');
+                $(".rav-fields").css('display','none');
+                $(".rav-values").css('display','none');
+                break;
+            case 'fields':
+                $(".rav-field").css('display','block');
+                $(".rav-fields").css('display','block');
+                $(".rav-value").css('display','none');
+                $(".rav-model").css('display','none');
+                $(".rav-values").css('display','none');
+                break;
+            case 'values':
+                $(".rav-value").css('display','block');
+                $(".rav-values").css('display','block');
+                $(".rav-fields").css('display','none');
+                $(".rav-field").css('display','none');
+                $(".rav-model").css('display','none');
+                break;
+            case 'model':
+                $(".rav-model").css('display','block');
+                $(".rav-value").css('display','none');
+                $(".rav-field").css('display','none');
+                $(".rav-fields").css('display','none');
+                $(".rav-values").css('display','none');
+                break;
+        }
+        {% if response.error == True  %}
+            Swal.fire({
+                html: '<iconify-icon style="color:#f44336" class="icon-swal" icon="solar:dislike-bold-duotone"></iconify-icon><br><br><b><h3><b>Oopps !!</b></h3></b><h5>{{ response.msj }}</h5>',
+                icon: "error",
+                showCancelButton: false,
+                confirmButtonBackground: "#009688",
+                confirmButtonText: "Enterado"
+            }).then((result) => {
+              if (result.isConfirmed) {
+                  window.location.href = "{% url 'rules:' %}";
+              }
+            });
+        {% elif response.error == False %}
+            Swal.fire({
+                html: '<iconify-icon style="color:#4caf50" class="icon-swal" icon="solar:like-bold-duotone"></iconify-icon><br><br><b><h3><b>Genial!!</b></h3></b><h5>{{ response.msj }}</h5>',
+                icon: "success",
+                showCancelButton: false,
+                confirmButtonBackground: "#009688",
+                confirmButtonText: "Enterado"
+            }).then((result) => {
+              if (result.isConfirmed) {
+                  window.location.href = "{% url 'rules:' %}";
+              }
+            });
+        {% endif %}
+
+        function getRandomInt(max) {
+          return Math.floor(Math.random() * max);
+        }
+        ////// MODEL
+        $(".rc-internal--field").before('<div class="add-fields--internal"><input id="add-fields--internal--input" type="text" /><a id="add-fields--internal" class="btn btn-success">+</a></div>')
+        $("#add-fields--internal").click(function(){
+            xinput = $("#add-fields--internal--input");
+            xarea = $("#id_tinternal_fields");
+            data = xinput.val();
+            xinput.val("");
+            fileds = xarea.text();
+            if(fileds.length > 1){
+                var new_field = fileds + ',' + data;
+            }else{
+                var new_field =  data;
+            }
+            xarea.text(new_field.trim(','));
+            xinput.focus();
+        });
+        $(".rc-external--field").before('<div class="add-fields--external"><input id="add-fields--external--input" type="text" /><a id="add-fields--external" class="btn btn-success">+</a></div>')
+        $("#add-fields--external").click(function(){
+            xinput = $("#add-fields--external--input");
+            xarea = $("#id_texternal_fields");
+            data = xinput.val();
+            xinput.val("");
+            fileds = xarea.text();
+            if(fileds.length > 1){
+                var new_field = fileds + ',' + data;
+            }else{
+                var new_field =  data;
+            }
+            xarea.text(new_field.trim(','));
+            xinput.focus();
+        });
+        $(".rc-file--field").before('<div class="add-fields--file"><input id="add-fields--file--input" type="text" /><a id="add-fields--file" class="btn btn-success">+</a></div>')
+        $("#add-fields--file").click(function(){
+            xinput = $("#add-fields--file--input");
+            xarea = $("#id_tfile_fields");
+            data = xinput.val();
+            xinput.val("");
+            fileds = xarea.text();
+            if(fileds.length > 1){
+                var new_field = fileds + ',' + data;
+            }else{
+                var new_field =  data;
+            }
+            xarea.text(new_field.trim(','));
+            xinput.focus();
+        });
+        $(".rc-endpoint--field").before('<div class="add-fields--endpoint"><input id="add-fields--endpoint--input" type="text" /><a id="add-fields--endpoint" class="btn btn-success">+</a></div>')
+        $("#add-fields--endpoint").click(function(){
+            xinput = $("#add-fields--endpoint--input");
+            xarea = $("#id_tapi_fields");
+            data = xinput.val();
+            xinput.val("");
+            fileds = xarea.text();
+            if(fileds.length > 1){
+                var new_field = fileds + ',' + data;
+            }else{
+                var new_field =  data;
+            }
+            xarea.text(new_field.trim(','));
+            xinput.focus();
+        });
+        $(".btn_tmodel_fields").after("<a id='btn_tmodel_fields' class='btn btn-success'>Agregar</a>");
+        $("#btn_tmodel_fields").click(function(){
+            var optionSelected = $("option:selected", $("#id_tmodel_field")).val();
+            info = $("#id_tmodel_fields").text();
+            if(info.length > 1){
+                xinfo = info + ',' + optionSelected;
+            }else{
+                xinfo = optionSelected;
+            }
+            $("#id_tmodel_fields").text(xinfo);
+            console.log(optionSelected);
+            $(this).val("equal");
+            $("#id_eval").val("values");
+            $(".rav-value").css('display','block');
+            $(".rav-values").css('display','block');
+            $(".rav-field").css('display','none');
+            $(".rav-fields").css('display','none');
+            $(".rav-model").css('display','none');
+            $(".rav-values-comp").css('display','none');
+        });
+        $("#btn_tmodel_fields").after("<a id='btn_tmodel_fields2' class='btn btn-success' style='margin-left: 5px;'>Colectar Información</a>");
+        $("#btn_tmodel_fields2").click(function(){
+            //ID
+             var optionSelected_ID = $("#id_tmodel_id").val();
+            info = $("#id_tmodels_id").text();
+            if(info.length > 1){
+                xinfo = info + ',' + optionSelected_ID;
+            }else{
+                xinfo = optionSelected_ID;
+            }
+            $("#id_tmodels_id").text(xinfo);
+            //MODEL NAME
+            var optionSelected_MODEL = $("option:selected", $("#id_tmodel_code")).text();
+            info = $("#id_tmodels_code").text();
+            if(info.length > 1){
+                xinfo = info + ',' + optionSelected_MODEL;
+            }else{
+                xinfo = optionSelected_MODEL;
+            }
+            $("#id_tmodels_code").text(xinfo);
+            //FIELDS
+            var optionSelected_fields = $("#id_tmodel_fields").text();
+            info = $("#id_tmodels_fields").text();
+            if(info.length > 1){
+                xinfo = info + '@' + optionSelected_fields;
+            }else{
+                xinfo = optionSelected_fields;
+            }
+            $("#id_tmodels_fields").text(xinfo);
+        });
+        ///////
+        ///////
+        $(".btn_amodel_fields").after("<a id='btn_amodel_fields' class='btn btn-success'>Agregar</a>");
+        $("#btn_amodel_fields").click(function(){
+            var optionSelected = $("option:selected", $("#id_amodel_field")).val();
+            info = $("#id_amodel_fields").text();
+            if(info.length > 1){
+                xinfo = info + ',' + optionSelected;
+            }else{
+                xinfo = optionSelected;
+            }
+            $("#id_amodel_fields").text(xinfo);
+            console.log(optionSelected);
+        });
+        ///////
+        $("#id_avalues").after("<a id='btn_rav-values' class='btn btn-success'>Agregar</a>");
+        $("#btn_rav-values").click(function(){
+            var optionSelected = $("#id_avalue").val();
+            info = $("#id_avalues").text();
+            console.log("previo -> " + info);
+            if(info.length > 0){
+                if( $('label[for="id_avalue"]').text().indexOf("OR") !== -1 ){
+                    xinfo = info + '-[0R]-' + optionSelected;
+                }else{
+                    xinfo = info + ',' + optionSelected;
+                }
+            }else{
+                xinfo = optionSelected;
+            }
+            $("#id_avalues").text(xinfo);
+            $("#id_avalue").val("");
+            console.log(optionSelected);
+        });
+        ///////
+        /////// fields entrada
+        $("#id_afields").after("<a id='btn_id_afields' class='btn btn-success'>Agregar</a>");
+        $("#btn_id_afields").click(function(){
+            var optionSelected = $("option:selected", $("#id_afield")).val();
+            info = $("#id_afields").text();
+            console.log("previo -> " + info);
+            if(info.length > 0){
+                xinfo = info + ',' + optionSelected;
+            }else{
+                xinfo = optionSelected;
+            }
+            $("#id_afields").text(xinfo);
+            console.log(optionSelected);
+        });
+        /////
+        $("#id_amodel_fields").after("<a id='btn_id_amodel_fields' class='btn btn-success'>Agregar</a>");
+        $("#btn_id_amodel_fields").click(function(){
+            var optionSelected = $("option:selected", $("#id_amodel_field")).val();
+            info = $("#id_amodel_fields").text();
+            console.log("previo -> " + info);
+            if(info.length > 0){
+                xinfo = info + ',' + optionSelected;
+            }else{
+                xinfo = optionSelected;
+            }
+            $("#id_amodel_fields").text(xinfo);
+            $('.rav-model-comp').show();
+            console.log(optionSelected);
+        });
+        /////// ACTION
+        $("#id_action").change(function(){
+            $(".rav-values-comp").hide()
+            $('#id_eval').val('value');
+            if($("#id_typec").find("option:selected").val() == "current"){
+                console.log("id_action > current " );
+                if(($("option:selected", $("#id_action")).val() == "notdefined") || ($("option:selected", $("#id_action")).val() == "defined")){
+                    console.log("id_action > current < definiciones" );
+                    $(".rav-value").css('display','none');
+                    $(".rav-values").css('display','none');
+                    $(".rav-field").css('display','none');
+                    $(".rav-fields").css('display','none');
+                    $(".rav-model").css('display','none');
+                    $(".rc-eval-second").css('display','none');
+                    $("#id_avalue").val("");
+                    $("#id_avalues").text("");
+                    $("#id_afield").val("");
+                    $("#id_afields").text("");
+                }else{
+                    console.log("id_action > current < NO definiciones" );
+                    $(".rav-value").css('display','block');
+                    $(".rc-eval-second").css('display','block');
+                }
+            }else{//model
+                console.log("id_action > NO current " );
+                if(($("option:selected", $("#id_action")).val() == "notdefined") || ($("option:selected", $("#id_action")).val() == "defined")){
+                    if($('#id_tmodel_fields').text().length > 0){
+                        state = "error"
+                        msj_aux_1 = '<iconify-icon style="color:#e91e63" class="icon-swal" icon="solar:dislike-bold-duotone"></iconify-icon><br><br><b><h3><b>Oopps!!</b></h3></b>'
+                        Swal.fire({
+                            html: msj_aux_1 + "<h5>No se puede ocupar esta opción con multiples campos.</h5>",
+                            icon: state,
+                            showCancelButton: false,
+                            confirmButtonBackground: "#009688",
+                            confirmButtonText: "Enterado"
+                        }).then((result) => {
+                          if (result.isConfirmed) {
+                              $(this).val("equal");
+                              $("#id_eval").val("values");
+                              $(".rav-values").css("display","block");
+                          }
+                        });
+                    }else{
+                        console.log("id_action > current < definiciones" );
+                        $(".rav-value").css('display','none');
+                        $(".rav-values").css('display','none');
+                        $(".rav-field").css('display','none');
+                        $(".rav-fields").css('display','none');
+                        $(".rav-model").css('display','none');
+                        $(".rc-eval-second").css('display','none');
+                        $("#id_avalue").val("");
+                        $("#id_avalues").text("");
+                        $("#id_afield").val("");
+                        $("#id_afields").text("");
+                    }
+                }else{
+                    console.log("id_action > current < NO definiciones" );
+                    $(".rav-value").css('display','block');
+                    $(".rc-eval-second").css('display','block');
+                }
+            }
+        });
+        /////// ACTION
+        /////// CONDICIÓN
+        $("#id_type").change(function(){
+            var optionSelected = $("option:selected", this).val();
+            console.log(optionSelected);
+            switch (optionSelected){
+                case "file":
+                    $(".rc-file").show();
+                    $(".rc-endpoint").hide();
+                    $(".rc-internal").hide();
+                    $(".rc-external").hide();
+                    break;
+                case "api":
+                    $(".rc-endpoint").show();
+                    $(".rc-file").hide();
+                    $(".rc-internal").hide();
+                    $(".rc-external").hide();
+                    break;
+                case "internal":
+                    $(".rc-internal").show();
+                    $(".rc-endpoint").hide();
+                    $(".rc-file").hide();
+                    $(".rc-external").hide();
+                    break;
+                case "external":
+                    $(".rc-external").show();
+                    $(".rc-endpoint").hide();
+                    $(".rc-file").hide();
+                    $(".rc-internal").hide();
+                    break;
+            }
+        });
+
+        $("#id_typec").change(function(){
+            var optionSelected = $("option:selected", this).val();
+            console.log(optionSelected);
+            $("#id_avalues").text("");
+            $("#id_amodel_fields").text("");
+            $("#id_action").val("equal");
+            $("#id_eval").val("value");
+            $(".rav-value").css('display','block');
+            $(".rav-field").css('display','none');
+            $(".rav-model").css('display','none');
+            $(".rav-fields").css('display','none');
+            $(".rav-values").css('display','none');
+            switch($("#id_typec").find("option:selected").val()){
+                case 'current':
+                    $(".rc-current").show();
+                    $(".rc-model").hide();
+                    $(".rc-models").hide();
+                    $(".rc-seed").hide();
+                    break;
+                case 'model':
+                    $(".rc-model").show();
+                    $(".rc-current").hide();
+                    $(".rc-models").hide();
+                    $(".rc-seed").hide();
+                    break;
+                case 'models':
+                    $(".rc-models").show();
+                    $(".rc-model").show();
+                    $(".rc-current").hide();
+                    $(".rc-seed").hide();
+                    break;
+                case 'semilla':
+                    $(".rc-seed").show();
+                    $(".rc-model").hide();
+                    $("rc-current").hide();
+                    $(".rc-models").hide();
+                    break;
+            }
+        });
+
+        $("#id_eval").change(function(){
+            var optionSelected = $("option:selected", this).val();
+            $('.rav-values-comp').hide();
+            $('.rav-fields-comp').hide();
+            $('.rav-model-comp').hide()
+            $('#id_afield').empty();
+            console.log(optionSelected);
+            switch (optionSelected){
+                case 'value':
+                    if($("#id_typec").find("option:selected").val() == "model"){
+                        if($('#id_tmodel_fields').text().length > 0){
+                            state = "error"
+                            msj_aux_1 = '<iconify-icon style="color:#e91e63" class="icon-swal" icon="solar:dislike-bold-duotone"></iconify-icon><br><br><b><h3><b>Oopps!!</b></h3></b>'
+                            Swal.fire({
+                                html: msj_aux_1 + "<h5>No se puede ocupar esta opción con multiples campos.</h5>",
+                                icon: state,
+                                showCancelButton: false,
+                                confirmButtonBackground: "#009688",
+                                confirmButtonText: "Enterado"
+                            }).then((result) => {
+                              if (result.isConfirmed) {
+                                  $("#id_eval").val("values");
+                                  $(".rav-values").css("display", "block");
+                                  $(".rav-value").css("display", "block");
+                                  $(".rav-field").css("display", "none");
+                                  $(".rav-fields").css("display", "none");
+                                  $(".rav-model").css('display', 'none');
+                                }
+                            });
+                        }else{
+                            $(".rav-value").css('display','block');
+                            $(".rav-field").css('display','none');
+                            $(".rav-model").css('display','none');
+                            $(".rav-fields").css('display','none');
+                            $(".rav-values").css('display','none');
+                        }
+                    }else{
+                        if($("#id_typec").find("option:selected").val() == "current"){
+                            $(".rav-value").css('display','block');
+                            $(".rav-field").css('display','none');
+                            $(".rav-model").css('display','none');
+                            $(".rav-fields").css('display','none');
+                            $(".rav-values").css('display','none');
+                        }else{}
+                    }
+                    break;
+                case 'field':
+                    $('#id_afield').empty();
+                    if($("#id_typec").find("option:selected").val() == "model"){
+                        if($('#id_tmodel_fields').text().length > 0){
+                            state = "error"
+                            msj_aux_1 = '<iconify-icon style="color:#e91e63" class="icon-swal" icon="solar:dislike-bold-duotone"></iconify-icon><br><br><b><h3><b>Oopps!!</b></h3></b>'
+                            Swal.fire({
+                                html: msj_aux_1 + "<h5>No se puede ocupar esta opción con multiples campos.</h5>",
+                                icon: state,
+                                showCancelButton: false,
+                                confirmButtonBackground: "#009688",
+                                confirmButtonText: "Enterado"
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    $("#id_eval").val("fields");
+                                    $(".rav-field").css("display","block");
+                                    $(".rav-fields").css("display","block");
+                                    $(".rav-value").css('display','none');
+                                    $(".rav-values").css('display','none');
+                                    $(".rav-model").css('display','none');
+                                }
+                            });
+                        }else{
+                            var id_tmodel_field_select = $("#id_tmodel_field").html();
+                            $("#id_afield").html(id_tmodel_field_select);
+                            $(".rav-field").css('display','block');
+                            $(".rav-value").css('display','none');
+                            $(".rav-model").css('display','none');
+                            $(".rav-fields").css('display','none');
+                            $(".rav-values").css('display','none');
+                        }
+                    }else{
+                        if($("#id_typec").find("option:selected").val() == "current"){
+                            $(".rav-field").css('display','block');
+                            $(".rav-value").css('display','none');
+                            $(".rav-model").css('display','none');
+                            $(".rav-fields").css('display','none');
+                            $(".rav-values").css('display','none');
+                            var html_id_tcurrent_fields = $("#id_tcurrent_fields").html();
+                            $('#id_afield').html(html_id_tcurrent_fields);
+                        }else{}
+                    }
+                    ////////////////////////
+                    break;
+                case 'fields':
+                    $(".rav-field").css('display','block');
+                    $(".rav-fields").css('display','block');
+                    $(".rav-value").css('display','none');
+                    $(".rav-model").css('display','none');
+                    $(".rav-values").css('display','none');
+                    if($("#id_typec").find("option:selected").val() == "current"){
+                        var html_id_tcurrent_fields = $("#id_tcurrent_fields").html();
+                        $('#id_afield').html(html_id_tcurrent_fields);
+                        $('.rav-fields-comp').show();
+                    }else{
+                        if($("#id_typec").find("option:selected").val() == "model"){
+                            if($('#id_tmodel_fields').text().length > 0){
+                                //
+                            }else{
+                                $(".rav-fields-comp").show();
+                            }
+                        }else{
+
+                        }
+                    }
+                    break;
+                case 'values':
+                    $(".rav-value").css('display','block');
+                    $(".rav-values").css('display','block');
+                    $(".rav-fields").css('display','none');
+                    $(".rav-field").css('display','none');
+                    $(".rav-model").css('display','none');
+                    if($("#id_typec").find("option:selected").val() == "current"){
+                        console.log("ENTRO : " + $("#id_typec").find("option:selected").val())
+                        $(".rav-values-comp").show();
+                    }else{
+                        console.log("NO ENTRO : " + $("#id_typec").find("option:selected").val())
+                        if($("#id_tmodel_fields").val().length > 0){
+                            $(".rav-values-comp").hide();
+                        }else{
+                            $(".rav-values-comp").show();
+                        }
+                    }
+                    break;
+                case 'model': //
+                    $(".rav-model").css('display','block');
+                    $(".rav-value").css('display','none');
+                    $(".rav-field").css('display','none');
+                    $(".rav-fields").css('display','none');
+                    $(".rav-values").css('display','none');
+                    if($("#id_typec").find("option:selected").val() == "current"){
+                        if($("#id_amodel_fields").text().length > 0){
+                            $('.rav-model-comp').show();
+                        }else{
+                            $('.rav-model-comp').hide();
+                        }
+                    }else{
+                        if($("#id_tmodel_fields").text().length > 0){
+                            $('#btn_id_amodel_fields').css("display","inline-block");
+                        }else{
+                            $('#btn_id_amodel_fields').css("display","none");
+                        }
+                    }
+                    break;
+            }
+        });
+
+        $('.btn-bluehard').click(function() {
+            $(".cpage-delete").remove();
+            var action = $(this).attr("data-card");
+            var description = $(this).attr("data-mdl-name");
+            var number = parseInt(action.split('-')[1]);
+            console.log(action)
+            console.log(description)
+            console.log(number)
+            for (var i = 0; i < 10; i++) {
+                $('.cpage-' + i).hide('fast');
+                $('.lcpage-' + i).hide('fast');
+            }
+            $('#activebtn').val(number);
+            $('.lcpage-00').hide('fast');
+            $('.cpage-' + number).show('fast');
+            $('.lcpage-' + number).show('fast');
+            $('.btn-bluehard').hide('fast');
+            $(this).after("<span class='cpage-delete'><b>Información : </b>" + description + "</span>")
+            $(this).show('fast');
+            $(".cpage-head-" + number).html('<a class="rew-btn" ><iconify-icon style="font-size: 14px;" icon="solar:multiple-forward-left-bold-duotone"></iconify-icon>Volver</a><a class="rew-btn2" ><iconify-icon style="font-size: 14px;" icon="solar:wind-bold-duotone"></iconify-icon>Limpiar formulario</a>');
+            // $(".cpage-body-" + number).text("");
+            $(".rew-btn").click(function(){
+                $(".cpage-delete").remove();
+                $('.btn-bluehard').show('fast');
+                $('.lcpage-00').show('fast');
+                $('.cpage-card').hide('fast');
+            });
+            $(".rew-btn2").click(function(){
+                $("#act-model").trigger("reset");
+                $("#act-cond").trigger("reset");
+            });
+            switch (parseInt(number)){
+                case 0:
+                    //////////////////////////////////////////////////////
+                    //////////////////////////////////////////////////////
+                    break;
+                case 1:
+                    /// < ACA VAN LAS CONDICIONES>
+                    break;
+                case 2:
+                    $.post(
+                        "{% url 'data:get_select_fusion' %}",
+                        {'csrfmiddlewaretoken':csrfmiddlewaretoken}
+                    ).done(function (data){
+                            var d = data.data
+                            var option = ''
+                           for(var i=0;i<d.length;i++){
+                                option = option + '<option value="'+d[i]['id']+'">'+d[i]['name']+'</option>';
+                           }
+                           $("#id_header_fusion_1").empty();
+                           $("#id_header_fusion_1").html(option);
+                           $("#id_header_fusion_2").empty();
+                           $("#id_header_fusion_2").html(option);
+                    });
+                    $('.btn-bluehard').focus();
+                    break;
+                case 4:
+                    $('#tb2').DataTable().destroy();
+                    new DataTable('#tb2',{
+                        fixedHeader: {
+                            header: true,
+                            footer: true
+                        },
+                        ajax: {
+                            type: 'POST',
+                            url: '{% url "rules:datatables_model" %}',
+                            data: csrfmiddlewaretoken,
+                            dataType: 'json',
+                        },
+                        columns: [
+                            {data: 'id', title: 'Id', visible:false,  type: 'string'},
+                            {data: null, title: 'Acciones', width: '16%', "render": function ( data, type, row, meta) {
+                                if(data.status == "Listo"){
+                                    ////////
+                                    if(data.active == false){
+                                        add = '</a>' +
+                                                '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="dearchive" data-toggle="tooltip" data-placement="top" title="Desasrchivar Data List" style="cursor:pointer">' +
+                                                '<iconify-icon style="font-size: 30px;cursor:pointer;color:#009688;" icon="solar:minimize-square-minimalistic-bold-duotone"></iconify-icon>' +
+                                                '</a>';
+                                    }else{
+                                        if(data.xdelete == 0) {
+                                            add = '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="archive" data-toggle="tooltip" data-placement="top" title="Archivar Data List" style="cursor:pointer">' +
+                                                '<iconify-icon style="font-size: 30px;cursor:pointer;color:#c40647;" icon="solar:minus-square-bold-duotone"></iconify-icon>' +
+                                                '</a>' +
+                                                '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="dearchive" data-toggle="tooltip" data-placement="top" title="Desasrchivar Data List" style="cursor:pointer">' +
+                                                '<iconify-icon style="font-size: 30px;cursor:pointer;color:#009688;" icon="solar:minimize-square-minimalistic-bold-duotone"></iconify-icon>' +
+                                                '</a>' +
+                                                '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="delete" data-toggle="tooltip" data-placement="top" title="Eliminar Data List" style="cursor:pointer">' +
+                                                '<iconify-icon style="font-size: 30px;cursor:pointer;color:#f44336;" icon="solar:trash-bin-trash-bold-duotone"></iconify-icon>' +
+                                                '</a>';
+                                        }else{
+                                            add = '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="archive" data-toggle="tooltip" data-placement="top" title="Archivar Data List" style="cursor:pointer">' +
+                                                '<iconify-icon style="font-size: 30px;cursor:pointer;color:#c40647;" icon="solar:minus-square-bold-duotone"></iconify-icon>' +
+                                                '</a>' +
+                                                '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="dearchive" data-toggle="tooltip" data-placement="top" title="Desasrchivar Data List" style="cursor:pointer">' +
+                                                '<iconify-icon style="font-size: 30px;cursor:pointer;color:#009688;" icon="solar:minimize-square-minimalistic-bold-duotone"></iconify-icon>' +
+                                                '</a>';
+                                        }
+                                    }
+                                    ////////
+                                }else {
+                                    add = "";
+                                }
+                                return '' +
+                                        '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="info" data-toggle="tooltip" data-placement="top" title="Ver detalle" style="cursor:pointer">' +
+                                        '<iconify-icon style="font-size: 30px;cursor: pointer;" icon="solar:eye-closed-bold-duotone"></iconify-icon>' +
+                                        '</a>'+ add
+                                        ;
+                                }
+                            },
+                            {data: null, title: 'Nombre',  type: 'string', "render" : function(data, type, row, meta){
+                                return '<span style="font-weight: bold;">'+data.name+'</span>'
+                            }},
+                            {data: null, title: 'Tipo',  type: 'string', "render": function(data, type, row, meta){
+                                    var xclasess = "";
+                                    if(data.type == "Interno"){
+                                        xclasess = "state-ap"
+                                    }else{
+                                        if(data.type == "Postgresql"){
+                                            xclasess = "state-cl"
+                                        }else{
+                                            if(data.type == "CSV"){
+                                                xclasess = "state-o-cp"
+                                            }else{
+                                                if(data.type == "API"){
+                                                    xclasess = "state-an"
+                                                }else{
+                                                    xclasess = "state-f-fs"
+                                                }
+                                            }
+                                        }
+                                    }
+                                    return '<span class="'+xclasess+'">'+data.type+'</span>'
+                                }
+                            },
+                            {data: null, title: 'Estado',  type: 'string', "render": function(data, type, row, meta){
+                                    var xclasess = "";
+                                    if(data.status == "Listo"){
+                                        xclasess = "state-o-ca"
+                                    }else{
+                                        xclasess = "state-f-fs"
+                                    }
+                                    return '<span class="'+xclasess+'">'+data.status+'</span>'
+                                }
+                            },
+                            {data: 'code', title: 'Tabla',  type: 'string'},
+                            {data: 'name', title: 'Modelo',  type: 'string'},
+                        ],
+                        pageLength: 40,
+                        autoWidth: true,
+                        columnDefs:[
+                            {
+                                "max-width": "50%", targets: [0, 1], className: "truncate",
+                                checkboxes: {
+                                    selectRow: true
+                                },
+
+                            },
+                        ],
+                        fnRowCallback: function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+                            if ( aData.active == false ){
+                                $('td', nRow).css('background-color', 'rgba(150,0,0,0.17)' );
+                                $('td', nRow).css('border-bottom', '1px solid #b5c3d0' );
+                                $('td', nRow).css('border-top', '1px solid #b5c3d0' );
+                            }
+                        },
+                        fixedColumns: true,
+                        bAutoWidth: true,
+                        iDisplayLength: 40,
+                        select: {
+                            style: 'multi',
+                        },
+                        bScrollCollapse: true,
+                        buttons: [],
+                        order: [[1, 'asc']]
+                    });
+                    break;
+            }
+        });
+
+        $('#tb2 tbody').on('click', 'a', function (e) {
+            e.preventDefault();
+            var elemnets = $(this).attr("data-action");
+            switch (elemnets) {
+                case "info":
+                    xid = $(this).attr("data-id");
+                    window.location.href = "{% url 'rules:showid' %}?csrfmiddlewaretoken=" + csrfmiddlewaretoken + "&id="+xid;
+                    break;
+                case "archive":
+                    console.log(0);
+                    xid = $(this).attr("data-id");
+                    $.post(
+                        "{% url 'rules:active_toggle_rules' %}",
+                        {'csrfmiddlewaretoken':csrfmiddlewaretoken,'id':xid,'action':0}
+                    ).done(function (data){
+                           if(data.error){
+                                state = "error"
+                                msj_aux_1 = '<iconify-icon style="color:#e91e63" class="icon-swal" icon="solar:dislike-bold-duotone"></iconify-icon><br><br><b><h3><b>Oopps!!</b></h3></b>'
+                           }else{
+                                state = "success"
+                                msj_aux_1 = '<iconify-icon style="color:#4caf50" class="icon-swal" icon="solar:like-bold-duotone"></iconify-icon><br><br><b><h3><b>Genial!!</b></h3></b>'
+                           }
+                           Swal.fire({
+                                html: msj_aux_1 + "<h5>" + data.msj + "</h5>",
+                                icon: state,
+                                showCancelButton: false,
+                                confirmButtonBackground: "#009688",
+                                confirmButtonText: "Enterado"
+                            }).then((result) => {
+                              if (result.isConfirmed) {
+                                  $('#tb2').DataTable().ajax.reload();
+                              }
+                            });
+                    });
+                    break;
+                case 'dearchive':
+                    console.log(1);
+                    xid = $(this).attr("data-id");
+                    $.post(
+                        "{% url 'rules:active_toggle_rules' %}",
+                        {'csrfmiddlewaretoken':csrfmiddlewaretoken,'id':xid,'action':1}
+                    ).done(function (data){
+                           if(data.error){
+                                state = "error"
+                                msj_aux_1 = '<iconify-icon style="color:#e91e63" class="icon-swal" icon="solar:dislike-bold-duotone"></iconify-icon><br><br><b><h3><b>Oopps!!</b></h3></b>'
+                           }else{
+                                state = "success"
+                                msj_aux_1 = '<iconify-icon style="color:#4caf50" class="icon-swal" icon="solar:like-bold-duotone"></iconify-icon><br><br><b><h3><b>Genial!!</b></h3></b>'
+                           }
+                           Swal.fire({
+                                html: msj_aux_1 + "<h5>" + data.msj + "</h5>",
+                                icon: state,
+                                showCancelButton: false,
+                                confirmButtonBackground: "#009688",
+                                confirmButtonText: "Enterado"
+                            }).then((result) => {
+                              if (result.isConfirmed) {
+                                  $('#tb2').DataTable().ajax.reload();
+                              }
+                            });
+                    });
+                    break;
+                case 'delete':
+                    xid = $(this).attr("data-id");
+                    $.post(
+                        "{% url 'rules:delete_rules' %}",
+                        {'csrfmiddlewaretoken':csrfmiddlewaretoken,'id':xid}
+                    ).done(function (data){
+                           if(data.error){
+                                state = "error"
+                                msj_aux_1 = '<iconify-icon style="color:#e91e63" class="icon-swal" icon="solar:dislike-bold-duotone"></iconify-icon><br><br><b><h3><b>Oopps!!</b></h3></b>'
+                           }else{
+                                state = "success"
+                                msj_aux_1 = '<iconify-icon style="color:#4caf50" class="icon-swal" icon="solar:like-bold-duotone"></iconify-icon><br><br><b><h3><b>Genial!!</b></h3></b>'
+                           }
+                           Swal.fire({
+                                html: msj_aux_1 + "<h5>" + data.msj + "</h5>",
+                                icon: state,
+                                showCancelButton: false,
+                                confirmButtonBackground: "#009688",
+                                confirmButtonText: "Enterado"
+                            }).then((result) => {
+                              if (result.isConfirmed) {
+                                  $('#tb2').DataTable().ajax.reload();
+                              }
+                            });
+                    });
+                    break;
+            }
+        });
+
+        $('#tb tbody').on('click', 'a', function (e) {
+            e.preventDefault();
+            var elemnets = $(this).attr("data-action");
+            switch (elemnets) {
+                case "info":
+                    xid = $(this).attr("data-id");
+                    window.location.href = "{% url 'data:showid' %}?csrfmiddlewaretoken=" + csrfmiddlewaretoken + "&id="+xid;
+                    break;
+                case "archive":
+                    console.log(0);
+                    xid = $(this).attr("data-id");
+                    $.post(
+                        "{% url 'data:active_deactive_datalist' %}",
+                        {'csrfmiddlewaretoken':csrfmiddlewaretoken,'id':xid,'action':0}
+                    ).done(function (data){
+                           if(data.error){
+                                state = "error"
+                                msj_aux_1 = '<iconify-icon style="color:#e91e63" class="icon-swal" icon="solar:dislike-bold-duotone"></iconify-icon><br><br><b><h3><b>Oopps!!</b></h3></b>'
+                           }else{
+                                state = "success"
+                                msj_aux_1 = '<iconify-icon style="color:#4caf50" class="icon-swal" icon="solar:like-bold-duotone"></iconify-icon><br><br><b><h3><b>Genial!!</b></h3></b>'
+                           }
+                           Swal.fire({
+                                html: msj_aux_1 + "<h5>" + data.msj + "</h5>",
+                                icon: state,
+                                showCancelButton: false,
+                                confirmButtonBackground: "#009688",
+                                confirmButtonText: "Enterado"
+                            }).then((result) => {
+                              if (result.isConfirmed) {
+                                  $('#tb').DataTable().ajax.reload();
+                              }
+                            });
+                    });
+                    break;
+                case 'dearchive':
+                    console.log(1);
+                    xid = $(this).attr("data-id");
+                    $.post(
+                        "{% url 'data:active_deactive_datalist' %}",
+                        {'csrfmiddlewaretoken':csrfmiddlewaretoken,'id':xid,'action':1}
+                    ).done(function (data){
+                           if(data.error){
+                                state = "error"
+                                msj_aux_1 = '<iconify-icon style="color:#e91e63" class="icon-swal" icon="solar:dislike-bold-duotone"></iconify-icon><br><br><b><h3><b>Oopps!!</b></h3></b>'
+                           }else{
+                                state = "success"
+                                msj_aux_1 = '<iconify-icon style="color:#4caf50" class="icon-swal" icon="solar:like-bold-duotone"></iconify-icon><br><br><b><h3><b>Genial!!</b></h3></b>'
+                           }
+                           Swal.fire({
+                                html: msj_aux_1 + "<h5>" + data.msj + "</h5>",
+                                icon: state,
+                                showCancelButton: false,
+                                confirmButtonBackground: "#009688",
+                                confirmButtonText: "Enterado"
+                            }).then((result) => {
+                              if (result.isConfirmed) {
+                                  $('#tb').DataTable().ajax.reload();
+                              }
+                            });
+                    });
+                    break;
+                case 'delete':
+                    xid = $(this).attr("data-id");
+                    $.post(
+                        "{% url 'data:delete_datalist' %}",
+                        {'csrfmiddlewaretoken':csrfmiddlewaretoken,'id':xid}
+                    ).done(function (data){
+                           if(data.error){
+                                state = "error"
+                                msj_aux_1 = '<iconify-icon style="color:#e91e63" class="icon-swal" icon="solar:dislike-bold-duotone"></iconify-icon><br><br><b><h3><b>Oopps!!</b></h3></b>'
+                           }else{
+                                state = "success"
+                                msj_aux_1 = '<iconify-icon style="color:#4caf50" class="icon-swal" icon="solar:like-bold-duotone"></iconify-icon><br><br><b><h3><b>Genial!!</b></h3></b>'
+                           }
+                           Swal.fire({
+                                html: msj_aux_1 + "<h5>" + data.msj + "</h5>",
+                                icon: state,
+                                showCancelButton: false,
+                                confirmButtonBackground: "#009688",
+                                confirmButtonText: "Enterado"
+                            }).then((result) => {
+                              if (result.isConfirmed) {
+                                  $('#tb').DataTable().ajax.reload();
+                              }
+                            });
+                    });
+                    break;
+            }
+        });
+
+        $('#id_tmodel_code').change(function(){
+            $("#id_tmodel_fields").empty();
+            $("#id_tmodel_id").val($("option:selected", this).val());
+            var optionSelected2 = $("option:selected", this).val();
+            console.log(optionSelected2);
+            $.post(
+                "{% url 'rules:get_filedsmodel_id' %}",
+                {'csrfmiddlewaretoken':csrfmiddlewaretoken, 'idx':optionSelected2}
+            ).done(function (data){
+                d = data.data;
+                darr = d.split(',');
+                htmlq = "";
+                for(var i=0; i<darr.length; i++){
+                    htmlq = htmlq + '<option value="'+darr[i]+'">'+darr[i]+'</option>';
+                }
+                $("#id_tmodel_field").empty()
+
+                $("#id_tmodel_field").html(htmlq);
+                $("#id_afield").empty();
+                $("#id_afield").html(htmlq);
+            });
+        });
+
+        $('#id_amodel_code').change(function(){
+            var optionSelected2 = $("option:selected", this).val();
+            console.log(optionSelected2);
+            $.post(
+                "{% url 'rules:get_filedsmodel_id' %}",
+                {'csrfmiddlewaretoken':csrfmiddlewaretoken, 'idx':optionSelected2}
+            ).done(function (data){
+                d = data.data;
+                darr = d.split(',');
+                htmlq = "";
+                for(var i=0; i<darr.length; i++){
+                    htmlq = htmlq + '<option value="'+darr[i]+'">'+darr[i]+'</option>';
+                }
+                $("#id_amodel_field").empty()
+                $("#id_amodel_field").html(htmlq);
+            });
+        });
+        ///------------------------------------------- ///
+
+    })
+
+</script>
+{% endblock%}
+

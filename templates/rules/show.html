@@ -1,0 +1,240 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block sitio %}
+    <li class="breadcrumb-item"><a href="{% url 'rules:' %}">Condiciones</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'rules:' %}">Modelo</a></li>
+{% endblock %}
+
+
+{% block content %}
+{% csrf_token %}
+<!-- begin row -->
+<h3>Modelo({{ name }})</h3><br>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title">.</h4>
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                </div>
+            </div>
+            <div class="panel-body m-20">
+                 <div class="row">
+                     <div class="col-12 m-b-30" >
+                         <div class="card" style="padding: 30px;border: none !important;">
+                             <div class="cpage-card" style="display: block;">
+                                <div class="lphead">
+                                    <a class="rew-btn" href="{% url 'rules:' %}" ><iconify-icon style="font-size: 14px;" icon="solar:multiple-forward-left-bold-duotone"></iconify-icon>Volver</a>
+                                </div>
+                                 <div class="lpbody">
+                                    <style>
+                                         .helptext{top: 5px !important;}
+                                    </style>
+                                    <form id="act-model" action="{% url 'rules:update_model' %}" method="post">
+                                        {% csrf_token %}
+                                        <!--<input type="text" name="id" id="id" value="{{ id }}" hidden/>-->
+                                        {% load form_extras %}
+                                        {% for field in models %}
+                                             <div class="form-group row {{ field|get_class }}">
+                                                <div for="{{ field.label }}" class="col-sm-12 col-form-label">
+                                                    {{ field.label_tag }}
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    {{ field }}
+                                                    {% if field.help_text %}
+                                                        <small class="helptext">{{ field.help_text }}</small>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                        <br>
+                                        <input class="btn btn-success" type="submit" value="Actualizar">
+                                     </form>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end row -->
+<!-- begin row -->
+
+{% endblock %}
+
+{% block style %}
+    <style>
+    .rc-id{
+        display:none;
+    }
+    .btn-name-mdl-create{
+        font-size: 14px;
+    }
+    .chip-user{
+        width: 100%;
+        text-align: center;
+    }
+    .bold{
+        font-weight: bold !important;
+        color:#0d3349;
+    }
+    .badge{
+        background: transparent !important;
+    }
+    .state-li{
+        color: #000000;
+        border: 1px solid #00000038;
+        background: #c6c6c6;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-as{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #009688;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-an{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #03A9F4;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-cl{
+        color: #000000;
+        border: 1px solid #00000038;
+        background: #ffb64c;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-ap{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #4CAF50;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-o-cp{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #8859db;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-o-ca{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #22c4b5;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-f-fs{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #e44949;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    table.dataTable.cell-border>tbody>tr>* {
+        border-right: none !important;
+    }
+    table.dataTable.cell-border>tbody>tr>*:first-child {
+        border-left: none !important;
+    }
+    table.dataTable.display tbody tr:hover.selected > .sorting_1, table.dataTable.order-column.hover tbody tr:hover.selected > .sorting_1 {
+        box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    table.dataTable.stripe > tbody > tr:nth-child(odd).selected > *, table.dataTable.display > tbody > tr:nth-child(odd).selected > * {
+        box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    table.dataTable.display > tbody > tr.selected + tr.selected > td {
+        box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    table.dataTable.display > tbody > tr.selected:hover > * {
+        box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    table.dataTable.display > tbody tr.selected > .sorting_1{
+        box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    table.dataTable.hover > tbody > tr.selected:hover > *, table.dataTable.display > tbody > tr.selected:hover > * {
+      box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    table.dataTable.stripe > tbody > tr:nth-child(odd).selected > *, table.dataTable.display > tbody > tr:nth-child(odd).selected > * {
+      box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    .rc-endpoint, .rc-file, .rc-external, .rc-internal {
+        display: none;
+    }
+    .add-fields--internal input, .add-fields--external input, .add-fields--file input{
+        height: 35.3px;
+    }
+    </style>
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready(function (){
+        type = '{{ type }}';
+        switch (type) {
+            case 'internal':
+                $(".rc-internal").css('display','block');
+                $("#id_tinternal_fields").attr('readonly',false);
+                break;
+            case 'external':
+                $(".rc-external").css('display','block');
+                break;
+            case 'file':
+                $(".rc-file").css('display','block');
+                break;
+            case 'api':
+                $(".rc-endpoint").css('display','block');
+                break;
+        }
+
+    });
+
+</script>
+{% endblock%}
+

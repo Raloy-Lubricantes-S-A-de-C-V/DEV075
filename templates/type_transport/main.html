@@ -1,0 +1,611 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block sitio %}
+    <li class="breadcrumb-item"><a href="{% url 'typetransport:' %}">{{ name_model }}</a></li>
+{% endblock %}
+
+
+{% block content %}
+{% csrf_token %}
+<!-- begin row -->
+<h3>{{ name_model }}</h3><br>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title">.</h4>
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                </div>
+            </div>
+            <div class="panel-body m-20">
+                 <div class="row">
+                     <div class="col-12 m-b-30" >
+                         <div class="card cpage" style="padding: 30px;">
+                              <div class="cpage-ctrl">
+                                 <div class="cphead xcpage-head-0">
+                                     <a class="btn btn-bluehard m-r-4 m-b-5" data-mdl-name="Listado de tipos de transporte." data-mdl-sh="cpage-btn" data-card="cpage-0">
+                                        <iconify-icon class="new-icon" icon="solar:list-arrow-down-minimalistic-bold-duotone"></iconify-icon>
+                                        <span class="new-text">Lista {{ name_model }}</span>
+                                     </a>
+                                     <a class="btn btn-bluehard m-r-4 m-b-5" data-mdl-name="Agregar nuevo tipo de transporte para uso de la evaluación" data-mdl-sh="cpage-btn" data-card="cpage-1">
+                                        <iconify-icon class="new-icon" icon="solar:add-square-bold-duotone"></iconify-icon>
+                                        <span class="new-text">Agregar {{ name_model }}</span>
+                                     </a>
+                                 </div>
+                                 <div class="cpbody xcpage-body-0"> </div>
+                             </div>
+                             <div class="cpage-card cpage-0">
+                                 <div class="phead cpage-head-0">A1</div>
+                                 <div class="pbody cpage-body-0">
+
+                                 </div>
+                             </div>
+                             <div class="cpage-card cpage-1">
+                                 <div class="phead cpage-head-1">B1</div>
+                                 <div class="pbody cpage-body-1">
+
+                                 </div>
+                             </div>
+                             <div class="cpage-card cpage-2">
+                                 <div class="phead cpage-head-2">C1</div>
+                                 <div class="pbody cpage-body-2">
+
+                                 </div>
+                             </div>
+                             <div class="cpage-card cpage-3">
+                                 <div class="phead cpage-head-3">D1</div>
+                                 <div class="pbody cpage-body-3">
+
+                                 </div>
+                             </div>
+                             <div class="cpage-card cpage-4">
+                                 <div class="phead cpage-head-4">E1</div>
+                                 <div class="pbody cpage-body-4">
+
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="col-12 m-b-30" >
+                         <div class="card lcpage" style="padding: 30px;border: none !important;">
+                             <div class="lcpage-00">
+                                 <div class="lphead lcpage-head-00"></div>
+                                 <div class="lpbody lcpage-body-00">
+                                     <img style="filter:opacity(0.7); width: 50%;margin-left:24%;" src="{% static 'img/datalist/bus.gif' %}">
+                                 </div>
+                             </div>
+                             <div class="cpage-card lcpage-0">
+                                 <div class="lphead lcpage-head-0">
+                                    <h4>Listado de Tipo de transporte</h4>
+                                     {{ response }}
+                                 </div>
+                                 <div class="lpbody lcpage-body-0">
+                                     <div class="col-12 card-layout cl0">
+                                         <button id="btn-kanban" class="btn" style="border-color: #F44336;background: #fff3e0;color: #F44336;width: 50px;"><iconify-icon class="solar-navbar" icon="solar:widget-5-bold-duotone"></iconify-icon></button>
+                                         <button id="btn-list" class="btn" style="border-color: #F44336;background: #fff3e0;color: #F44336;width: 50px;"><iconify-icon class="solar-navbar" icon="solar:checklist-bold-duotone"></iconify-icon></button>
+                                     </div>
+                                     <div class="col-12 card-layout cl1" style="display:none;">
+                                         <table id="tb" class="display cell-border compact stripe">
+                                            <thead>
+                                                <tr>
+                                                    <th>x</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>x</td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>x</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                     </div>
+                                     <div class="col-12 card-layout cl2">
+                                     </div>
+                                 </div>
+                             </div>
+                             <div class="cpage-card lcpage-1">
+                                 <div class="lphead lcpage-head-1">
+                                     <h4>
+                                         Agregar nuevo Tipo de transporte
+                                     </h4>
+                                 </div>
+                                 <div class="lpbody lcpage-body-1">
+                                     <form  action="{% url 'typetransport:' %}" method="post">
+                                         {% csrf_token %}
+                                         {% load form_extras %}
+                                         {{ form1 }}
+                                         <input class="btn btn-success" type="submit" value="Guardar">
+                                     </form>
+                                 </div>
+                             </div>
+                             <div class="cpage-card lcpage-2">
+
+                             </div>
+                             <div class="cpage-card lcpage-3">
+
+                             </div>
+                             <div class="cpage-card lcpage-4">
+
+                             </div>
+                         </div>
+                     </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end row -->
+<!-- begin row -->
+
+{% endblock %}
+
+{% block style %}
+    <style>
+    .btn-name-mdl-create{
+        font-size: 14px;
+    }
+    .chip-user{
+        width: 100%;
+        text-align: center;
+    }
+    .bold{
+        font-weight: bold !important;
+        color:#0d3349;
+    }
+    .badge{
+        background: transparent !important;
+    }
+    .state-li{
+        color: #000000;
+        border: 1px solid #00000038;
+        background: #c6c6c6;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-as{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #009688;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-an{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #03A9F4;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-cl{
+        color: #000000;
+        border: 1px solid #00000038;
+        background: #ffb64c;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-ap{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #4CAF50;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-o-cp{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #8859db;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-o-ca{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #22c4b5;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .state-f-fs{
+        color: #ffffff;
+        border: 1px solid #00000038;
+        background: #e44949;
+        display: inline-block;
+        min-width: 100px;
+        max-width: 100px;
+        padding: 4px 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    table.dataTable.cell-border>tbody>tr>* {
+        border-right: none !important;
+    }
+    table.dataTable.cell-border>tbody>tr>*:first-child {
+        border-left: none !important;
+    }
+    table.dataTable.display tbody tr:hover.selected > .sorting_1, table.dataTable.order-column.hover tbody tr:hover.selected > .sorting_1 {
+        box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    table.dataTable.stripe > tbody > tr:nth-child(odd).selected > *, table.dataTable.display > tbody > tr:nth-child(odd).selected > * {
+        box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    table.dataTable.display > tbody > tr.selected + tr.selected > td {
+        box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    table.dataTable.display > tbody > tr.selected:hover > * {
+        box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    table.dataTable.display > tbody tr.selected > .sorting_1{
+        box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    table.dataTable.hover > tbody > tr.selected:hover > *, table.dataTable.display > tbody > tr.selected:hover > * {
+      box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    table.dataTable.stripe > tbody > tr:nth-child(odd).selected > *, table.dataTable.display > tbody > tr:nth-child(odd).selected > * {
+      box-shadow: inset 0 0 0 9999px rgb(255, 245, 220) !important;
+    }
+    .rc-endpoint, .rc-file, .rc-external, .rc-internal {
+        display: none;
+    }
+    .add-fields--internal input, .add-fields--external input, .add-fields--file input, .add-fields--endpoint input{
+        height: 35.3px;
+    }
+    .xrc-hr--ok .xrc-1{
+        width: 40%;
+        display: block;
+        position: relative;
+        float: left;
+    }
+    .xrc-hr--ok .xrc-2{
+        background: #fff;
+        border-radius: 15px 0px 15px 0px;
+        width: 20%;
+        display: block;
+        position: relative;
+        float: left;
+        text-align: center;
+        font-weight: bold;
+        color: #3f51b5;
+    }
+    .xrc-hr--ok .xrc-3{
+        width: 40%;
+        display: block;
+        position: relative;
+        float: left;
+    }
+    .xrc-hr--ok{
+        margin-top: 50px;
+        margin-bottom: 50px;
+        display: flex;
+        position: relative;
+        width: 100%;
+        background: #d5d9ef;
+        border: 3px solid #d5d9ef;
+        border-radius: 15px;
+    }
+    </style>
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready(function (){
+        $("[for=id_id]").hide();
+        {% if response.error == True  %}
+            Swal.fire({
+                html: '<iconify-icon style="color:#f44336" class="icon-swal" icon="solar:dislike-bold-duotone"></iconify-icon><br><br><b><h3><b>Oopps !!</b></h3></b><h5>{{ response.msj }}</h5>',
+                icon: "error",
+                showCancelButton: false,
+                confirmButtonBackground: "#009688",
+                confirmButtonText: "Enterado"
+            }).then((result) => {
+              if (result.isConfirmed) {
+                  window.location.href = "{% url 'typetransport:' %}";
+              }
+            });
+        {% elif response.error == False %}
+            Swal.fire({
+                html: '<iconify-icon style="color:#4caf50" class="icon-swal" icon="solar:like-bold-duotone"></iconify-icon><br><br><b><h3><b>Genial!!</b></h3></b><h5>{{ response.msj }}</h5>',
+                icon: "success",
+                showCancelButton: false,
+                confirmButtonBackground: "#009688",
+                confirmButtonText: "Enterado"
+            }).then((result) => {
+              if (result.isConfirmed) {
+                  window.location.href = "{% url 'typetransport:' %}";
+              }
+            });
+        {% endif %}
+
+        function getRandomInt(max) {
+          return Math.floor(Math.random() * max);
+        }
+
+        $("#btn-kanban").click(function(){
+            $('.cl1').hide('fast')
+            $('.cl2').show('fast')
+        });
+
+        $("#btn-list").click(function(){
+            $('.cl1').show('fast')
+            $('.cl2').hide('fast')
+        });
+
+        $('.btn-bluehard').click(function() {
+            $(".cpage-delete").remove();
+            var action = $(this).attr("data-card");
+            var description = $(this).attr("data-mdl-name");
+            var number = parseInt(action.split('-')[1]);
+            console.log(action)
+            console.log(description)
+            console.log(number)
+            for (var i = 0; i < 10; i++) {
+                $('.cpage-' + i).hide('fast');
+                $('.lcpage-' + i).hide('fast');
+            }
+            $('#activebtn').val(number);
+            $('.lcpage-00').hide('fast');
+            $('.cpage-' + number).show('fast');
+            $('.lcpage-' + number).show('fast');
+            $('.btn-bluehard').hide('fast');
+            $(this).after("<span class='cpage-delete'><b>Información : </b>" + description + "</span>")
+            $(this).show('fast');
+            $(".cpage-head-" + number).html('<a class="rew-btn" ><iconify-icon style="font-size: 14px;" icon="solar:multiple-forward-left-bold-duotone"></iconify-icon>Volver</a>');
+            // $(".cpage-body-" + number).text("");
+            $(".rew-btn").click(function(){
+                $(".cpage-delete").remove();
+                $('.btn-bluehard').show('fast');
+                $('.lcpage-00').show('fast');
+                $('.cpage-card').hide('fast');
+            });
+            $(".rew-btn2").click(function(){
+                $("#act-model").trigger("reset");
+                $("#act-cond").trigger("reset");
+            });
+            switch (parseInt(number)){
+                case 0:
+                    //////////////////////////////////////////////////////
+                    $('#tb').DataTable().destroy();
+                    new DataTable('#tb',{
+                        fixedHeader: {
+                            header: true,
+                            footer: true
+                        },
+                        ajax: {
+                            type: 'POST',
+                            url: '{% url "typetransport:datatables_info" %}',
+                            data: csrfmiddlewaretoken,
+                            dataType: 'json',
+                        },
+                        columns: [
+                            {data: 'id', title: 'Id', visible:false,  type: 'string'},
+                            {data: null, title: 'Acciones', width: '16%', "render": function ( data, type, row, meta) {
+                                return  '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="archive" data-toggle="tooltip" data-placement="top" title="Archivar {{ name_model }}" style="cursor:pointer">' +
+                                        '<iconify-icon style="font-size: 30px;cursor:pointer;color:#c40647;" icon="solar:minus-square-bold-duotone"></iconify-icon>' +
+                                        '</a>' +
+                                        '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="dearchive" data-toggle="tooltip" data-placement="top" title="Desasrchivar {{ name_model }}" style="cursor:pointer">' +
+                                        '<iconify-icon style="font-size: 30px;cursor:pointer;color:#009688;" icon="solar:minimize-square-minimalistic-bold-duotone"></iconify-icon>' +
+                                        '</a>' +
+                                        '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="delete" data-toggle="tooltip" data-placement="top" title="Eliminar {{ name_model }}" style="cursor:pointer">' +
+                                        '<iconify-icon style="font-size: 30px;cursor:pointer;color:#f44336;" icon="solar:trash-bin-trash-bold-duotone"></iconify-icon>' +
+                                        '</a>'+
+                                        '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="info" data-toggle="tooltip" data-placement="top" title="Ver detalle" style="cursor:pointer">' +
+                                        '<iconify-icon style="font-size: 30px;cursor: pointer;" icon="solar:eye-closed-bold-duotone"></iconify-icon>' +
+                                        '</a>'
+                                        ;
+                                }
+                            },
+                            {data: null, title: 'Nombre',  type: 'string', "render" : function(data, type, row, meta){
+                                return '<span style="font-weight: bold;">'+data.name+'</span>'
+                            }},
+                            {data: 'volumen', title: 'Volumén',  type: 'string'},
+                            {data: 'capacity_pallet', title: 'Capacidad de tarimas',  type: 'string'},
+                        ],
+                        pageLength: 40,
+                        autoWidth: true,
+                        columnDefs:[
+                            {
+                                "max-width": "50%", targets: [0, 1], className: "truncate",
+                                checkboxes: {
+                                    selectRow: true
+                                },
+
+                            },
+                        ],
+                        fnRowCallback: function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+                            if ( aData.active == false ){
+                                $('td', nRow).css('background-color', 'rgba(150,0,0,0.17)' );
+                                $('td', nRow).css('border-bottom', '1px solid #b5c3d0' );
+                                $('td', nRow).css('border-top', '1px solid #b5c3d0' );
+                            }
+                        },
+                        fixedColumns: true,
+                        bAutoWidth: true,
+                        iDisplayLength: 40,
+                        select: {
+                            style: 'multi',
+                        },
+                        bScrollCollapse: true,
+                        buttons: [],
+                        order: [[1, 'asc']]
+                    });
+                    $.post(
+                        "{% url "typetransport:datatables_info" %}",
+                        {'csrfmiddlewaretoken':csrfmiddlewaretoken}
+                    ).done(function (data){
+                        console.log("**************************************")
+                        xdata = data.data
+                        html = "";
+                        for(var i=0; i<xdata.length; i++){
+                            console.log(xdata[i]);
+                            html = html + '<div class="card ckanban" style="width: 18rem;background:#e2dfdf;">'+
+                                  '<img class="card-img-top" src="{% static 'kanban/transport.png' %}" alt="Card image cap">'+
+                                  '<div class="card-body">'+
+                                    '<a style="cursor:pointer;text-decoration:none;color:#6f6f6f;" href="{% url 'typetransport:showid' %}?csrfmiddlewaretoken=' + csrfmiddlewaretoken + '&id='+xdata[i].id+'">'+
+                                        '<h5><b style="text-align: center;width: 100% !important;position: relative;display: block;">'+xdata[i].name+'</b></h5>'+
+                                        '<p class="card-text">' +
+                                            '<div class="med-card">' +
+                                                '<span><iconify-icon class="solar-navbar" style="font-size: 38px;" icon="solar:water-bold-duotone"></iconify-icon></span>'+
+                                                '<div>'+xdata[i].volumen+'</div>'+
+                                            '</div>'+
+                                            '<div class="med-card">' +
+                                                '<span><iconify-icon class="solar-navbar" style="font-size: 38px;" icon="solar:layers-minimalistic-bold-duotone"></iconify-icon></span>'+
+                                                '<div>'+xdata[i].capacity_pallet+'</div>'+
+                                            '</div>'+
+                                        '</p>'+
+                                    '</a>'+
+                                  '</div>'+
+                                '</div>';
+                        }
+                        $('.cl2').empty();
+                        $('.cl2').html(html);
+                        console.log("**************************************")
+                    });
+                    //////////////////////////////////////////////////////
+                    break;
+                case 1:
+
+                    break;
+                case 2:
+
+                    break;
+                case 4:
+
+
+                    break;
+            }
+        });
+
+        $('#tb tbody').on('click', 'a', function (e) {
+            e.preventDefault();
+            var elemnets = $(this).attr("data-action");
+            switch (elemnets) {
+                case "info":
+                    xid = $(this).attr("data-id");
+                    window.location.href = "{% url 'typetransport:showid' %}?csrfmiddlewaretoken=" + csrfmiddlewaretoken + "&id="+xid;
+                    break;
+                case "archive":
+                    console.log(0);
+                    xid = $(this).attr("data-id");
+                    console.log(xid)
+                    $.post(
+                        "{% url 'typetransport:active_toggle_rules' %}",
+                        {'csrfmiddlewaretoken':csrfmiddlewaretoken,'id':xid,'action':0}
+                    ).done(function (data){
+                           if(data.error){
+                                state = "error"
+                                msj_aux_1 = '<iconify-icon style="color:#e91e63" class="icon-swal" icon="solar:dislike-bold-duotone"></iconify-icon><br><br><b><h3><b>Oopps!!</b></h3></b>'
+                           }else{
+                                state = "success"
+                                msj_aux_1 = '<iconify-icon style="color:#4caf50" class="icon-swal" icon="solar:like-bold-duotone"></iconify-icon><br><br><b><h3><b>Genial!!</b></h3></b>'
+                           }
+                           Swal.fire({
+                                html: msj_aux_1 + "<h5>" + data.msj + "</h5>",
+                                icon: state,
+                                showCancelButton: false,
+                                confirmButtonBackground: "#009688",
+                                confirmButtonText: "Enterado"
+                            }).then((result) => {
+                              if (result.isConfirmed) {
+                                  $('#tb').DataTable().ajax.reload();
+                              }
+                            });
+                    });
+                    break;
+                case 'dearchive':
+                    console.log(1);
+                    xid = $(this).attr("data-id");
+                    $.post(
+                        "{% url 'typetransport:active_toggle_rules' %}",
+                        {'csrfmiddlewaretoken':csrfmiddlewaretoken,'id':xid,'action':1}
+                    ).done(function (data){
+                           if(data.error){
+                                state = "error"
+                                msj_aux_1 = '<iconify-icon style="color:#e91e63" class="icon-swal" icon="solar:dislike-bold-duotone"></iconify-icon><br><br><b><h3><b>Oopps!!</b></h3></b>'
+                           }else{
+                                state = "success"
+                                msj_aux_1 = '<iconify-icon style="color:#4caf50" class="icon-swal" icon="solar:like-bold-duotone"></iconify-icon><br><br><b><h3><b>Genial!!</b></h3></b>'
+                           }
+                           Swal.fire({
+                                html: msj_aux_1 + "<h5>" + data.msj + "</h5>",
+                                icon: state,
+                                showCancelButton: false,
+                                confirmButtonBackground: "#009688",
+                                confirmButtonText: "Enterado"
+                            }).then((result) => {
+                              if (result.isConfirmed) {
+                                  $('#tb').DataTable().ajax.reload();
+                              }
+                            });
+                    });
+                    break;
+                case 'delete':
+                    xid = $(this).attr("data-id");
+                    $.post(
+                        "{% url 'typetransport:delete_rules' %}",
+                        {'csrfmiddlewaretoken':csrfmiddlewaretoken,'id':xid}
+                    ).done(function (data){
+                           if(data.error){
+                                state = "error"
+                                msj_aux_1 = '<iconify-icon style="color:#e91e63" class="icon-swal" icon="solar:dislike-bold-duotone"></iconify-icon><br><br><b><h3><b>Oopps!!</b></h3></b>'
+                           }else{
+                                state = "success"
+                                msj_aux_1 = '<iconify-icon style="color:#4caf50" class="icon-swal" icon="solar:like-bold-duotone"></iconify-icon><br><br><b><h3><b>Genial!!</b></h3></b>'
+                           }
+                           Swal.fire({
+                                html: msj_aux_1 + "<h5>" + data.msj + "</h5>",
+                                icon: state,
+                                showCancelButton: false,
+                                confirmButtonBackground: "#009688",
+                                confirmButtonText: "Enterado"
+                            }).then((result) => {
+                              if (result.isConfirmed) {
+                                  $('#tb').DataTable().ajax.reload();
+                              }
+                            });
+                    });
+                    break;
+            }
+        });
+
+
+    })
+
+</script>
+{% endblock%}
+

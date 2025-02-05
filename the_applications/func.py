@@ -1,5 +1,4 @@
 from itertools import count
-
 from the_applications import conexion
 
 # bd_apps = selecciona_basedatos.inicia_odoo()

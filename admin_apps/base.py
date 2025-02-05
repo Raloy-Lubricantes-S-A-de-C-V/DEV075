@@ -43,6 +43,10 @@ LOCAL_APPS=(
     'the_applications.applications',
     'the_applications.notify',
     'the_applications.datasheet',
+    'the_applications.rules',
+    'the_applications.type_transport',
+    'the_applications.zones',
+    'the_applications.api',
 )
 
 
@@ -50,7 +54,6 @@ LOCAL_APPS=(
 THIRD_PARTY_APPS = (
 
 )
-
 
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS

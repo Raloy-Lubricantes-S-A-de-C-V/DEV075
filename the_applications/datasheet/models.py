@@ -2,47 +2,9 @@ from django.db import models
 from django.db.models.constraints import UniqueConstraint
 
 # Create your models here.
-'''
-    Folio : <char:40> / "JCE240102-00407"   **
-    Identificador <interger:20> / 2147102  **
-    Referencia Interna  <char:40> / "APT/OUT/377497"  **
-    Pedido <interger:20> / 2147102  **
-    Factura  <char:40> / "FD123456"  **
-    Cuenta <char:160> / "JOHNSON CONTROLS ENTERPRISES MEXICO"  **
-    Estatus <char:20> / ["Sin asignar","Procesando","Asignado","Corregido"] **
-    Fecha de creación <date> / "YYYY/MM/DD"  **
-    Hora de creación <time> / "HH:SS:ii"  **
-    Fecha de entrega <date> / "YYYY/MM/DD" ** 
-    Hora de cita <time> / "HH:SS:ii"  **
-    Comentarios adicionales <text> / "LOREAM SPOSUM" **
-    Piezas recibidas <float> / 00.00 **
-    Cajas recibidas <float> / 00.00 **
-    Pallets recibidas <float> / 00.00 **
-    Código <char:10> / "P12159" **
-    Descripción <text> / "44D40CF0B ACEITE MOTOR DIESEL SAE 40 TIPO API CF-2 B/20.1L" **
-    Peso <float> / 00.00 **
-    Volumen <float> / 00.00 **
-    Bodega <char:20> / "Cedis I" **
-    Nombre del origen <char:40> / "Physical Location/APT/Cedis I" **
-    Nombre del destino <text> / "700415 BDH BATERIAS Y DISTRIBUCIONES HERMOSILLO SA DE CV"  **
-    Estado del destino <char:10> / "SR" **
-    Municipio del destino <char:30> / "HERMOSILLO" **
-    Colonia del destino <char:30> / "SAN BENITO" **
-    CP del destino <char:10> / "83190"  **
-    Dirección del destino <text> / "GUADALUPE VICTORIA, ESQ. TAMAULIPAS S/N"  **
-    Latitud del destino <float> / 00.00 **
-    Longitud del destino <float> / 00.00 **
-    Tipo de servicio <char:10> / "CAS"  **
-    Tipo de orden <char:20> / "Entrega" **
-    Tipo de entrega <char:20> / "Sin información"  **
-    Última solicitud de embarque <text> / "" **
-    Último embarque <text> / "" **
-    Piezas  <float> / 00.00  **
-    Cajas <float> / 00.00  **
-    Pallets <float> / 00.00  **
-    Responsable del rechazo <char:40> / ""  **
-    Estatus de Ruteo  <char:40> / "['Pendiente de envío a ruteo','En escenario','Aprobación','Ruteado','En ruta']"
-'''
+
+class ModelReg(models.Model):
+    name = models.CharField(max_length=100, default='')
 class Header(models.Model):
     STATE_HEADER = [
         ("LI", "Libre"),
