@@ -86,8 +86,7 @@
                              <div class="lcpage-00">
                                  <div class="lphead lcpage-head-00"></div>
                                  <div class="lpbody lcpage-body-00">
-                                     <img style="filter:opacity(0.5); width: 50%;margin-left: 25%;" src="{% static 'img/datalist/poster6.png' %}">
-
+                                     <img style="filter:opacity(0.5); width: 45%;margin-left:27%;" src="{% static 'img/datalist/list.gif' %}">
                                  </div>
                              </div>
                              <div class="cpage-card lcpage-0">
@@ -200,7 +199,7 @@
                                           </div>
                                          <br>
                                          <input class="btn btn-success" type="submit" value="Fusionar">
-                                     </form>
+                                    </form>
                                  </div>
                              </div>
                              <div class="cpage-card lcpage-3">
@@ -469,26 +468,32 @@
                         columns: [
                             {data: 'id', title: 'Id', visible:false,  type: 'string'},
                             {data: null, title: 'Acciones', width: '16%', "render": function ( data, type, row, meta) {
-                                if((data.state=="Libre")){
-                                    add = '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="archive" data-toggle="tooltip" data-placement="top" title="Archivar Data List" style="cursor:pointer">' +
-                                        '<iconify-icon style="font-size: 30px;cursor:pointer;color:#c40647;" icon="solar:minus-square-bold-duotone"></iconify-icon>' +
-                                        '</a>'+
-                                        '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="dearchive" data-toggle="tooltip" data-placement="top" title="Desasrchivar Data List" style="cursor:pointer">' +
-                                        '<iconify-icon style="font-size: 30px;cursor:pointer;color:#009688;" icon="solar:minimize-square-minimalistic-bold-duotone"></iconify-icon>' +
-                                        '</a>'+
-                                        '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="delete" data-toggle="tooltip" data-placement="top" title="Eliminar Data List" style="cursor:pointer">' +
-                                        '<iconify-icon style="font-size: 30px;cursor:pointer;color:#f44336;" icon="solar:trash-bin-trash-bold-duotone"></iconify-icon>' +
-                                        '</a>';
+                                if(data.active == false){
+                                    add = '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="dearchive" data-toggle="tooltip" data-placement="top" title="Desasrchivar Data List" style="cursor:pointer">' +
+                                            '<iconify-icon style="font-size: 30px;cursor:pointer;color:#009688;" icon="solar:minimize-square-minimalistic-bold-duotone"></iconify-icon>' +
+                                            '</a>';
                                 }else{
-                                    if((data.state=="Asignado")||(data.state=="Analizado")){
+                                    if((data.state=="Libre")){
                                         add = '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="archive" data-toggle="tooltip" data-placement="top" title="Archivar Data List" style="cursor:pointer">' +
                                             '<iconify-icon style="font-size: 30px;cursor:pointer;color:#c40647;" icon="solar:minus-square-bold-duotone"></iconify-icon>' +
                                             '</a>'+
                                             '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="dearchive" data-toggle="tooltip" data-placement="top" title="Desasrchivar Data List" style="cursor:pointer">' +
                                             '<iconify-icon style="font-size: 30px;cursor:pointer;color:#009688;" icon="solar:minimize-square-minimalistic-bold-duotone"></iconify-icon>' +
-                                            '</a>'
+                                            '</a>'+
+                                            '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="delete" data-toggle="tooltip" data-placement="top" title="Eliminar Data List" style="cursor:pointer">' +
+                                            '<iconify-icon style="font-size: 30px;cursor:pointer;color:#f44336;" icon="solar:trash-bin-trash-bold-duotone"></iconify-icon>' +
+                                            '</a>';
                                     }else{
-                                        add = "";
+                                        if((data.state=="Asignado")||(data.state=="Analizado")){
+                                            add = '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="archive" data-toggle="tooltip" data-placement="top" title="Archivar Data List" style="cursor:pointer">' +
+                                                '<iconify-icon style="font-size: 30px;cursor:pointer;color:#c40647;" icon="solar:minus-square-bold-duotone"></iconify-icon>' +
+                                                '</a>'+
+                                                '<a data-id="' + data.id + '" class="tooltipm" style="margin-right: 10px;" data-action="dearchive" data-toggle="tooltip" data-placement="top" title="Desasrchivar Data List" style="cursor:pointer">' +
+                                                '<iconify-icon style="font-size: 30px;cursor:pointer;color:#009688;" icon="solar:minimize-square-minimalistic-bold-duotone"></iconify-icon>' +
+                                                '</a>'
+                                        }else{
+                                            add = "";
+                                        }
                                     }
                                 }
                                 return '' +

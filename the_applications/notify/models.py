@@ -14,7 +14,7 @@ class Notify(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     type = models.ForeignKey(TypeNotify, on_delete=models.CASCADE)
     name = models.CharField(max_length=50, default='')
-    description = models.CharField(max_length=400, default='')
+    description = models.TextField(default='')
     active = models.SmallIntegerField(default=1)
     see = models.SmallIntegerField(default=0)
     important = models.SmallIntegerField(default=0)
